@@ -1,0 +1,62 @@
+import type { Metadata, Viewport } from 'next'
+import { Geist, Geist_Mono } from 'next/font/google'
+import { Providers } from '@/components/providers'
+import { BottomNav } from '@/components/nav/bottom-nav'
+import { TopHeader } from '@/components/nav/top-header'
+import { PWARegister } from '@/components/pwa-register'
+import './globals.css'
+
+const geistSans = Geist({
+  variable: '--font-geist-sans',
+  subsets: ['latin'],
+})
+
+const geistMono = Geist_Mono({
+  variable: '--font-geist-mono',
+  subsets: ['latin'],
+})
+
+export const metadata: Metadata = {
+  title: 'Global Tour Connect',
+  description: 'Marketplace de micro-servicios turisticos. Conecta con locales, descubre experiencias unicas.',
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'GTC',
+  },
+}
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  themeColor: '#0f766e',
+}
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode
+}>) {
+  return (
+    <html lang="es">
+      <head>
+        <link rel="apple-touch-icon" href="/icons/icon-192.svg" />
+      </head>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased font-sans`}
+      >
+        <Providers>
+          <PWARegister />
+          <TopHeader />
+          <main className="min-h-[calc(100dvh-8rem)] pb-20">
+            {children}
+          </main>
+          <BottomNav />
+        </Providers>
+      </body>
+    </html>
+  )
+}
