@@ -29,17 +29,29 @@ export async function updateSession(request: NextRequest) {
     }
   )
 
-  // Refresh session
-  const { data: { user } } = await supabase.auth.getUser()
-
-  // Allow demo mode (cookie set by auth page)
+  // Allow demo mode (cookie set by auth page) — check BEFORE Supabase call
   const isDemo = request.cookies.get('gtc_demo')?.value === 'true'
 
-  // Redirect unauthenticated users to auth page for protected routes
+  // Protected routes check
   const protectedPaths = ['/dashboard', '/publicar', '/chat', '/perfil', '/calificar']
   const isProtected = protectedPaths.some(path => request.nextUrl.pathname.startsWith(path))
 
-  if (isProtected && !user && !isDemo) {
+  // If demo mode or not a protected route, skip auth check
+  if (isDemo || !isProtected) {
+    return supabaseResponse
+  }
+
+  // Only call Supabase if we actually need to check auth
+  try {
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) {
+      const url = request.nextUrl.clone()
+      url.pathname = '/auth'
+      url.searchParams.set('redirect', request.nextUrl.pathname)
+      return NextResponse.redirect(url)
+    }
+  } catch {
+    // If Supabase fails (e.g. placeholder URL), redirect to auth
     const url = request.nextUrl.clone()
     url.pathname = '/auth'
     url.searchParams.set('redirect', request.nextUrl.pathname)
