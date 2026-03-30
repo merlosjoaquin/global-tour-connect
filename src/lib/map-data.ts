@@ -169,8 +169,8 @@ export const MOCK_MAP_LANDMARKS: MapLandmark[] = [
     name: 'Museo de Historia Natural',
     description: 'Museo con colecciones de paleontologia, mineralogia y fauna regional del sur mendocino.',
     image: 'https://images.unsplash.com/photo-1554907984-15263bfd63bd?w=400&h=300&fit=crop',
-    lat: -34.6155,
-    lng: -68.3250,
+    lat: -34.64547824975054,
+    lng: -68.3750315650564,
     category: 'museo',
   },
   {
