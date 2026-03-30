@@ -128,3 +128,146 @@
     @apply font-sans;
   }
 }
+
+/* Leaflet overrides for clean look */
+.leaflet-container {
+  background: #f8f9fa;
+  font-family: inherit;
+}
+.leaflet-control-attribution {
+  display: none !important;
+}
+.leaflet-control-zoom {
+  border: none !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+  border-radius: 12px !important;
+  overflow: hidden;
+}
+.leaflet-control-zoom a {
+  border: none !important;
+  color: #0f766e !important;
+}
+
+/* Host markers */
+.host-marker-wrapper {
+  background: none !important;
+  border: none !important;
+}
+.host-marker {
+  position: relative;
+  width: 46px;
+  height: 46px;
+}
+.host-marker img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 3px solid #0f766e;
+  object-fit: cover;
+  background: white;
+}
+.host-marker .online-dot {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #16a34a;
+  border: 2px solid white;
+}
+
+/* Landmark markers */
+.landmark-marker-wrapper {
+  background: none !important;
+  border: none !important;
+}
+.landmark-marker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 56px;
+}
+.landmark-marker img {
+  width: 48px;
+  height: 36px;
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  border: 2px solid white;
+  background: white;
+}
+.landmark-marker .landmark-label {
+  margin-top: 2px;
+  font-size: 10px;
+  font-weight: 600;
+  color: #374151;
+  text-align: center;
+  line-height: 1.2;
+  white-space: nowrap;
+  max-width: 72px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 1px 4px;
+  border-radius: 4px;
+}
+
+/* User location dot with pulse */
+.user-location-wrapper {
+  background: none !important;
+  border: none !important;
+}
+.user-location-dot {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  background: #0d9488;
+  border-radius: 50%;
+  border: 3px solid white;
+  box-shadow: 0 0 6px rgba(13, 148, 136, 0.5);
+}
+.user-location-dot .pulse-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(13, 148, 136, 0.2);
+  animation: pulse-location 2s ease-out infinite;
+}
+
+@keyframes pulse-location {
+  0% {
+    transform: translate(-50%, -50%) scale(0.4);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0;
+  }
+}
+
+/* Bottom sheet slide up animation */
+@keyframes slide-up {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+.animate-slide-up {
+  animation: slide-up 0.3s ease-out;
+}
+
+/* Hide scrollbar for filter pills */
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
