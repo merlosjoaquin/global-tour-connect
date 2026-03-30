@@ -147,7 +147,7 @@ export default function MapView() {
         center={mapCenter}
         zoom={DEFAULT_ZOOM}
         className="w-full h-full"
-        zoomControl={true}
+        zoomControl={false}
         attributionControl={false}
       >
         <TileLayer
