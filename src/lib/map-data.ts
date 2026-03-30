@@ -142,8 +142,8 @@ export const MOCK_MAP_LANDMARKS: MapLandmark[] = [
     name: 'Plaza San Martin',
     description: 'Corazon de San Rafael. Plaza historica rodeada de arboles, la catedral y edificios coloniales. Punto de encuentro de la ciudad.',
     image: 'https://images.unsplash.com/photo-1584646098378-0874589d76b1?w=400&h=300&fit=crop',
-    lat: -34.6176,
-    lng: -68.3301,
+    lat: -34.61312740504701,
+    lng: -68.3306195811649,
     category: 'monumento',
   },
   {
@@ -151,8 +151,8 @@ export const MOCK_MAP_LANDMARKS: MapLandmark[] = [
     name: 'Catedral San Rafael Arcangel',
     description: 'Catedral principal de San Rafael, de estilo neoclasico. Ubicada frente a la Plaza San Martin.',
     image: 'https://images.unsplash.com/photo-1510674485131-dc88d96369b4?w=400&h=300&fit=crop',
-    lat: -34.6170,
-    lng: -68.3295,
+    lat: -34.61232669764184,
+    lng: -68.32988253499283,
     category: 'cultura',
   },
   {
@@ -160,8 +160,8 @@ export const MOCK_MAP_LANDMARKS: MapLandmark[] = [
     name: 'Parque Mariano Moreno',
     description: 'Gran espacio verde de San Rafael con lago artificial, senderos y areas recreativas. Ideal para paseos y picnics.',
     image: 'https://images.unsplash.com/photo-1519331379826-f10be5486c6f?w=400&h=300&fit=crop',
-    lat: -34.6120,
-    lng: -68.3380,
+    lat: -34.64909995424117,
+    lng: -68.36708401641373,
     category: 'parque',
   },
   {
