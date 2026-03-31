@@ -68,7 +68,7 @@ function AuthForm() {
   function handleDemoMode() {
     document.cookie = 'gtc_demo=true; path=/; max-age=86400'
     toast.success('Modo demo activado!')
-    router.push('/dashboard')
+    window.location.href = '/dashboard'
   }
 
   return (
