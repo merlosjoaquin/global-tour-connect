@@ -11,7 +11,7 @@ export default function HomePage() {
     if (!introSeen) {
       router.replace('/intro')
     } else {
-      router.replace('/explorar')
+      router.replace('/dashboard')
     }
   }, [router])
 

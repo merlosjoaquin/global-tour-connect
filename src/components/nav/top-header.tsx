@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button'
 
 const PAGE_TITLES: Record<string, string> = {
   '/': 'Global Tour Connect',
-  '/explorar': 'Explorar',
+
   '/publicar': 'Publicar Servicio',
   '/chat': 'Mensajes',
   '/perfil': 'Mi Perfil',

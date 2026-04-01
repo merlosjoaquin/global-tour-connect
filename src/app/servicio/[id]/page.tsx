@@ -30,8 +30,8 @@ export default function ServiceDetailPage({ params }: { params: Promise<{ id: st
       <div className="flex items-center justify-center min-h-[50vh]">
         <div className="text-center">
           <p className="text-lg font-medium">Servicio no encontrado</p>
-          <Button render={<Link href="/explorar" />} variant="link" className="text-teal-700 mt-2">
-            Volver a explorar
+          <Button render={<Link href="/dashboard" />} variant="link" className="text-teal-700 mt-2">
+            Volver al inicio
           </Button>
         </div>
       </div>
