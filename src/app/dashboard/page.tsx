@@ -1,6 +1,8 @@
 'use client'
 
 import dynamic from 'next/dynamic'
+import Link from 'next/link'
+import { Search } from 'lucide-react'
 
 const MapView = dynamic(() => import('@/components/map-view'), {
   ssr: false,
@@ -18,6 +20,15 @@ export default function DashboardPage() {
   return (
     <div className="fixed inset-0 bottom-[64px] z-0">
       <MapView />
+      {/* CTA to request a host */}
+      <Link
+        href="/solicitar"
+        className="absolute bottom-6 left-4 right-4 z-[1000] flex items-center justify-center gap-2 py-4 rounded-2xl font-semibold text-white shadow-lg active:scale-[0.98] transition-transform"
+        style={{ backgroundColor: '#0f766e' }}
+      >
+        <Search className="h-5 w-5" />
+        Solicitar anfitrion
+      </Link>
     </div>
   )
 }

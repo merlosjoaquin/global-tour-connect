@@ -64,11 +64,11 @@ function AuthForm() {
     if (error) toast.error(error.message)
   }
 
-  // Demo mode - skip auth
+  // Demo mode - skip auth, go to onboarding
   function handleDemoMode() {
     document.cookie = 'gtc_demo=true; path=/; max-age=86400'
     toast.success('Modo demo activado!')
-    window.location.href = '/dashboard'
+    window.location.href = '/onboarding'
   }
 
   return (

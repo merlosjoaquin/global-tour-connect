@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { MapContainer, TileLayer, Marker, useMap } from 'react-leaflet'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
@@ -66,6 +66,158 @@ function FlyToLocation({ coords }: { coords: [number, number] | null }) {
   return null
 }
 
+// --- Host bubble popup (positioned above marker) ---
+
+function HostBubble({
+  host,
+  onClose,
+}: {
+  host: MapHost
+  onClose: () => void
+}) {
+  const map = useMap()
+  const bubbleRef = useRef<HTMLDivElement>(null)
+  const [position, setPosition] = useState<{ x: number; y: number } | null>(null)
+
+  const updatePosition = useCallback(() => {
+    const point = map.latLngToContainerPoint([host.lat, host.lng])
+    setPosition({ x: point.x, y: point.y })
+  }, [map, host.lat, host.lng])
+
+  // Update position on map move/zoom
+  useEffect(() => {
+    updatePosition()
+    map.on('move', updatePosition)
+    map.on('zoom', updatePosition)
+    return () => {
+      map.off('move', updatePosition)
+      map.off('zoom', updatePosition)
+    }
+  }, [map, updatePosition])
+
+  // Close on outside click
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      function handleClick(e: MouseEvent) {
+        if (bubbleRef.current && !bubbleRef.current.contains(e.target as Node)) {
+          onClose()
+        }
+      }
+      document.addEventListener('click', handleClick)
+      return () => document.removeEventListener('click', handleClick)
+    }, 100)
+    return () => clearTimeout(timer)
+  }, [onClose])
+
+  if (!position) return null
+
+  // Bubble dimensions for positioning
+  const bubbleWidth = 280
+  const arrowHeight = 8
+  const markerOffset = 28 // half of marker icon height (46/2 ~ 23) + some padding
+
+  // Get map container size for edge clamping
+  const container = map.getContainer()
+  const containerWidth = container.clientWidth
+  const containerHeight = container.clientHeight
+
+  // Horizontal: center on marker, but clamp to screen edges with 8px padding
+  let left = position.x - bubbleWidth / 2
+  left = Math.max(8, Math.min(left, containerWidth - bubbleWidth - 8))
+
+  // Arrow offset from bubble left edge (points to the marker)
+  const arrowLeft = Math.max(16, Math.min(position.x - left, bubbleWidth - 16))
+
+  // Vertical: position above marker
+  // We don't know exact bubble height, so use bottom positioning
+  const bottom = containerHeight - position.y + markerOffset + arrowHeight
+
+  return (
+    <div
+      ref={bubbleRef}
+      className="absolute z-[1000] animate-pop-in"
+      style={{
+        left: `${left}px`,
+        bottom: `${bottom}px`,
+        width: `${bubbleWidth}px`,
+        pointerEvents: 'auto',
+      }}
+      onClick={(e) => e.stopPropagation()}
+    >
+      <div className="bg-white rounded-2xl shadow-xl p-4 relative">
+        {/* Close button */}
+        <button
+          onClick={onClose}
+          className="absolute top-2.5 right-2.5 p-1 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
+          aria-label="Cerrar"
+        >
+          <X className="h-3.5 w-3.5 text-gray-500" />
+        </button>
+
+        {/* Host info */}
+        <div className="flex items-center gap-2.5 mb-3 pr-6">
+          <img
+            src={host.avatar}
+            alt={host.name}
+            width={44}
+            height={44}
+            className="w-11 h-11 rounded-full border-2 shrink-0"
+            style={{ borderColor: '#0f766e' }}
+          />
+          <div className="min-w-0">
+            <h3 className="font-semibold text-sm text-gray-900 truncate">{host.name}</h3>
+            <div className="flex items-center gap-1">
+              <Star className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />
+              <span className="text-xs font-medium text-gray-700">{host.rating}</span>
+              {host.isOnline && (
+                <span className="ml-1.5 text-[11px] text-green-600 font-medium">En linea</span>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Services */}
+        <div className="space-y-1.5 mb-3">
+          {host.services.map((svc) => (
+            <div
+              key={svc.id}
+              className="flex items-center justify-between py-1.5 px-2.5 bg-gray-50 rounded-lg"
+            >
+              <span className="text-xs text-gray-700 truncate mr-2">{svc.title}</span>
+              <span className="text-xs font-semibold shrink-0" style={{ color: '#0f766e' }}>
+                ${svc.price} {svc.currency}
+              </span>
+            </div>
+          ))}
+        </div>
+
+        {/* CTA */}
+        <Link
+          href={`/servicio/${host.services[0]?.id || host.id}`}
+          className="block w-full py-2 text-center text-sm font-semibold rounded-xl transition-colors"
+          style={{ backgroundColor: '#0f766e', color: '#ffffff' }}
+        >
+          Ver perfil
+        </Link>
+      </div>
+
+      {/* Triangle arrow pointing down */}
+      <div
+        className="absolute w-0 h-0"
+        style={{
+          left: `${arrowLeft}px`,
+          bottom: '-7px',
+          transform: 'translateX(-50%)',
+          borderLeft: '8px solid transparent',
+          borderRight: '8px solid transparent',
+          borderTop: '8px solid white',
+          filter: 'drop-shadow(0 2px 2px rgba(0,0,0,0.06))',
+        }}
+      />
+    </div>
+  )
+}
+
 // --- Category badge colors ---
 
 const CATEGORY_COLORS: Record<string, string> = {
@@ -106,16 +258,14 @@ export default function MapView() {
     }
   }, [])
 
-  // Close sheet on outside tap
+  // Close landmark sheet on outside tap (host bubble handles its own outside click)
   useEffect(() => {
     function handleClick(e: MouseEvent) {
       if (sheetRef.current && !sheetRef.current.contains(e.target as Node)) {
-        setSelectedHost(null)
         setSelectedLandmark(null)
       }
     }
-    if (selectedHost || selectedLandmark) {
-      // Small delay so the click that opened the sheet doesn't immediately close it
+    if (selectedLandmark) {
       const timer = setTimeout(() => {
         document.addEventListener('click', handleClick)
       }, 100)
@@ -124,7 +274,7 @@ export default function MapView() {
         document.removeEventListener('click', handleClick)
       }
     }
-  }, [selectedHost, selectedLandmark])
+  }, [selectedLandmark])
 
   function handleHostClick(host: MapHost) {
     setSelectedLandmark(null)
@@ -137,7 +287,6 @@ export default function MapView() {
   }
 
   function closeSheet() {
-    setSelectedHost(null)
     setSelectedLandmark(null)
   }
 
@@ -181,6 +330,11 @@ export default function MapView() {
             eventHandlers={{ click: () => handleLandmarkClick(landmark) }}
           />
         ))}
+
+        {/* Host bubble popup (inside MapContainer to access useMap) */}
+        {selectedHost && (
+          <HostBubble host={selectedHost} onClose={() => setSelectedHost(null)} />
+        )}
       </MapContainer>
 
       {/* Top overlay: search + filters */}
@@ -217,77 +371,6 @@ export default function MapView() {
           </div>
         </div>
       </div>
-
-      {/* Host bottom sheet */}
-      {selectedHost && (
-        <div
-          className="absolute bottom-0 left-0 right-0 z-[1000] animate-slide-up"
-          ref={sheetRef}
-          onClick={(e) => e.stopPropagation()}
-        >
-          <div className="bg-white rounded-t-3xl shadow-2xl p-5 pb-6 mx-0">
-            {/* Handle bar */}
-            <div className="flex justify-center mb-3">
-              <div className="w-10 h-1 bg-gray-300 rounded-full" />
-            </div>
-
-            {/* Close button */}
-            <button
-              onClick={closeSheet}
-              className="absolute top-4 right-4 p-1.5 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
-              aria-label="Cerrar"
-            >
-              <X className="h-4 w-4 text-gray-500" />
-            </button>
-
-            {/* Host info */}
-            <div className="flex items-center gap-3 mb-4">
-              <img
-                src={selectedHost.avatar}
-                alt={selectedHost.name}
-                width={56}
-                height={56}
-                className="w-14 h-14 rounded-full border-2"
-                style={{ borderColor: '#0f766e' }}
-              />
-              <div>
-                <h3 className="font-semibold text-lg text-gray-900">{selectedHost.name}</h3>
-                <div className="flex items-center gap-1">
-                  <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                  <span className="text-sm font-medium text-gray-700">{selectedHost.rating}</span>
-                  {selectedHost.isOnline && (
-                    <span className="ml-2 text-xs text-green-600 font-medium">En linea</span>
-                  )}
-                </div>
-              </div>
-            </div>
-
-            {/* Services */}
-            <div className="space-y-2 mb-4">
-              {selectedHost.services.map((svc) => (
-                <div
-                  key={svc.id}
-                  className="flex items-center justify-between py-2 px-3 bg-gray-50 rounded-xl"
-                >
-                  <span className="text-sm text-gray-700">{svc.title}</span>
-                  <span className="text-sm font-semibold" style={{ color: '#0f766e' }}>
-                    ${svc.price} {svc.currency}
-                  </span>
-                </div>
-              ))}
-            </div>
-
-            {/* CTA */}
-            <Link
-              href={`/servicio/${selectedHost.services[0]?.id || selectedHost.id}`}
-              className="block w-full py-3 text-center text-white font-semibold rounded-2xl transition-colors"
-              style={{ backgroundColor: '#0f766e' }}
-            >
-              Ver perfil
-            </Link>
-          </div>
-        </div>
-      )}
 
       {/* Landmark bottom sheet */}
       {selectedLandmark && (

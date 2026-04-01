@@ -10,7 +10,7 @@ import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
 import {
   MapPin, Star, Award, Settings,
-  LogOut, ChevronRight, Globe, Shield
+  LogOut, ChevronRight, Globe, Shield, PlusCircle
 } from 'lucide-react'
 import type { Profile } from '@/types/database'
 
@@ -131,6 +131,22 @@ export default function PerfilPage() {
           </CardContent>
         </Card>
       )}
+
+      {/* Publish new service */}
+      <Link href="/publicar" className="block">
+        <Card className="rounded-2xl border-dashed border-2 border-teal-200 hover:border-teal-400 transition-colors">
+          <CardContent className="p-4 flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-teal-50 flex items-center justify-center shrink-0">
+              <PlusCircle className="h-5 w-5 text-teal-700" />
+            </div>
+            <div>
+              <p className="font-medium text-sm">Publicar nuevo servicio</p>
+              <p className="text-xs text-muted-foreground">Ofrece una experiencia a viajeros</p>
+            </div>
+            <ChevronRight className="h-4 w-4 text-muted-foreground ml-auto" />
+          </CardContent>
+        </Card>
+      </Link>
 
       <Separator />
 

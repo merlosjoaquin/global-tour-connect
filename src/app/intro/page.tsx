@@ -2,25 +2,17 @@
 
 import { useState, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
-import { MapPin, ArrowRightLeft, CalendarCheck, ArrowRight } from 'lucide-react'
+import { Globe, CalendarCheck, ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 const SLIDES = [
   {
-    icon: MapPin,
-    title: 'Descubre experiencias locales',
-    subtitle: 'Conecta con personas reales en cada ciudad que visites',
+    icon: Globe,
+    title: 'Viaja y conecta con el mundo',
+    subtitle: 'Contrata anfitriones locales en tus vacaciones, o se el anfitrion de tu propia ciudad!',
     bg: 'from-teal-50 to-white',
     iconBg: 'bg-teal-100',
     iconColor: 'text-teal-700',
-  },
-  {
-    icon: ArrowRightLeft,
-    title: 'Se turista o anfitrion',
-    subtitle: 'Explora servicios unicos o comparte lo mejor de tu ciudad',
-    bg: 'from-emerald-50 to-white',
-    iconBg: 'bg-emerald-100',
-    iconColor: 'text-emerald-700',
   },
   {
     icon: CalendarCheck,

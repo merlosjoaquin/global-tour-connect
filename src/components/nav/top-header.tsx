@@ -19,7 +19,7 @@ export function TopHeader() {
   const pathname = usePathname()
 
   // Don't show on landing page, auth, intro, or dashboard (map view)
-  if (pathname === '/' || pathname === '/auth' || pathname === '/intro' || pathname === '/dashboard') return null
+  if (pathname === '/' || pathname === '/auth' || pathname === '/intro' || pathname === '/dashboard' || pathname === '/solicitar') return null
 
   const title = PAGE_TITLES[pathname] || 'Global Tour Connect'
   const showBack = pathname !== '/dashboard'
