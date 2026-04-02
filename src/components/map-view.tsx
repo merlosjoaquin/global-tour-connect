@@ -4,8 +4,9 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import { MapContainer, TileLayer, Marker, useMap } from 'react-leaflet'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
-import { Star, X, MapPin } from 'lucide-react'
+import { Star, X, MapPin, Search, Loader2 } from 'lucide-react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import {
   DEFAULT_CENTER,
   DEFAULT_ZOOM,
@@ -14,6 +15,8 @@ import {
   type MapHost,
   type MapLandmark,
 } from '@/lib/map-data'
+import { MOCK_SERVICES } from '@/lib/mock-data'
+import { SERVICE_TYPES } from '@/lib/constants'
 
 // --- Custom marker icons ---
 
@@ -64,6 +67,39 @@ function FlyToLocation({ coords }: { coords: [number, number] | null }) {
     }
   }, [coords, map])
   return null
+}
+
+// --- Fly to search target ---
+
+function FlyToTarget({ target }: { target: { lat: number; lng: number } | null }) {
+  const map = useMap()
+  useEffect(() => {
+    if (target) {
+      map.flyTo([target.lat, target.lng], 14, { duration: 1.2 })
+    }
+  }, [target, map])
+  return null
+}
+
+// --- Nominatim result type ---
+
+interface NominatimResult {
+  place_id: number
+  display_name: string
+  lat: string
+  lon: string
+  name?: string
+}
+
+// --- Search results for services ---
+
+interface ServiceSearchResult {
+  id: string
+  title: string
+  address: string
+  emoji: string
+  latitude: number
+  longitude: number
 }
 
 // --- Host bubble popup (positioned above marker) ---
@@ -230,12 +266,23 @@ const CATEGORY_COLORS: Record<string, string> = {
 // --- Main Map Component ---
 
 export default function MapView() {
+  const router = useRouter()
   const [userCoords, setUserCoords] = useState<[number, number] | null>(null)
   const [mapCenter, setMapCenter] = useState<[number, number]>(DEFAULT_CENTER)
   const [selectedHost, setSelectedHost] = useState<MapHost | null>(null)
   const [selectedLandmark, setSelectedLandmark] = useState<MapLandmark | null>(null)
   const [activeFilter, setActiveFilter] = useState('Todos')
   const sheetRef = useRef<HTMLDivElement>(null)
+
+  // Search state
+  const [searchQuery, setSearchQuery] = useState('')
+  const [serviceResults, setServiceResults] = useState<ServiceSearchResult[]>([])
+  const [placeResults, setPlaceResults] = useState<NominatimResult[]>([])
+  const [isSearchingPlaces, setIsSearchingPlaces] = useState(false)
+  const [showDropdown, setShowDropdown] = useState(false)
+  const [flyTarget, setFlyTarget] = useState<{ lat: number; lng: number } | null>(null)
+  const searchContainerRef = useRef<HTMLDivElement>(null)
+  const nominatimTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const filters = ['Todos', 'Gastronomia', 'Tours', 'Cultura', 'Aventura', 'Bienestar']
 
@@ -257,6 +304,104 @@ export default function MapView() {
       )
     }
   }, [])
+
+  // Filter services locally when query changes
+  useEffect(() => {
+    if (!searchQuery.trim()) {
+      setServiceResults([])
+      setPlaceResults([])
+      setShowDropdown(false)
+      return
+    }
+
+    const q = searchQuery.toLowerCase().trim()
+
+    // Filter mock services
+    const filtered = MOCK_SERVICES
+      .filter(
+        (s) =>
+          s.title.toLowerCase().includes(q) ||
+          s.description.toLowerCase().includes(q) ||
+          s.address.toLowerCase().includes(q)
+      )
+      .slice(0, 5)
+      .map((s) => ({
+        id: s.id,
+        title: s.title,
+        address: s.address,
+        emoji: SERVICE_TYPES[s.type]?.emoji || '📍',
+        latitude: s.latitude,
+        longitude: s.longitude,
+      }))
+
+    setServiceResults(filtered)
+    setShowDropdown(true)
+
+    // Debounce Nominatim query
+    if (nominatimTimeoutRef.current) {
+      clearTimeout(nominatimTimeoutRef.current)
+    }
+
+    nominatimTimeoutRef.current = setTimeout(async () => {
+      if (q.length < 2) {
+        setPlaceResults([])
+        return
+      }
+
+      setIsSearchingPlaces(true)
+      try {
+        const res = await fetch(
+          `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(q)}&limit=5&accept-language=es`,
+          {
+            headers: { 'User-Agent': 'GlobalTourConnect/1.0' },
+          }
+        )
+        if (res.ok) {
+          const data: NominatimResult[] = await res.json()
+          setPlaceResults(data)
+        }
+      } catch {
+        // Silently fail — places section just won't show
+      } finally {
+        setIsSearchingPlaces(false)
+      }
+    }, 400)
+
+    return () => {
+      if (nominatimTimeoutRef.current) {
+        clearTimeout(nominatimTimeoutRef.current)
+      }
+    }
+  }, [searchQuery])
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (
+        searchContainerRef.current &&
+        !searchContainerRef.current.contains(e.target as Node)
+      ) {
+        setShowDropdown(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
+
+  function handleSelectService(service: ServiceSearchResult) {
+    setShowDropdown(false)
+    setSearchQuery('')
+    setFlyTarget({ lat: service.latitude, lng: service.longitude })
+    router.push(`/servicio/${service.id}`)
+  }
+
+  function handleSelectPlace(place: NominatimResult) {
+    setShowDropdown(false)
+    setSearchQuery('')
+    const lat = parseFloat(place.lat)
+    const lng = parseFloat(place.lon)
+    setFlyTarget({ lat, lng })
+  }
 
   // Close landmark sheet on outside tap (host bubble handles its own outside click)
   useEffect(() => {
@@ -305,6 +450,7 @@ export default function MapView() {
         />
 
         <FlyToLocation coords={userCoords} />
+        <FlyToTarget target={flyTarget} />
 
         {/* User location marker */}
         {userCoords && (
@@ -340,15 +486,99 @@ export default function MapView() {
       {/* Top overlay: search + filters */}
       <div className="absolute top-0 left-0 right-0 z-[1000] pointer-events-none px-4 pt-3">
         {/* Search bar */}
-        <div className="pointer-events-auto">
-          <div className="flex items-center gap-3 bg-white/90 backdrop-blur-md rounded-full px-4 py-3 shadow-lg">
-            <MapPin className="h-5 w-5 shrink-0" style={{ color: '#0f766e' }} />
-            <input
-              type="text"
-              placeholder="Buscar servicios, lugares..."
-              className="flex-1 bg-transparent text-sm outline-none placeholder:text-gray-400"
-              readOnly
-            />
+        <div className="pointer-events-auto" ref={searchContainerRef}>
+          <div className="relative">
+            <div className="flex items-center gap-3 bg-white/90 backdrop-blur-md rounded-full px-4 py-3 shadow-lg">
+              <Search className="h-5 w-5 shrink-0" style={{ color: '#0f766e' }} />
+              <input
+                type="text"
+                placeholder="Buscar servicios, lugares..."
+                className="flex-1 bg-transparent text-sm outline-none placeholder:text-gray-400"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onFocus={() => {
+                  if (searchQuery.trim()) setShowDropdown(true)
+                }}
+              />
+              {searchQuery && (
+                <button
+                  onClick={() => {
+                    setSearchQuery('')
+                    setShowDropdown(false)
+                  }}
+                  className="p-0.5 rounded-full hover:bg-gray-200 transition-colors"
+                  aria-label="Limpiar busqueda"
+                >
+                  <X className="h-4 w-4 text-gray-400" />
+                </button>
+              )}
+            </div>
+
+            {/* Search dropdown */}
+            {showDropdown && (serviceResults.length > 0 || placeResults.length > 0 || isSearchingPlaces) && (
+              <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-xl border border-gray-100 max-h-80 overflow-y-auto">
+                {/* Services section */}
+                {serviceResults.length > 0 && (
+                  <div>
+                    <div className="px-4 pt-3 pb-1.5">
+                      <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                        Servicios
+                      </span>
+                    </div>
+                    {serviceResults.map((svc) => (
+                      <button
+                        key={svc.id}
+                        onClick={() => handleSelectService(svc)}
+                        className="w-full flex items-center gap-3 px-4 py-2.5 hover:bg-gray-50 transition-colors text-left"
+                      >
+                        <span className="text-lg shrink-0">{svc.emoji}</span>
+                        <div className="min-w-0 flex-1">
+                          <p className="text-sm font-medium text-gray-900 truncate">{svc.title}</p>
+                          <p className="text-xs text-gray-500 truncate">{svc.address}</p>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                )}
+
+                {/* Divider between sections */}
+                {serviceResults.length > 0 && (placeResults.length > 0 || isSearchingPlaces) && (
+                  <div className="mx-4 border-t border-gray-100" />
+                )}
+
+                {/* Places section */}
+                {(placeResults.length > 0 || isSearchingPlaces) && (
+                  <div>
+                    <div className="px-4 pt-3 pb-1.5 flex items-center gap-2">
+                      <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                        Lugares
+                      </span>
+                      {isSearchingPlaces && (
+                        <Loader2 className="h-3 w-3 text-gray-400 animate-spin" />
+                      )}
+                    </div>
+                    {placeResults.map((place) => (
+                      <button
+                        key={place.place_id}
+                        onClick={() => handleSelectPlace(place)}
+                        className="w-full flex items-center gap-3 px-4 py-2.5 hover:bg-gray-50 transition-colors text-left"
+                      >
+                        <MapPin className="h-4 w-4 text-gray-400 shrink-0" />
+                        <div className="min-w-0 flex-1">
+                          <p className="text-sm font-medium text-gray-900 truncate">
+                            {place.name || place.display_name.split(',')[0]}
+                          </p>
+                          <p className="text-xs text-gray-500 truncate">{place.display_name}</p>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                )}
+
+                {/* Bottom padding */}
+                <div className="h-2" />
+              </div>
+            )}
           </div>
         </div>
 
