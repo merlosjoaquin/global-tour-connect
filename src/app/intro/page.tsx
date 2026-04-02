@@ -4,17 +4,16 @@ import { useState, useCallback, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { TravelIllustration, BookingIllustration } from '@/components/onboarding-illustrations'
 
 const SLIDES = [
   {
-    illustration: TravelIllustration,
+    image: '/onboarding-slide1.png',
     title: 'Viaja y conecta con el mundo',
     subtitle: 'Contrata anfitriones locales en tus vacaciones, o se el anfitrion de tu propia ciudad!',
     bg: 'from-teal-50 to-white',
   },
   {
-    illustration: BookingIllustration,
+    image: '/onboarding-slide2.png',
     title: 'Reserva en minutos',
     subtitle: 'Pago seguro, chat directo y calificaciones reales',
     bg: 'from-yellow-50 to-white',
@@ -60,7 +59,6 @@ export default function IntroPage() {
   }
 
   const slide = SLIDES[current]
-  const Illustration = slide.illustration
 
   return (
     <div
@@ -85,7 +83,7 @@ export default function IntroPage() {
 
       {/* Content */}
       <div className="flex-1 flex flex-col items-center justify-center px-8 text-center">
-        <Illustration className="w-52 h-52 mb-8" />
+        <img src={slide.image} alt={slide.title} className="w-64 h-64 object-contain mb-8" />
         <h1 className="text-2xl font-bold text-foreground mb-3 max-w-xs">
           {slide.title}
         </h1>
