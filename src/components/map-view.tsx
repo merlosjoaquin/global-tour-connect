@@ -374,6 +374,14 @@ export default function MapView() {
     }
   }, [searchQuery])
 
+  // Prevent Leaflet from stealing events on the search container
+  useEffect(() => {
+    const el = searchContainerRef.current
+    if (!el) return
+    L.DomEvent.disableClickPropagation(el)
+    L.DomEvent.disableScrollPropagation(el)
+  }, [])
+
   // Close dropdown on outside click
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
@@ -489,10 +497,6 @@ export default function MapView() {
         <div
           className="pointer-events-auto"
           ref={searchContainerRef}
-          onMouseDown={(e) => e.stopPropagation()}
-          onTouchStart={(e) => e.stopPropagation()}
-          onKeyDown={(e) => e.stopPropagation()}
-          onKeyUp={(e) => e.stopPropagation()}
         >
           <div className="relative">
             <div className="flex items-center gap-3 bg-white/90 backdrop-blur-md rounded-full px-4 py-3 shadow-lg">
