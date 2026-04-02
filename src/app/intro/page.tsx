@@ -83,7 +83,15 @@ export default function IntroPage() {
 
       {/* Content */}
       <div className="flex-1 flex flex-col items-center justify-center px-8 text-center">
-        <img src={slide.image} alt={slide.title} className="w-64 h-64 object-contain mb-8" />
+        <img
+          src={slide.image}
+          alt={slide.title}
+          className="w-64 h-64 object-contain mb-8"
+          style={{
+            maskImage: 'radial-gradient(ellipse 75% 75% at center, black 45%, transparent 90%)',
+            WebkitMaskImage: 'radial-gradient(ellipse 75% 75% at center, black 45%, transparent 90%)',
+          }}
+        />
         <h1 className="text-2xl font-bold text-foreground mb-3 max-w-xs">
           {slide.title}
         </h1>
