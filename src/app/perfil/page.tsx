@@ -35,7 +35,7 @@ export default function PerfilPage() {
         setProfile({
           id: 'demo-user',
           full_name: 'Usuario Demo',
-          avatar_url: 'https://api.dicebear.com/9.x/adventurer-neutral/svg?seed=Demo',
+          avatar_url: 'https://api.dicebear.com/9.x/avataaars/svg?seed=Demo',
           bio: 'Explorador y anfitrion demo. Viajando por el mundo, conectando con locales.',
           languages: ['Espanol', 'Ingles', 'Portugues'],
           city: 'Ciudad de Mexico',

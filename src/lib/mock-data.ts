@@ -4,7 +4,7 @@ export const MOCK_PROFILES: Profile[] = [
   {
     id: 'host-1',
     full_name: 'Carlos Mendez',
-    avatar_url: 'https://api.dicebear.com/9.x/adventurer-neutral/svg?seed=Carlos',
+    avatar_url: 'https://api.dicebear.com/9.x/avataaars/svg?seed=Carlos',
     bio: 'Guia local en Ciudad de Mexico con 5 anos de experiencia. Amo mostrar los secretos de mi ciudad.',
     languages: ['Espanol', 'Ingles'],
     city: 'Ciudad de Mexico',
@@ -19,7 +19,7 @@ export const MOCK_PROFILES: Profile[] = [
   {
     id: 'host-2',
     full_name: 'Maria Garcia',
-    avatar_url: 'https://api.dicebear.com/9.x/adventurer-neutral/svg?seed=Maria',
+    avatar_url: 'https://api.dicebear.com/9.x/avataaars/svg?seed=Maria',
     bio: 'Fotografa profesional. Capturo tus mejores momentos en los lugares mas iconicos de Barcelona.',
     languages: ['Espanol', 'Ingles', 'Frances'],
     city: 'Barcelona',
@@ -34,7 +34,7 @@ export const MOCK_PROFILES: Profile[] = [
   {
     id: 'host-3',
     full_name: 'Takeshi Yamamoto',
-    avatar_url: 'https://api.dicebear.com/9.x/adventurer-neutral/svg?seed=Takeshi',
+    avatar_url: 'https://api.dicebear.com/9.x/avataaars/svg?seed=Takeshi',
     bio: 'Traductor japones-espanol. Te ayudo a comunicarte en Tokio sin problemas.',
     languages: ['Japones', 'Espanol', 'Ingles'],
     city: 'Tokio',
@@ -49,7 +49,7 @@ export const MOCK_PROFILES: Profile[] = [
   {
     id: 'host-4',
     full_name: 'Ana Lucia Rios',
-    avatar_url: 'https://api.dicebear.com/9.x/adventurer-neutral/svg?seed=AnaLucia',
+    avatar_url: 'https://api.dicebear.com/9.x/avataaars/svg?seed=AnaLucia',
     bio: 'Conocedora de la vida nocturna bogotana. Reservas VIP en los mejores lugares.',
     languages: ['Espanol', 'Ingles'],
     city: 'Bogota',
@@ -64,7 +64,7 @@ export const MOCK_PROFILES: Profile[] = [
   {
     id: 'host-5',
     full_name: 'Pierre Dubois',
-    avatar_url: 'https://api.dicebear.com/9.x/adventurer-neutral/svg?seed=Pierre',
+    avatar_url: 'https://api.dicebear.com/9.x/avataaars/svg?seed=Pierre',
     bio: 'Sommelier y amante de la gastronomia parisina. Te consigo la mejor mesa con vista.',
     languages: ['Frances', 'Espanol', 'Ingles'],
     city: 'Paris',
@@ -297,7 +297,7 @@ export const MOCK_REVIEWS: Review[] = [
     reviewer: {
       id: 'user-1',
       full_name: 'Laura Martinez',
-      avatar_url: 'https://api.dicebear.com/9.x/adventurer-neutral/svg?seed=Laura',
+      avatar_url: 'https://api.dicebear.com/9.x/avataaars/svg?seed=Laura',
       bio: null,
       languages: ['Espanol'],
       city: 'Madrid',
@@ -322,7 +322,7 @@ export const MOCK_REVIEWS: Review[] = [
     reviewer: {
       id: 'user-2',
       full_name: 'Roberto Silva',
-      avatar_url: 'https://api.dicebear.com/9.x/adventurer-neutral/svg?seed=Roberto',
+      avatar_url: 'https://api.dicebear.com/9.x/avataaars/svg?seed=Roberto',
       bio: null,
       languages: ['Portugues', 'Espanol'],
       city: 'Sao Paulo',
@@ -347,7 +347,7 @@ export const MOCK_REVIEWS: Review[] = [
     reviewer: {
       id: 'user-3',
       full_name: 'Sofia Chen',
-      avatar_url: 'https://api.dicebear.com/9.x/adventurer-neutral/svg?seed=Sofia',
+      avatar_url: 'https://api.dicebear.com/9.x/avataaars/svg?seed=Sofia',
       bio: null,
       languages: ['Chino', 'Ingles', 'Espanol'],
       city: 'Shanghai',

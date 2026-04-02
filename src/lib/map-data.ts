@@ -34,7 +34,7 @@ export const MOCK_MAP_HOSTS: MapHost[] = [
   {
     id: 'host-map-1',
     name: 'Lucia Fernandez',
-    avatar: 'https://api.dicebear.com/9.x/adventurer-neutral/svg?seed=Lucia',
+    avatar: 'https://api.dicebear.com/9.x/avataaars/svg?seed=Lucia',
     lat: -34.6150,
     lng: -68.3280,
     rating: 4.8,
@@ -47,7 +47,7 @@ export const MOCK_MAP_HOSTS: MapHost[] = [
   {
     id: 'host-map-2',
     name: 'Martin Rodriguez',
-    avatar: 'https://api.dicebear.com/9.x/adventurer-neutral/svg?seed=Martin',
+    avatar: 'https://api.dicebear.com/9.x/avataaars/svg?seed=Martin',
     lat: -34.6200,
     lng: -68.3350,
     rating: 4.5,
@@ -59,7 +59,7 @@ export const MOCK_MAP_HOSTS: MapHost[] = [
   {
     id: 'host-map-3',
     name: 'Camila Lopez',
-    avatar: 'https://api.dicebear.com/9.x/adventurer-neutral/svg?seed=Camila',
+    avatar: 'https://api.dicebear.com/9.x/avataaars/svg?seed=Camila',
     lat: -34.6130,
     lng: -68.3330,
     rating: 4.9,
@@ -72,7 +72,7 @@ export const MOCK_MAP_HOSTS: MapHost[] = [
   {
     id: 'host-map-4',
     name: 'Diego Alvarez',
-    avatar: 'https://api.dicebear.com/9.x/adventurer-neutral/svg?seed=Diego',
+    avatar: 'https://api.dicebear.com/9.x/avataaars/svg?seed=Diego',
     lat: -34.6190,
     lng: -68.3260,
     rating: 4.3,
@@ -85,7 +85,7 @@ export const MOCK_MAP_HOSTS: MapHost[] = [
   {
     id: 'host-map-5',
     name: 'Valentina Ruiz',
-    avatar: 'https://api.dicebear.com/9.x/adventurer-neutral/svg?seed=Valentina',
+    avatar: 'https://api.dicebear.com/9.x/avataaars/svg?seed=Valentina',
     lat: -34.6160,
     lng: -68.3240,
     rating: 4.7,
@@ -98,7 +98,7 @@ export const MOCK_MAP_HOSTS: MapHost[] = [
   {
     id: 'host-map-6',
     name: 'Santiago Perez',
-    avatar: 'https://api.dicebear.com/9.x/adventurer-neutral/svg?seed=Santiago',
+    avatar: 'https://api.dicebear.com/9.x/avataaars/svg?seed=Santiago',
     lat: -34.6210,
     lng: -68.3310,
     rating: 4.6,
@@ -110,7 +110,7 @@ export const MOCK_MAP_HOSTS: MapHost[] = [
   {
     id: 'host-map-7',
     name: 'Isabella Torres',
-    avatar: 'https://api.dicebear.com/9.x/adventurer-neutral/svg?seed=Isabella',
+    avatar: 'https://api.dicebear.com/9.x/avataaars/svg?seed=Isabella',
     lat: -34.6145,
     lng: -68.3370,
     rating: 4.4,
@@ -123,7 +123,7 @@ export const MOCK_MAP_HOSTS: MapHost[] = [
   {
     id: 'host-map-8',
     name: 'Mateo Garcia',
-    avatar: 'https://api.dicebear.com/9.x/adventurer-neutral/svg?seed=Mateo',
+    avatar: 'https://api.dicebear.com/9.x/avataaars/svg?seed=Mateo',
     lat: -34.6175,
     lng: -68.3220,
     rating: 4.2,
