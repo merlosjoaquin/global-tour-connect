@@ -2,25 +2,22 @@
 
 import { useState, useCallback, useRef } from 'react'
 import { useRouter } from 'next/navigation'
-import { Globe, CalendarCheck, ArrowRight } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { TravelIllustration, BookingIllustration } from '@/components/onboarding-illustrations'
 
 const SLIDES = [
   {
-    icon: Globe,
+    illustration: TravelIllustration,
     title: 'Viaja y conecta con el mundo',
     subtitle: 'Contrata anfitriones locales en tus vacaciones, o se el anfitrion de tu propia ciudad!',
     bg: 'from-teal-50 to-white',
-    iconBg: 'bg-teal-100',
-    iconColor: 'text-teal-700',
   },
   {
-    icon: CalendarCheck,
+    illustration: BookingIllustration,
     title: 'Reserva en minutos',
     subtitle: 'Pago seguro, chat directo y calificaciones reales',
     bg: 'from-yellow-50 to-white',
-    iconBg: 'bg-yellow-100',
-    iconColor: 'text-yellow-600',
   },
 ]
 
@@ -63,7 +60,7 @@ export default function IntroPage() {
   }
 
   const slide = SLIDES[current]
-  const Icon = slide.icon
+  const Illustration = slide.illustration
 
   return (
     <div
@@ -88,9 +85,7 @@ export default function IntroPage() {
 
       {/* Content */}
       <div className="flex-1 flex flex-col items-center justify-center px-8 text-center">
-        <div className={`w-28 h-28 rounded-full ${slide.iconBg} flex items-center justify-center mb-8`}>
-          <Icon className={`h-14 w-14 ${slide.iconColor}`} />
-        </div>
+        <Illustration className="w-52 h-52 mb-8" />
         <h1 className="text-2xl font-bold text-foreground mb-3 max-w-xs">
           {slide.title}
         </h1>
