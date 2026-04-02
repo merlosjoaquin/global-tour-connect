@@ -1,127 +1,153 @@
 export function TravelIllustration({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-      <defs>
-        {/* Globe gradient */}
-        <radialGradient id="globeGrad" cx="0.4" cy="0.35" r="0.65">
-          <stop offset="0%" stopColor="#5eead4" />
-          <stop offset="60%" stopColor="#14b8a6" />
-          <stop offset="100%" stopColor="#0f766e" />
-        </radialGradient>
-        {/* Globe highlight */}
-        <radialGradient id="globeHighlight" cx="0.3" cy="0.25" r="0.4">
-          <stop offset="0%" stopColor="white" stopOpacity="0.35" />
-          <stop offset="100%" stopColor="white" stopOpacity="0" />
-        </radialGradient>
-        {/* Shadow */}
-        <radialGradient id="shadowGrad" cx="0.5" cy="0.5" r="0.5">
-          <stop offset="0%" stopColor="#0f766e" stopOpacity="0.25" />
-          <stop offset="100%" stopColor="#0f766e" stopOpacity="0" />
-        </radialGradient>
-        {/* Person body gradient */}
-        <linearGradient id="bodyGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#f0fdfa" />
-          <stop offset="100%" stopColor="#99f6e4" />
-        </linearGradient>
-        {/* Backpack gradient */}
-        <linearGradient id="backpackGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#fbbf24" />
-          <stop offset="100%" stopColor="#d97706" />
-        </linearGradient>
-      </defs>
+    <svg viewBox="0 0 280 240" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+      {/* Background buildings (gray, simple) */}
+      {/* Tall building left */}
+      <rect x="30" y="60" width="40" height="140" rx="4" fill="#e5e7eb" />
+      <rect x="36" y="70" width="8" height="8" rx="1" fill="#d1d5db" />
+      <rect x="48" y="70" width="8" height="8" rx="1" fill="#d1d5db" />
+      <rect x="36" y="84" width="8" height="8" rx="1" fill="#d1d5db" />
+      <rect x="48" y="84" width="8" height="8" rx="1" fill="#d1d5db" />
+      <rect x="36" y="98" width="8" height="8" rx="1" fill="#d1d5db" />
+      <rect x="48" y="98" width="8" height="8" rx="1" fill="#d1d5db" />
+      <rect x="36" y="112" width="8" height="8" rx="1" fill="#d1d5db" />
+      <rect x="48" y="112" width="8" height="8" rx="1" fill="#d1d5db" />
 
-      {/* Floor shadow */}
-      <ellipse cx="95" cy="178" rx="60" ry="8" fill="url(#shadowGrad)" />
+      {/* Medium building center-left */}
+      <rect x="75" y="90" width="35" height="110" rx="4" fill="#f3f4f6" />
+      <rect x="81" y="100" width="7" height="7" rx="1" fill="#e5e7eb" />
+      <rect x="92" y="100" width="7" height="7" rx="1" fill="#e5e7eb" />
+      <rect x="81" y="113" width="7" height="7" rx="1" fill="#e5e7eb" />
+      <rect x="92" y="113" width="7" height="7" rx="1" fill="#e5e7eb" />
 
-      {/* Globe */}
-      <circle cx="88" cy="95" r="52" fill="url(#globeGrad)" />
-      {/* Globe highlight */}
-      <circle cx="88" cy="95" r="52" fill="url(#globeHighlight)" />
+      {/* Short building right */}
+      <rect x="210" y="110" width="45" height="90" rx="4" fill="#e5e7eb" />
+      <rect x="217" y="120" width="8" height="8" rx="1" fill="#d1d5db" />
+      <rect x="230" y="120" width="8" height="8" rx="1" fill="#d1d5db" />
+      <rect x="217" y="134" width="8" height="8" rx="1" fill="#d1d5db" />
+      <rect x="230" y="134" width="8" height="8" rx="1" fill="#d1d5db" />
 
-      {/* Simplified continents */}
-      {/* Americas-like shape */}
-      <path
-        d="M68 60 Q72 55, 78 58 Q82 62, 80 70 Q78 78, 72 82 Q68 85, 65 80 Q60 72, 63 65 Z"
-        fill="#0d9488"
-        opacity="0.6"
-      />
-      {/* Europe/Africa-like shape */}
-      <path
-        d="M95 65 Q100 60, 105 63 Q110 68, 108 78 Q106 88, 100 95 Q96 100, 92 95 Q88 88, 90 78 Q92 70, 95 65 Z"
-        fill="#0d9488"
-        opacity="0.6"
-      />
-      {/* Small island */}
-      <ellipse cx="115" cy="85" rx="5" ry="3" fill="#0d9488" opacity="0.5" />
+      {/* Map pin icon (top right area) */}
+      <g transform="translate(200, 55)">
+        <path d="M12 0C5.4 0 0 5.4 0 12c0 9 12 20 12 20s12-11 12-20c0-6.6-5.4-12-12-12z" fill="#9ca3af" />
+        <circle cx="12" cy="12" r="5" fill="white" />
+      </g>
 
-      {/* Globe equator line */}
-      <ellipse cx="88" cy="98" rx="50" ry="14" stroke="#99f6e4" strokeWidth="0.8" fill="none" opacity="0.4" />
+      {/* Chat bubble (top right of character) */}
+      <g transform="translate(175, 68)">
+        <rect x="0" y="0" width="30" height="20" rx="8" fill="#fbbf24" />
+        <circle cx="9" cy="10" r="2" fill="white" />
+        <circle cx="16" cy="10" r="2" fill="white" />
+        <circle cx="23" cy="10" r="2" fill="white" />
+        <path d="M6 20 L10 20 L6 26Z" fill="#fbbf24" />
+      </g>
 
-      {/* Globe rim shine */}
-      <path
-        d="M42 75 Q55 45, 88 43 Q120 45, 134 75"
-        stroke="white"
-        strokeWidth="1.5"
-        fill="none"
-        opacity="0.15"
-        strokeLinecap="round"
-      />
+      {/* Bus stop sign (far left) */}
+      <g transform="translate(15, 120)">
+        <rect x="6" y="0" width="3" height="80" fill="#d1d5db" />
+        <rect x="0" y="0" width="15" height="18" rx="3" fill="#d1d5db" />
+        {/* Bus icon simplified */}
+        <rect x="3" y="4" width="9" height="7" rx="2" fill="#9ca3af" />
+        <circle cx="5.5" cy="14" r="1.5" fill="#9ca3af" />
+        <circle cx="9.5" cy="14" r="1.5" fill="#9ca3af" />
+      </g>
 
-      {/* --- Character standing beside globe --- */}
-      {/* Character shadow */}
-      <ellipse cx="155" cy="178" rx="18" ry="4" fill="url(#shadowGrad)" />
+      {/* === CHARACTER === */}
+      {/* Character shadow on ground */}
+      <ellipse cx="148" cy="200" rx="30" ry="5" fill="#e5e7eb" />
 
-      {/* Legs */}
-      <rect x="148" y="155" width="7" height="22" rx="3.5" fill="#0f766e" />
-      <rect x="159" y="155" width="7" height="22" rx="3.5" fill="#0d9488" />
+      {/* Suitcase (yellow) */}
+      <g transform="translate(105, 148)">
+        <rect x="0" y="8" width="28" height="42" rx="5" fill="#fbbf24" />
+        <rect x="0" y="8" width="28" height="42" rx="5" stroke="#f59e0b" strokeWidth="1" fill="none" />
+        {/* Suitcase handle */}
+        <rect x="9" y="0" width="10" height="10" rx="3" fill="none" stroke="#f59e0b" strokeWidth="2.5" />
+        {/* Suitcase belt */}
+        <rect x="0" y="28" width="28" height="3" fill="#f59e0b" opacity="0.5" />
+        {/* Suitcase tag */}
+        <rect x="22" y="34" width="8" height="6" rx="1" fill="#3b82f6" opacity="0.7" />
+        {/* Wheels */}
+        <circle cx="6" cy="52" r="2.5" fill="#9ca3af" />
+        <circle cx="22" cy="52" r="2.5" fill="#9ca3af" />
+      </g>
 
-      {/* Shoes */}
-      <ellipse cx="151.5" cy="176" rx="5" ry="3" fill="#134e4a" />
-      <ellipse cx="162.5" cy="176" rx="5" ry="3" fill="#115e59" />
+      {/* Left leg (walking pose, back leg) */}
+      <path d="M142 168 L136 195" stroke="#4f6bf0" strokeWidth="11" strokeLinecap="round" />
+      {/* Right leg (walking pose, front leg) */}
+      <path d="M155 168 L165 193" stroke="#4358d6" strokeWidth="11" strokeLinecap="round" />
 
-      {/* Body */}
-      <rect x="144" y="125" width="26" height="34" rx="10" fill="url(#bodyGrad)" />
+      {/* Left shoe */}
+      <ellipse cx="133" cy="197" rx="8" ry="4.5" fill="#1e293b" />
+      {/* Right shoe */}
+      <ellipse cx="168" cy="195" rx="8" ry="4.5" fill="#1e293b" />
+      {/* Shoe soles (lighter) */}
+      <ellipse cx="131" cy="199" rx="5" ry="2" fill="#f5f5f4" opacity="0.6" />
+      <ellipse cx="170" cy="197" rx="5" ry="2" fill="#f5f5f4" opacity="0.6" />
 
-      {/* Backpack */}
-      <rect x="168" y="128" width="12" height="22" rx="5" fill="url(#backpackGrad)" />
-      <rect x="170" y="132" width="8" height="4" rx="2" fill="#fcd34d" opacity="0.6" />
-      {/* Backpack strap */}
-      <path d="M168 132 Q164 130, 162 135" stroke="#d97706" strokeWidth="1.5" fill="none" strokeLinecap="round" />
+      {/* Body / T-shirt (orange) */}
+      <path d="M135 120 Q133 118, 133 130 L133 170 Q133 175, 140 175 L162 175 Q168 175, 168 170 L168 130 Q168 118, 166 120 Z" fill="#f97316" />
+
+      {/* T-shirt collar */}
+      <path d="M142 118 Q150 124, 158 118" stroke="#ea580c" strokeWidth="1.5" fill="none" />
+
+      {/* Left arm (holding phone) */}
+      <path d="M135 128 Q125 132, 122 145" stroke="#fcd4a8" strokeWidth="8" strokeLinecap="round" />
+      {/* Phone in hand */}
+      <rect x="116" y="142" width="14" height="22" rx="3" fill="#374151" />
+      <rect x="118" y="145" width="10" height="16" rx="1.5" fill="#93c5fd" />
+      {/* Left hand */}
+      <circle cx="122" cy="144" r="5" fill="#fcd4a8" />
+
+      {/* Right arm (relaxed, slightly back) */}
+      <path d="M166 128 Q176 140, 172 155" stroke="#fcd4a8" strokeWidth="8" strokeLinecap="round" />
+      {/* Right hand */}
+      <circle cx="172" cy="156" r="5" fill="#fcd4a8" />
+
+      {/* Neck */}
+      <rect x="145" y="108" width="12" height="12" rx="4" fill="#fcd4a8" />
 
       {/* Head */}
-      <circle cx="157" cy="115" r="14" fill="#fde68a" />
-      {/* Hair */}
-      <path
-        d="M143 112 Q145 100, 157 98 Q169 100, 171 112"
-        fill="#92400e"
-        opacity="0.8"
-      />
+      <circle cx="151" cy="98" r="18" fill="#fcd4a8" />
+
+      {/* Hair (dark) */}
+      <path d="M133 94 Q135 78, 151 76 Q167 78, 169 94 Q169 88, 165 86 Q158 82, 151 82 Q144 82, 137 86 Q133 88, 133 94Z" fill="#3f2d1e" />
+
+      {/* Yellow cap */}
+      <path d="M131 90 Q133 76, 151 74 Q169 76, 171 90 L131 90Z" fill="#fbbf24" />
+      {/* Cap brim */}
+      <path d="M167 90 Q175 88, 180 90 Q175 94, 167 92Z" fill="#f59e0b" />
+
+      {/* Glasses */}
+      <circle cx="144" cy="97" r="5" fill="none" stroke="#374151" strokeWidth="1.5" />
+      <circle cx="158" cy="97" r="5" fill="none" stroke="#374151" strokeWidth="1.5" />
+      <path d="M149 97 L153 97" stroke="#374151" strokeWidth="1.5" />
+      {/* Glasses lenses (subtle) */}
+      <circle cx="144" cy="97" r="4" fill="#bfdbfe" opacity="0.2" />
+      <circle cx="158" cy="97" r="4" fill="#bfdbfe" opacity="0.2" />
+
       {/* Eyes */}
-      <circle cx="152" cy="115" r="2" fill="#1e293b" />
-      <circle cx="162" cy="115" r="2" fill="#1e293b" />
+      <circle cx="144" cy="97" r="2" fill="#1e293b" />
+      <circle cx="158" cy="97" r="2" fill="#1e293b" />
       {/* Eye highlights */}
-      <circle cx="152.7" cy="114.3" r="0.7" fill="white" />
-      <circle cx="162.7" cy="114.3" r="0.7" fill="white" />
+      <circle cx="145" cy="96" r="0.8" fill="white" />
+      <circle cx="159" cy="96" r="0.8" fill="white" />
+
       {/* Smile */}
-      <path d="M153 120 Q157 124, 161 120" stroke="#92400e" strokeWidth="1.2" fill="none" strokeLinecap="round" />
-      {/* Cheek blush */}
-      <circle cx="149" cy="119" r="2.5" fill="#fca5a5" opacity="0.4" />
-      <circle cx="165" cy="119" r="2.5" fill="#fca5a5" opacity="0.4" />
+      <path d="M146 104 Q151 108, 156 104" stroke="#b45309" strokeWidth="1.5" fill="none" strokeLinecap="round" />
 
-      {/* Arm waving */}
-      <path d="M144 132 Q130 120, 128 108" stroke="#fde68a" strokeWidth="5" fill="none" strokeLinecap="round" />
-      {/* Hand */}
-      <circle cx="127" cy="106" r="4" fill="#fde68a" />
+      {/* Ear */}
+      <ellipse cx="133" cy="98" rx="3" ry="4" fill="#f0bc8a" />
 
-      {/* Decorative elements — small floating dots/stars */}
-      <circle cx="30" cy="45" r="2.5" fill="#5eead4" opacity="0.5" />
-      <circle cx="160" cy="50" r="2" fill="#99f6e4" opacity="0.6" />
-      <circle cx="45" cy="160" r="1.8" fill="#5eead4" opacity="0.4" />
-
-      {/* Small airplane */}
-      <g transform="translate(25, 32) rotate(-15)">
-        <path d="M0 3 L12 0 L12 6 Z" fill="#99f6e4" opacity="0.7" />
-        <rect x="4" y="1.5" width="5" height="3" rx="1.5" fill="#5eead4" opacity="0.7" />
+      {/* Clouds */}
+      <g transform="translate(120, 20)" opacity="0.6">
+        <circle cx="0" cy="8" r="7" fill="#e5e7eb" />
+        <circle cx="10" cy="5" r="9" fill="#e5e7eb" />
+        <circle cx="22" cy="7" r="8" fill="#e5e7eb" />
+      </g>
+      <g transform="translate(30, 35)" opacity="0.4">
+        <circle cx="0" cy="5" r="5" fill="#e5e7eb" />
+        <circle cx="8" cy="3" r="6" fill="#e5e7eb" />
+        <circle cx="16" cy="5" r="5" fill="#e5e7eb" />
       </g>
     </svg>
   )
@@ -129,121 +155,138 @@ export function TravelIllustration({ className }: { className?: string }) {
 
 export function BookingIllustration({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-      <defs>
-        {/* Phone gradient */}
-        <linearGradient id="phoneGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#fef3c7" />
-          <stop offset="100%" stopColor="#fde68a" />
-        </linearGradient>
-        {/* Screen gradient */}
-        <linearGradient id="screenGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#fffbeb" />
-          <stop offset="100%" stopColor="white" />
-        </linearGradient>
-        {/* Check circle gradient */}
-        <linearGradient id="checkGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#34d399" />
-          <stop offset="100%" stopColor="#059669" />
-        </linearGradient>
-        {/* Shadow */}
-        <radialGradient id="bookShadow" cx="0.5" cy="0.5" r="0.5">
-          <stop offset="0%" stopColor="#d97706" stopOpacity="0.2" />
-          <stop offset="100%" stopColor="#d97706" stopOpacity="0" />
-        </radialGradient>
-        {/* Star gradient */}
-        <linearGradient id="starGrad" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="#fbbf24" />
-          <stop offset="100%" stopColor="#f59e0b" />
-        </linearGradient>
-      </defs>
+    <svg viewBox="0 0 280 240" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+      {/* Background elements (gray) */}
+      {/* Stairs / steps (left side) */}
+      <rect x="20" y="155" width="55" height="12" rx="2" fill="#e5e7eb" />
+      <rect x="28" y="143" width="47" height="12" rx="2" fill="#f3f4f6" />
+      <rect x="36" y="131" width="39" height="12" rx="2" fill="#e5e7eb" />
+      <rect x="44" y="119" width="31" height="12" rx="2" fill="#f3f4f6" />
 
-      {/* Floor shadow */}
-      <ellipse cx="100" cy="180" rx="55" ry="7" fill="url(#bookShadow)" />
-
-      {/* Phone body */}
-      <rect x="55" y="30" width="70" height="140" rx="14" fill="url(#phoneGrad)" />
-      {/* Phone inner shadow for depth */}
-      <rect x="55" y="30" width="70" height="140" rx="14" stroke="#d97706" strokeWidth="1" fill="none" opacity="0.3" />
-
-      {/* Screen */}
-      <rect x="62" y="45" width="56" height="108" rx="6" fill="url(#screenGrad)" />
-
-      {/* Screen content — calendar grid */}
-      {/* Month header */}
-      <rect x="68" y="50" width="44" height="8" rx="2" fill="#fbbf24" opacity="0.3" />
-      <rect x="74" y="52" width="32" height="4" rx="1" fill="#d97706" opacity="0.5" />
-
-      {/* Calendar day cells — 3 rows x 5 cols */}
-      {[0, 1, 2].map(row =>
-        [0, 1, 2, 3, 4].map(col => {
-          const x = 68 + col * 10
-          const y = 63 + row * 10
-          const isHighlighted = row === 1 && col === 2
-          return (
-            <rect
-              key={`${row}-${col}`}
-              x={x}
-              y={y}
-              width="8"
-              height="8"
-              rx="2"
-              fill={isHighlighted ? '#f59e0b' : '#fef3c7'}
-              opacity={isHighlighted ? 1 : 0.6}
-            />
-          )
-        })
-      )}
-
-      {/* Confirmation card on screen */}
-      <rect x="66" y="98" width="48" height="28" rx="5" fill="white" />
-      <rect x="66" y="98" width="48" height="28" rx="5" stroke="#e5e7eb" strokeWidth="0.5" fill="none" />
-      {/* Card text lines */}
-      <rect x="71" y="103" width="28" height="3" rx="1" fill="#d4d4d8" />
-      <rect x="71" y="109" width="20" height="2.5" rx="1" fill="#e5e7eb" />
-      <rect x="71" y="114" width="24" height="2.5" rx="1" fill="#e5e7eb" />
-      {/* Mini checkmark in card */}
-      <circle cx="106" cy="112" r="5" fill="url(#checkGrad)" />
-      <path d="M103.5 112 L105.5 114 L109 110" stroke="white" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-
-      {/* Bottom bar on screen */}
-      <rect x="66" y="134" width="48" height="14" rx="4" fill="#fbbf24" opacity="0.2" />
-      <rect x="76" y="138.5" width="28" height="5" rx="2.5" fill="#d97706" opacity="0.4" />
-
-      {/* Camera notch */}
-      <rect x="82" y="35" width="16" height="4" rx="2" fill="#d97706" opacity="0.2" />
-
-      {/* Floating check circle — top right */}
-      <g transform="translate(135, 40)">
-        <circle cx="0" cy="0" r="18" fill="url(#checkGrad)" />
-        <circle cx="0" cy="0" r="18" fill="white" opacity="0.1" />
-        <path d="M-8 0 L-3 5 L8 -5" stroke="white" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-      </g>
-      {/* Check circle shadow ring */}
-      <circle cx="135" cy="40" r="20" stroke="#34d399" strokeWidth="1" fill="none" opacity="0.2" />
-
-      {/* Decorative sparkles */}
-      {/* Star 1 — top left */}
-      <g transform="translate(35, 55)">
-        <path d="M0 -6 L1.5 -1.5 L6 0 L1.5 1.5 L0 6 L-1.5 1.5 L-6 0 L-1.5 -1.5 Z" fill="url(#starGrad)" opacity="0.6" />
-      </g>
-      {/* Star 2 — bottom right */}
-      <g transform="translate(155, 130)">
-        <path d="M0 -5 L1.2 -1.2 L5 0 L1.2 1.2 L0 5 L-1.2 1.2 L-5 0 L-1.2 -1.2 Z" fill="url(#starGrad)" opacity="0.5" />
-      </g>
-      {/* Star 3 — mid left */}
-      <g transform="translate(38, 140)">
-        <path d="M0 -4 L1 -1 L4 0 L1 1 L0 4 L-1 1 L-4 0 L-1 -1 Z" fill="#fbbf24" opacity="0.4" />
+      {/* Directional sign post (right side) */}
+      <g transform="translate(220, 80)">
+        <rect x="8" y="0" width="4" height="120" fill="#d1d5db" />
+        {/* Top sign pointing right */}
+        <path d="M0 8 L35 8 L42 16 L35 24 L0 24Z" fill="#d1d5db" />
+        {/* Bottom sign pointing left */}
+        <path d="M-10 34 L25 34 L25 48 L-10 48 L-17 41Z" fill="#e5e7eb" />
       </g>
 
-      {/* Small floating dots */}
-      <circle cx="155" cy="85" r="3" fill="#fde68a" opacity="0.5" />
-      <circle cx="30" cy="95" r="2" fill="#fcd34d" opacity="0.4" />
-      <circle cx="165" cy="155" r="2.5" fill="#fbbf24" opacity="0.3" />
+      {/* Tree (right background) */}
+      <g transform="translate(245, 100)">
+        <rect x="8" y="60" width="6" height="40" fill="#d1d5db" />
+        <ellipse cx="11" cy="50" rx="20" ry="28" fill="#e5e7eb" />
+        <ellipse cx="5" cy="60" rx="14" ry="20" fill="#d1d5db" opacity="0.5" />
+      </g>
 
-      {/* Subtle ring decorations */}
-      <circle cx="42" cy="35" r="6" stroke="#fde68a" strokeWidth="1" fill="none" opacity="0.3" />
-      <circle cx="160" cy="165" r="4" stroke="#fcd34d" strokeWidth="1" fill="none" opacity="0.3" />
+      {/* Map pin (above character) */}
+      <g transform="translate(155, 20)">
+        <path d="M10 0C4.5 0 0 4.5 0 10c0 7.5 10 17 10 17s10-9.5 10-17c0-5.5-4.5-10-10-10z" fill="#9ca3af" />
+        <circle cx="10" cy="10" r="4" fill="white" />
+        {/* Dashed line down to character */}
+        <line x1="10" y1="37" x2="10" y2="55" stroke="#d1d5db" strokeWidth="1.5" strokeDasharray="3 3" />
+      </g>
+
+      {/* Clouds */}
+      <g transform="translate(55, 25)" opacity="0.5">
+        <circle cx="0" cy="8" r="8" fill="#e5e7eb" />
+        <circle cx="12" cy="5" r="10" fill="#e5e7eb" />
+        <circle cx="24" cy="8" r="8" fill="#e5e7eb" />
+      </g>
+      <g transform="translate(200, 40)" opacity="0.4">
+        <circle cx="0" cy="5" r="6" fill="#e5e7eb" />
+        <circle cx="9" cy="3" r="7" fill="#e5e7eb" />
+        <circle cx="18" cy="5" r="5" fill="#e5e7eb" />
+      </g>
+
+      {/* === CHARACTER (walking, reading map) === */}
+      {/* Character shadow */}
+      <ellipse cx="145" cy="205" rx="32" ry="5" fill="#e5e7eb" />
+
+      {/* Left leg (back, extended behind — running/walking pose) */}
+      <path d="M132 170 L110 198" stroke="#4f6bf0" strokeWidth="12" strokeLinecap="round" />
+      {/* Right leg (front, extended forward) */}
+      <path d="M155 168 L178 195" stroke="#4358d6" strokeWidth="12" strokeLinecap="round" />
+
+      {/* Left shoe */}
+      <ellipse cx="107" cy="200" rx="9" ry="5" fill="#1e293b" />
+      <ellipse cx="104" cy="202" rx="5" ry="2" fill="#f5f5f4" opacity="0.5" />
+      {/* Right shoe */}
+      <ellipse cx="181" cy="198" rx="9" ry="5" fill="#1e293b" />
+      <ellipse cx="184" cy="200" rx="5" ry="2" fill="#f5f5f4" opacity="0.5" />
+
+      {/* Body / T-shirt (orange) */}
+      <path d="M128 118 Q126 115, 126 128 L126 172 Q126 177, 133 177 L158 177 Q164 177, 164 172 L164 128 Q164 115, 162 118 Z" fill="#f97316" />
+      {/* T-shirt collar */}
+      <path d="M137 116 Q145 122, 153 116" stroke="#ea580c" strokeWidth="1.5" fill="none" />
+
+      {/* Backpack (yellow/black, on back) */}
+      <g transform="translate(115, 115)">
+        <rect x="0" y="5" width="18" height="28" rx="6" fill="#1e293b" />
+        {/* Backpack top roll (sleeping bag / mat, blue) */}
+        <rect x="-2" y="-5" width="22" height="10" rx="5" fill="#3b82f6" opacity="0.8" />
+        {/* Backpack pocket */}
+        <rect x="3" y="18" width="12" height="10" rx="3" fill="#374151" />
+        {/* Backpack buckle */}
+        <rect x="6" y="16" width="6" height="3" rx="1" fill="#fbbf24" />
+        {/* Strap */}
+        <path d="M18 10 Q22 15, 20 25" stroke="#374151" strokeWidth="2.5" fill="none" />
+      </g>
+
+      {/* Left arm (holding map open) */}
+      <path d="M126 130 Q112 128, 108 120" stroke="#fcd4a8" strokeWidth="8" strokeLinecap="round" />
+      {/* Left hand */}
+      <circle cx="108" cy="118" r="5" fill="#fcd4a8" />
+
+      {/* Right arm (holding other side of map) */}
+      <path d="M162 128 Q174 124, 178 116" stroke="#fcd4a8" strokeWidth="8" strokeLinecap="round" />
+      {/* Right hand */}
+      <circle cx="178" cy="114" r="5" fill="#fcd4a8" />
+
+      {/* Open map/book (yellow, held in front) */}
+      <g transform="translate(105, 90)">
+        {/* Left page */}
+        <path d="M5 5 Q5 0, 35 0 L35 35 Q5 35, 5 30Z" fill="#fde68a" />
+        {/* Right page */}
+        <path d="M35 0 Q65 0, 65 5 L65 30 Q65 35, 35 35Z" fill="#fbbf24" />
+        {/* Map lines on left page */}
+        <path d="M12 10 L28 10" stroke="#f59e0b" strokeWidth="1" opacity="0.5" />
+        <path d="M10 16 L30 16" stroke="#f59e0b" strokeWidth="1" opacity="0.5" />
+        <path d="M14 22 L26 22" stroke="#f59e0b" strokeWidth="1" opacity="0.5" />
+        {/* Map route on right page */}
+        <path d="M42 8 Q50 15, 45 22 Q55 28, 58 20" stroke="#ea580c" strokeWidth="1.5" fill="none" strokeLinecap="round" />
+        <circle cx="42" cy="8" r="2" fill="#ef4444" />
+        <circle cx="58" cy="20" r="2" fill="#22c55e" />
+        {/* Spine fold */}
+        <line x1="35" y1="0" x2="35" y2="35" stroke="#e5a700" strokeWidth="1" />
+      </g>
+
+      {/* Neck */}
+      <rect x="140" y="104" width="12" height="14" rx="4" fill="#fcd4a8" />
+
+      {/* Head */}
+      <circle cx="146" cy="92" r="19" fill="#fcd4a8" />
+
+      {/* Hair (dark) */}
+      <path d="M127 88 Q130 72, 146 70 Q162 72, 165 88 Q165 82, 161 80 Q154 76, 146 76 Q138 76, 131 80 Q127 82, 127 88Z" fill="#3f2d1e" />
+
+      {/* Yellow cap */}
+      <path d="M125 84 Q128 70, 146 68 Q164 70, 167 84 L125 84Z" fill="#fbbf24" />
+      {/* Cap brim (pointing right since looking at map) */}
+      <path d="M163 84 Q172 82, 176 85 Q172 89, 163 87Z" fill="#f59e0b" />
+
+      {/* Eye (only one visible, looking at map) */}
+      <circle cx="155" cy="91" r="2.5" fill="#1e293b" />
+      <circle cx="156" cy="90" r="0.8" fill="white" />
+
+      {/* Smile */}
+      <path d="M152 99 Q156 103, 160 100" stroke="#b45309" strokeWidth="1.5" fill="none" strokeLinecap="round" />
+
+      {/* Ear (right side) */}
+      <ellipse cx="166" cy="93" rx="3" ry="4.5" fill="#f0bc8a" />
+
+      {/* Cheek blush */}
+      <circle cx="160" cy="96" r="3" fill="#fca5a5" opacity="0.3" />
     </svg>
   )
 }
