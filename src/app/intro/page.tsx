@@ -67,6 +67,7 @@ export default function IntroPage() {
 
   return (
     <div
+      style={{ touchAction: 'pan-y' }}
       className={`min-h-dvh flex flex-col bg-gradient-to-b ${slide.bg} transition-colors duration-500 select-none`}
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}
