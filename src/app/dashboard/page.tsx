@@ -2,7 +2,6 @@
 
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
-import { Search } from 'lucide-react'
 
 const MapView = dynamic(() => import('@/components/map-view'), {
   ssr: false,
@@ -26,7 +25,6 @@ export default function DashboardPage() {
         className="absolute bottom-6 left-[12.5%] right-[12.5%] z-[1000] flex items-center justify-center gap-2 py-4 rounded-2xl font-semibold text-white shadow-lg active:scale-[0.98] transition-transform"
         style={{ backgroundColor: '#0f766e' }}
       >
-        <Search className="h-5 w-5" />
         Solicitar anfitrion
       </Link>
     </div>
