@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -14,6 +14,8 @@ import { LANGUAGES } from '@/lib/constants'
 
 type Role = 'explorer' | 'host' | null
 
+const SWIPE_THRESHOLD = 50
+
 export default function OnboardingPage() {
   const [step, setStep] = useState(1)
   const [role, setRole] = useState<Role>(null)
@@ -24,6 +26,24 @@ export default function OnboardingPage() {
   const [selectedLangs, setSelectedLangs] = useState<string[]>([])
   const [loading, setLoading] = useState(false)
   const router = useRouter()
+  const touchStartX = useRef(0)
+  const touchEndX = useRef(0)
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX
+    touchEndX.current = e.touches[0].clientX
+  }
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.touches[0].clientX
+  }
+
+  const onTouchEnd = () => {
+    const diff = touchStartX.current - touchEndX.current
+    if (Math.abs(diff) < SWIPE_THRESHOLD) return
+    if (diff > 0 && step === 1 && role) setStep(2)  // swipe left → next (only if role selected)
+    if (diff < 0 && step === 2) setStep(1)           // swipe right → back
+  }
 
   function toggleLang(lang: string) {
     setSelectedLangs(prev =>
@@ -53,7 +73,12 @@ export default function OnboardingPage() {
   }
 
   return (
-    <div className="min-h-dvh flex flex-col items-center justify-center px-4 py-8">
+    <div
+      className="min-h-dvh flex flex-col items-center justify-center px-4 py-8"
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}
+    >
       <div className="w-full max-w-md">
         {/* Progress bar */}
         <div className="flex items-center gap-2 mb-8">

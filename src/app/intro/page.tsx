@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { Globe, CalendarCheck, ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -24,29 +24,54 @@ const SLIDES = [
   },
 ]
 
+const SWIPE_THRESHOLD = 50
+
 export default function IntroPage() {
   const [current, setCurrent] = useState(0)
   const router = useRouter()
   const isLast = current === SLIDES.length - 1
+  const touchStartX = useRef(0)
+  const touchEndX = useRef(0)
 
   const finish = useCallback(() => {
     localStorage.setItem('gtc_intro_seen', 'true')
     router.push('/auth')
   }, [router])
 
-  const next = () => {
-    if (isLast) {
-      finish()
-    } else {
-      setCurrent(c => c + 1)
-    }
+  const goNext = () => {
+    if (!isLast) setCurrent(c => c + 1)
+  }
+
+  const goPrev = () => {
+    if (current > 0) setCurrent(c => c - 1)
+  }
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX
+    touchEndX.current = e.touches[0].clientX
+  }
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.touches[0].clientX
+  }
+
+  const onTouchEnd = () => {
+    const diff = touchStartX.current - touchEndX.current
+    if (Math.abs(diff) < SWIPE_THRESHOLD) return
+    if (diff > 0) goNext()   // swipe left → next
+    else goPrev()            // swipe right → prev
   }
 
   const slide = SLIDES[current]
   const Icon = slide.icon
 
   return (
-    <div className={`min-h-dvh flex flex-col bg-gradient-to-b ${slide.bg} transition-colors duration-500`}>
+    <div
+      className={`min-h-dvh flex flex-col bg-gradient-to-b ${slide.bg} transition-colors duration-500 select-none`}
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}
+    >
       {/* Skip */}
       {!isLast && (
         <div className="flex justify-end p-4">
@@ -89,15 +114,21 @@ export default function IntroPage() {
           ))}
         </div>
 
-        {/* Button */}
-        <Button
-          onClick={next}
-          size="lg"
-          className="w-full rounded-full bg-teal-700 hover:bg-teal-600 text-base font-semibold h-14"
-        >
-          {isLast ? 'Comenzar' : 'Siguiente'}
-          <ArrowRight className="ml-2 h-5 w-5" />
-        </Button>
+        {/* Swipe hint on first slide, Comenzar button on last */}
+        {isLast ? (
+          <Button
+            onClick={finish}
+            size="lg"
+            className="w-full rounded-full bg-teal-700 hover:bg-teal-600 text-base font-semibold h-14"
+          >
+            Comenzar
+            <ArrowRight className="ml-2 h-5 w-5" />
+          </Button>
+        ) : (
+          <p className="text-center text-sm text-muted-foreground animate-pulse">
+            Desliza para continuar →
+          </p>
+        )}
       </div>
     </div>
   )
