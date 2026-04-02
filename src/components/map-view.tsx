@@ -486,7 +486,14 @@ export default function MapView() {
       {/* Top overlay: search + filters */}
       <div className="absolute top-0 left-0 right-0 z-[1000] pointer-events-none px-4 pt-3">
         {/* Search bar */}
-        <div className="pointer-events-auto" ref={searchContainerRef}>
+        <div
+          className="pointer-events-auto"
+          ref={searchContainerRef}
+          onMouseDown={(e) => e.stopPropagation()}
+          onTouchStart={(e) => e.stopPropagation()}
+          onKeyDown={(e) => e.stopPropagation()}
+          onKeyUp={(e) => e.stopPropagation()}
+        >
           <div className="relative">
             <div className="flex items-center gap-3 bg-white/90 backdrop-blur-md rounded-full px-4 py-3 shadow-lg">
               <Search className="h-5 w-5 shrink-0" style={{ color: '#0f766e' }} />
