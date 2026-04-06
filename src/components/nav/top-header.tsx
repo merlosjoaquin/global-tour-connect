@@ -20,6 +20,13 @@ export function TopHeader() {
 
   // Don't show on landing page, auth, intro, or dashboard (map view)
   if (pathname === '/' || pathname === '/auth' || pathname === '/intro' || pathname === '/dashboard' || pathname === '/solicitar') return null
+  // Demo payment pages render their own DemoHeader
+  if (
+    pathname === '/checkout' ||
+    pathname === '/wallet' ||
+    pathname === '/settings/currency' ||
+    pathname === '/onboarding/country'
+  ) return null
 
   const title = PAGE_TITLES[pathname] || 'Global Tour Connect'
   const showBack = pathname !== '/dashboard'
