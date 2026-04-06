@@ -6,12 +6,9 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
 import { Badge } from '@/components/ui/badge'
-import { Separator } from '@/components/ui/separator'
 import { toast } from 'sonner'
-import { Star, Shield, CreditCard, Loader2, CheckCircle, X, ArrowLeft, MessageCircle, AlertTriangle } from 'lucide-react'
+import { Star, Shield, CreditCard, CheckCircle, X, ArrowLeft, MessageCircle, AlertTriangle } from 'lucide-react'
 import { SERVICE_TYPES } from '@/lib/constants'
 import { MOCK_MAP_HOSTS } from '@/lib/map-data'
 import type { ServiceType } from '@/types/database'
@@ -221,28 +218,22 @@ function StepBrowseHosts({
 function StepPayment({
   host,
   serviceIndex,
-  onPaid,
   onBack,
 }: {
   host: MapHost
   serviceIndex: number
-  onPaid: () => void
   onBack: () => void
 }) {
+  const router = useRouter()
   const service = host.services[serviceIndex]
-  const [isProcessing, setIsProcessing] = useState(false)
 
-  const handlePay = () => {
-    setIsProcessing(true)
-    setTimeout(() => {
-      setIsProcessing(false)
-      onPaid()
-    }, 2000)
+  const handleContinueToCheckout = () => {
+    router.push('/checkout')
   }
 
   return (
     <>
-      <StepHeader title="Pago seguro" onBack={onBack} />
+      <StepHeader title="Resumen de solicitud" onBack={onBack} />
       <div className="px-4 space-y-4">
         {/* Host & service summary */}
         <Card className="rounded-2xl">
@@ -255,10 +246,10 @@ function StepPayment({
               className="rounded-full border-2 border-teal-700"
             />
             <div className="flex-1 min-w-0">
-              <h3 className="font-semibold text-gray-900">{host.name}</h3>
+              <h3 className="font-semibold text-gray-900 dark:text-gray-100">{host.name}</h3>
               <div className="flex items-center gap-1">
                 <Star className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />
-                <span className="text-sm text-gray-600">{host.rating}</span>
+                <span className="text-sm text-gray-600 dark:text-gray-400">{host.rating}</span>
               </div>
             </div>
           </CardContent>
@@ -268,7 +259,7 @@ function StepPayment({
         <Card className="rounded-2xl">
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
-              <span className="text-sm text-gray-600">{service.title}</span>
+              <span className="text-sm text-gray-600 dark:text-gray-400">{service.title}</span>
               <span className="text-lg font-bold text-teal-700">
                 ${service.price} {service.currency}
               </span>
@@ -277,75 +268,21 @@ function StepPayment({
         </Card>
 
         {/* Escrow explanation */}
-        <div className="flex gap-3 p-4 bg-teal-50 rounded-2xl border border-teal-200">
+        <div className="flex gap-3 p-4 bg-teal-50 dark:bg-teal-950/30 rounded-2xl border border-teal-200 dark:border-teal-800">
           <Shield className="h-5 w-5 text-teal-700 shrink-0 mt-0.5" />
-          <p className="text-sm text-teal-800 leading-relaxed">
+          <p className="text-sm text-teal-800 dark:text-teal-200 leading-relaxed">
             Tu pago queda retenido de forma segura hasta que el servicio sea
             completado. Si el servicio no se brinda correctamente, puedes
             cancelar y se te devolvera el dinero.
           </p>
         </div>
 
-        <Separator />
-
-        {/* Mock credit card form */}
-        <div className="space-y-4">
-          <div className="flex items-center gap-2 text-gray-700">
-            <CreditCard className="h-4 w-4" />
-            <span className="text-sm font-medium">Tarjeta de credito</span>
-          </div>
-          <div className="space-y-3">
-            <div>
-              <Label htmlFor="card-number" className="text-xs text-gray-500">
-                Numero de tarjeta
-              </Label>
-              <Input
-                id="card-number"
-                defaultValue="4242 4242 4242 4242"
-                className="mt-1"
-                readOnly
-              />
-            </div>
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <Label htmlFor="card-exp" className="text-xs text-gray-500">
-                  Vencimiento
-                </Label>
-                <Input
-                  id="card-exp"
-                  defaultValue="12/28"
-                  className="mt-1"
-                  readOnly
-                />
-              </div>
-              <div>
-                <Label htmlFor="card-cvc" className="text-xs text-gray-500">
-                  CVC
-                </Label>
-                <Input
-                  id="card-cvc"
-                  defaultValue="123"
-                  className="mt-1"
-                  readOnly
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-
         <Button
-          className="w-full rounded-2xl bg-teal-700 hover:bg-teal-600 text-white h-12 text-base font-semibold"
-          onClick={handlePay}
-          disabled={isProcessing}
+          className="w-full rounded-2xl bg-teal-700 hover:bg-teal-600 text-white h-12 text-base font-semibold flex items-center gap-2"
+          onClick={handleContinueToCheckout}
         >
-          {isProcessing ? (
-            <span className="flex items-center gap-2">
-              <Loader2 className="h-4 w-4 animate-spin" />
-              Procesando...
-            </span>
-          ) : (
-            `Pagar $${service.price} ${service.currency}`
-          )}
+          <CreditCard className="h-5 w-5" />
+          Continuar al pago
         </Button>
       </div>
     </>
@@ -515,7 +452,6 @@ export default function SolicitarPage() {
           <StepPayment
             host={selectedHost}
             serviceIndex={selectedServiceIdx}
-            onPaid={() => setStep(3)}
             onBack={() => setStep(1)}
           />
         )}

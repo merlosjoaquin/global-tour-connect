@@ -93,7 +93,7 @@ export default function WalletPage() {
 
   return (
     <div className="min-h-dvh bg-muted/30">
-      <DemoHeader title="Wallet" backHref="/dashboard" />
+      <DemoHeader title="Wallet" backHref="/perfil" />
       <main className="mx-auto max-w-3xl px-4 pb-24 pt-6 sm:pt-10">
         <div className="mb-5">
           <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">

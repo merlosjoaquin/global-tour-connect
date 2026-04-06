@@ -125,9 +125,11 @@ export default function PerfilPage() {
             <p className="text-sm text-white/80 mb-1">Ganancias como Anfitrion</p>
             <p className="text-3xl font-bold">${hostEarnings.toFixed(2)}</p>
             <p className="text-xs text-white/60 mt-1">Disponible para retiro</p>
-            <Button size="sm" className="mt-3 bg-white/20 hover:bg-white/30 text-white rounded-full">
-              Retirar fondos
-            </Button>
+            <Link href="/wallet">
+              <Button size="sm" className="mt-3 bg-white/20 hover:bg-white/30 text-white rounded-full">
+                Retirar fondos
+              </Button>
+            </Link>
           </CardContent>
         </Card>
       )}
@@ -152,7 +154,7 @@ export default function PerfilPage() {
 
       {/* Menu items */}
       <div className="space-y-1">
-        <Link href="/dashboard" className="flex items-center justify-between px-3 py-3 rounded-2xl hover:bg-muted transition-colors">
+        <Link href="/settings" className="flex items-center justify-between px-3 py-3 rounded-2xl hover:bg-muted transition-colors">
           <div className="flex items-center gap-3">
             <Settings className="h-5 w-5 text-muted-foreground" />
             <span className="text-sm">Configuracion</span>

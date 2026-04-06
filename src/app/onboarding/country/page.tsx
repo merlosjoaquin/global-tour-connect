@@ -45,7 +45,7 @@ export default function OnboardingCountryPage() {
     toast.success('Country set!', {
       description: `Display currency: ${getCurrency(effectiveCurrency).name}`,
     })
-    router.push('/dashboard')
+    router.push('/onboarding')
   }
 
   return (

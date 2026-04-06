@@ -42,7 +42,7 @@ export default function CurrencySettingsPage() {
 
   return (
     <div className="min-h-dvh bg-muted/30">
-      <DemoHeader title="Currency" backHref="/dashboard" />
+      <DemoHeader title="Currency" backHref="/settings" />
       <main className="mx-auto max-w-2xl px-4 pb-24 pt-6 sm:pt-10">
         <div className="mb-5">
           <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">

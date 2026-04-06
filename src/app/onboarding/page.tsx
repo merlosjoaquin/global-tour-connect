@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -17,15 +17,27 @@ type Role = 'explorer' | 'host' | null
 const SWIPE_THRESHOLD = 50
 
 export default function OnboardingPage() {
+  const router = useRouter()
   const [step, setStep] = useState(1)
   const [role, setRole] = useState<Role>(null)
+  const [ready, setReady] = useState(false)
+
+  // Redirect to country selection if user hasn't picked a country/currency yet
+  useEffect(() => {
+    const prefs = localStorage.getItem('gtc-currency-prefs')
+    if (!prefs) {
+      router.replace('/onboarding/country')
+    } else {
+      setReady(true)
+    }
+  }, [router])
+
   const [fullName, setFullName] = useState('')
   const [bio, setBio] = useState('')
   const [city, setCity] = useState('')
   const [country, setCountry] = useState('')
   const [selectedLangs, setSelectedLangs] = useState<string[]>([])
   const [loading, setLoading] = useState(false)
-  const router = useRouter()
   const touchStartX = useRef(0)
   const touchEndX = useRef(0)
 
@@ -70,6 +82,14 @@ export default function OnboardingPage() {
     } finally {
       setLoading(false)
     }
+  }
+
+  if (!ready) {
+    return (
+      <div className="min-h-dvh flex items-center justify-center">
+        <div className="animate-pulse text-muted-foreground">Cargando...</div>
+      </div>
+    )
   }
 
   return (
