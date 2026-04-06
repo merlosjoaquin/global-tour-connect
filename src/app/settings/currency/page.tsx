@@ -35,28 +35,28 @@ export default function CurrencySettingsPage() {
     setPreferredCurrency(draft)
     setAutoDetect(draftAuto)
     setSaving(false)
-    toast.success('Preferences saved', {
-      description: `Display currency set to ${currency.name} (${draft}).`,
+    toast.success('Preferencias guardadas', {
+      description: `Divisa de visualizacion: ${currency.name} (${draft}).`,
     })
   }
 
   return (
     <div className="min-h-dvh bg-muted/30">
-      <DemoHeader title="Currency" backHref="/settings" />
+      <DemoHeader title="Divisa" backHref="/settings" />
       <main className="mx-auto max-w-2xl px-4 pb-24 pt-6 sm:pt-10">
         <div className="mb-5">
           <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
-            Currency preferences
+            Preferencias de divisa
           </h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Control how prices and earnings are displayed across the app.
+            Controla como se muestran los precios y ganancias en la app.
           </p>
         </div>
 
         {/* Current currency */}
         <Card className="overflow-hidden rounded-2xl border-0 bg-gradient-to-br from-primary/10 via-primary/5 to-transparent p-5 ring-1 ring-primary/20">
           <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-            Current display currency
+            Divisa de visualizacion actual
           </p>
           <div className="mt-2 flex items-center gap-3">
             <span className="text-5xl leading-none" aria-hidden="true">
@@ -79,10 +79,10 @@ export default function CurrencySettingsPage() {
         {/* Currency switcher */}
         <Card className="mt-4 rounded-2xl p-5">
           <h2 className="font-heading text-sm font-semibold">
-            Change display currency
+            Cambiar divisa de visualizacion
           </h2>
           <p className="mt-1 text-xs text-muted-foreground">
-            Search and pick from 12 supported currencies.
+            Busca y elige entre 12 divisas disponibles.
           </p>
           <div className="mt-3">
             <CurrencySwitcher value={draft} onChange={setDraft} />
@@ -94,23 +94,23 @@ export default function CurrencySettingsPage() {
           <div className="flex items-start justify-between gap-4">
             <div className="min-w-0 flex-1">
               <h2 className="font-heading text-sm font-semibold">
-                Auto-detect from location
+                Detectar automaticamente por ubicacion
               </h2>
               <p className="mt-1 text-xs text-muted-foreground">
-                When on, we&apos;ll display prices in your detected local
-                currency when you travel.
+                Cuando esta activo, mostraremos los precios en tu divisa local
+                detectada cuando viajes.
               </p>
               {detectedCurrency && (
                 <div className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-muted px-2.5 py-1 text-xs">
                   <Check className="h-3 w-3 text-primary" aria-hidden="true" />
-                  Detected: {detectedCurrency}
+                  Detectada: {detectedCurrency}
                 </div>
               )}
             </div>
             <Switch
               checked={draftAuto}
               onCheckedChange={setDraftAuto}
-              aria-label="Auto-detect currency from location"
+              aria-label="Detectar divisa automaticamente por ubicacion"
             />
           </div>
         </Card>
@@ -122,10 +122,10 @@ export default function CurrencySettingsPage() {
             aria-hidden="true"
           />
           <p>
-            Your balance is stored in{' '}
-            <span className="font-semibold text-foreground">USD</span>. Display
-            currency only affects how amounts are shown — real conversion
-            happens at the moment of payout, at the then-current market rate.
+            Tu saldo se almacena en{' '}
+            <span className="font-semibold text-foreground">USD</span>. La divisa
+            de visualizacion solo afecta como se muestran los montos — la conversion
+            real ocurre al momento del retiro, a la tasa de mercado vigente.
           </p>
         </div>
 
@@ -138,18 +138,18 @@ export default function CurrencySettingsPage() {
         >
           <div className="flex items-center gap-2 rounded-full border bg-background/95 p-1.5 pl-4 shadow-lg backdrop-blur">
             <span className="text-xs text-muted-foreground">
-              You have unsaved changes
+              Tienes cambios sin guardar
             </span>
             <Button onClick={handleSave} disabled={saving} className="gap-1.5">
               {saving ? (
                 <>
                   <Save className="h-4 w-4 animate-pulse" />
-                  Saving...
+                  Guardando...
                 </>
               ) : (
                 <>
                   <Save className="h-4 w-4" />
-                  Save preferences
+                  Guardar preferencias
                 </>
               )}
             </Button>

@@ -54,11 +54,11 @@ export function BalanceCard({
       <div className="relative flex items-center justify-between">
         <div className="flex items-center gap-2 text-sm font-medium opacity-90">
           <Wallet className="h-4 w-4" aria-hidden="true" />
-          <span>Your balance</span>
+          <span>Tu saldo</span>
         </div>
         <span
           className="inline-flex items-center gap-1 rounded-full bg-white/15 px-2.5 py-1 text-xs font-medium backdrop-blur"
-          aria-label={`Display currency ${currency.name}`}
+          aria-label={`Divisa de visualizacion ${currency.name}`}
         >
           <span aria-hidden="true">{currency.flag}</span>
           {displayCurrency}
@@ -84,7 +84,7 @@ export function BalanceCard({
 
       {pendingUSD > 0 && (
         <div className="relative mt-3 inline-flex rounded-lg bg-white/10 px-3 py-1.5 text-xs backdrop-blur">
-          <span className="opacity-80">Pending release:&nbsp;</span>
+          <span className="opacity-80">Pendiente de liberacion:&nbsp;</span>
           <span className="font-semibold">
             {formatCurrency(
               convert(pendingUSD, 'USD', displayCurrency),
@@ -101,7 +101,7 @@ export function BalanceCard({
             variant="secondary"
             className="w-full gap-2 bg-white text-primary hover:bg-white/90"
           >
-            Withdraw to bank
+            Retirar a banco
             <ArrowUpRight className="h-4 w-4" />
           </Button>
         ) : (
@@ -110,7 +110,7 @@ export function BalanceCard({
             variant="secondary"
             className="w-full gap-2 bg-white text-primary hover:bg-white/90"
           >
-            Withdraw to bank
+            Retirar a banco
             <ArrowUpRight className="h-4 w-4" />
           </Button>
         )}

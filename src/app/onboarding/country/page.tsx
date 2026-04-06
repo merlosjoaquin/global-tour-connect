@@ -42,15 +42,15 @@ export default function OnboardingCountryPage() {
     if (!effectiveCurrency) return
     setPreferredCurrency(effectiveCurrency)
     setDetectedCurrency(effectiveCurrency)
-    toast.success('Country set!', {
-      description: `Display currency: ${getCurrency(effectiveCurrency).name}`,
+    toast.success('Pais configurado', {
+      description: `Divisa de visualizacion: ${getCurrency(effectiveCurrency).name}`,
     })
     router.push('/onboarding')
   }
 
   return (
     <div className="min-h-dvh bg-muted/30">
-      <DemoHeader title="Welcome" />
+      <DemoHeader title="Bienvenido" />
       <main className="mx-auto max-w-lg px-4 pb-24 pt-6 sm:pt-10">
         {/* Header */}
         <div className="mb-5 text-center">
@@ -58,11 +58,11 @@ export default function OnboardingCountryPage() {
             <Globe2 className="h-7 w-7" />
           </div>
           <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
-            Where are you from?
+            De donde eres?
           </h1>
           <p className="mx-auto mt-2 max-w-xs text-sm text-muted-foreground">
-            We&apos;ll show prices in your local currency for a smoother
-            experience.
+            Mostraremos los precios en tu divisa local para una mejor
+            experiencia.
           </p>
         </div>
 
@@ -70,12 +70,12 @@ export default function OnboardingCountryPage() {
         <Card className="overflow-hidden rounded-2xl p-0">
           <Command className="rounded-2xl">
             <div className="border-b px-1">
-              <CommandInput placeholder="Search your country..." />
+              <CommandInput placeholder="Busca tu pais..." />
             </div>
             <CommandList className="max-h-56">
               <CommandEmpty>
                 <span className="text-muted-foreground">
-                  Country not found — you can choose a currency manually below.
+                  Pais no encontrado — puedes elegir una divisa manualmente abajo.
                 </span>
               </CommandEmpty>
               <CommandGroup>
@@ -116,7 +116,7 @@ export default function OnboardingCountryPage() {
                   </div>
                   <div>
                     <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-                      Detected currency
+                      Divisa detectada
                     </p>
                     <p className="mt-0.5 text-lg font-bold leading-tight">
                       {getCurrency(effectiveCurrency ?? 'USD').name}
@@ -131,10 +131,10 @@ export default function OnboardingCountryPage() {
                   size="sm"
                   onClick={() => setShowOverride(!showOverride)}
                   className="gap-1.5 text-xs"
-                  aria-label="Change currency"
+                  aria-label="Cambiar divisa"
                 >
                   <RefreshCw className="h-3.5 w-3.5" />
-                  Change
+                  Cambiar
                 </Button>
               </div>
 
@@ -156,7 +156,7 @@ export default function OnboardingCountryPage() {
               className="mt-5 h-12 w-full gap-2 text-base"
             >
               <MapPin className="h-4 w-4" aria-hidden="true" />
-              Continue
+              Continuar
               <ArrowRight className="ml-1 h-4 w-4" />
             </Button>
           </div>
@@ -168,9 +168,9 @@ export default function OnboardingCountryPage() {
             <div className="mx-auto max-w-xs text-sm text-muted-foreground">
               <p>
                 <span className="font-medium text-foreground">
-                  45+ countries
+                  45+ paises
                 </span>{' '}
-                supported. Pick yours to get started.
+                disponibles. Elige el tuyo para comenzar.
               </p>
             </div>
           </div>

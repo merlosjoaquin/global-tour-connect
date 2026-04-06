@@ -60,19 +60,19 @@ const STATUS_STYLES: Record<
   { label: string; className: string; icon: React.ReactNode }
 > = {
   HELD: {
-    label: 'Held',
+    label: 'Retenido',
     className:
       'bg-amber-100 text-amber-900 dark:bg-amber-500/20 dark:text-amber-200',
     icon: <Clock3 className="h-3 w-3" />,
   },
   RELEASED: {
-    label: 'Released',
+    label: 'Liberado',
     className:
       'bg-emerald-100 text-emerald-900 dark:bg-emerald-500/20 dark:text-emerald-200',
     icon: <CheckCircle2 className="h-3 w-3" />,
   },
   PENDING: {
-    label: 'Pending',
+    label: 'Pendiente',
     className:
       'bg-slate-100 text-slate-900 dark:bg-slate-500/20 dark:text-slate-200',
     icon: <Clock3 className="h-3 w-3" />,
@@ -93,14 +93,14 @@ export default function WalletPage() {
 
   return (
     <div className="min-h-dvh bg-muted/30">
-      <DemoHeader title="Wallet" backHref="/perfil" />
+      <DemoHeader title="Billetera" backHref="/perfil" />
       <main className="mx-auto max-w-3xl px-4 pb-24 pt-6 sm:pt-10">
         <div className="mb-5">
           <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
-            Wallet
+            Billetera
           </h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Your earnings, transactions and payouts.
+            Tus ganancias, transacciones y retiros.
           </p>
         </div>
 
@@ -115,7 +115,7 @@ export default function WalletPage() {
         <div className="mt-5 grid grid-cols-3 gap-3">
           <StatCard
             icon={<TrendingUp className="h-4 w-4" />}
-            label="This month"
+            label="Este mes"
             value={formatCurrency(
               convert(monthEarnedUSD, 'USD', hostCurrency),
               hostCurrency,
@@ -124,13 +124,13 @@ export default function WalletPage() {
           />
           <StatCard
             icon={<CalendarDays className="h-4 w-4" />}
-            label="Completed"
+            label="Completados"
             value={`${completedTours}`}
             suffix="tours"
           />
           <StatCard
             icon={<Star className="h-4 w-4" />}
-            label="Rating"
+            label="Calificacion"
             value="4.8"
             suffix="/ 5.0"
           />
@@ -140,9 +140,9 @@ export default function WalletPage() {
         <div className="mt-6">
           <Tabs defaultValue="transactions">
             <TabsList className="w-full">
-              <TabsTrigger value="transactions">Transactions</TabsTrigger>
-              <TabsTrigger value="payouts">Payouts</TabsTrigger>
-              <TabsTrigger value="analytics">Analytics</TabsTrigger>
+              <TabsTrigger value="transactions">Transacciones</TabsTrigger>
+              <TabsTrigger value="payouts">Retiros</TabsTrigger>
+              <TabsTrigger value="analytics">Analisis</TabsTrigger>
             </TabsList>
 
             <TabsContent value="transactions" className="mt-4">
@@ -160,10 +160,10 @@ export default function WalletPage() {
             <TabsContent value="payouts" className="mt-4">
               <Card className="rounded-2xl p-5">
                 <h3 className="font-heading text-sm font-semibold">
-                  Payout methods
+                  Metodos de retiro
                 </h3>
                 <p className="mt-1 text-xs text-muted-foreground">
-                  Choose how you want to receive your funds.
+                  Elige como quieres recibir tus fondos.
                 </p>
                 <div className="mt-3 space-y-2">
                   {MOCK_PAYOUT_METHODS.map((pm) => (
@@ -183,7 +183,7 @@ export default function WalletPage() {
                         </div>
                       </div>
                       <span className="text-xs text-muted-foreground">
-                        {(pm.feePct * 100).toFixed(1)}% fee
+                        {(pm.feePct * 100).toFixed(1)}% comision
                       </span>
                     </div>
                   ))}
@@ -194,7 +194,7 @@ export default function WalletPage() {
             <TabsContent value="analytics" className="mt-4">
               <Card className="rounded-2xl p-5">
                 <h3 className="font-heading text-sm font-semibold">
-                  Lifetime earnings
+                  Ganancias totales
                 </h3>
                 <div className="mt-3 text-3xl font-bold tabular-nums">
                   {formatCurrency(
@@ -321,7 +321,7 @@ function TransactionRow({
             + {hostReceives}
           </div>
           <div className="mt-0.5 flex items-center justify-end gap-1 text-[11px] text-muted-foreground">
-            <span>from</span>
+            <span>de</span>
             <CurrencyBadge code={tx.touristCurrency} className="px-1.5 py-0" />
           </div>
           <div className="text-[11px] tabular-nums text-muted-foreground">
@@ -362,8 +362,8 @@ function WithdrawDialog({
     await new Promise((r) => setTimeout(r, 1500))
     setSubmitting(false)
     onOpenChange(false)
-    toast.success('Withdrawal requested', {
-      description: `${formatCurrency(receive, hostCurrency)} will arrive via ${selectedMethod.label} in 1–2 business days.`,
+    toast.success('Retiro solicitado', {
+      description: `${formatCurrency(receive, hostCurrency)} llegara via ${selectedMethod.label} en 1-2 dias habiles.`,
     })
   }
 
@@ -373,10 +373,10 @@ function WithdrawDialog({
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <ArrowDownRight className="h-5 w-5 text-primary" />
-            Withdraw funds
+            Retirar fondos
           </DialogTitle>
           <DialogDescription>
-            Available balance:{' '}
+            Saldo disponible:{' '}
             <span className="font-semibold text-foreground">
               {formatCurrency(balanceInHost, hostCurrency)}
             </span>
@@ -389,7 +389,7 @@ function WithdrawDialog({
               htmlFor="wd-amount"
               className="mb-1.5 block text-sm font-medium"
             >
-              Amount ({hostCurrency})
+              Monto ({hostCurrency})
             </label>
             <Input
               id="wd-amount"
@@ -402,7 +402,7 @@ function WithdrawDialog({
 
           <div>
             <label className="mb-1.5 block text-sm font-medium">
-              Send to
+              Enviar a
             </label>
             <div className="space-y-1.5">
               {MOCK_PAYOUT_METHODS.map((pm) => {
@@ -443,20 +443,20 @@ function WithdrawDialog({
 
           <div className="space-y-1.5 rounded-xl bg-muted/60 p-3 text-xs">
             <div className="flex justify-between">
-              <span className="text-muted-foreground">Est. FX rate</span>
+              <span className="text-muted-foreground">Tasa de cambio est.</span>
               <span className="font-medium tabular-nums">
                 1 USD ≈ {rate.toFixed(hostCurrency === 'JPY' ? 2 : 4)}{' '}
                 {hostCurrency}
               </span>
             </div>
             <div className="flex justify-between">
-              <span className="text-muted-foreground">Fee</span>
+              <span className="text-muted-foreground">Comision</span>
               <span className="font-medium tabular-nums">
                 − {formatCurrency(feeAmount, hostCurrency)}
               </span>
             </div>
             <div className="flex justify-between border-t pt-1.5">
-              <span className="font-medium">You receive</span>
+              <span className="font-medium">Recibes</span>
               <span className="font-bold tabular-nums">
                 {formatCurrency(receive, hostCurrency)}
               </span>
@@ -469,8 +469,8 @@ function WithdrawDialog({
               aria-hidden="true"
             />
             <span>
-              Final FX rate will be locked at the moment of payout processing
-              and may differ slightly.
+              La tasa de cambio final se fijara al momento de procesar el retiro
+              y puede variar ligeramente.
             </span>
           </div>
 
@@ -481,7 +481,7 @@ function WithdrawDialog({
               className="flex-1"
               disabled={submitting}
             >
-              Cancel
+              Cancelar
             </Button>
             <Button
               onClick={handleSubmit}
@@ -491,12 +491,12 @@ function WithdrawDialog({
               {submitting ? (
                 <>
                   <Loader2 className="h-4 w-4 animate-spin" />
-                  Processing...
+                  Procesando...
                 </>
               ) : (
                 <>
                   <Wallet className="h-4 w-4" />
-                  Confirm
+                  Confirmar
                 </>
               )}
             </Button>

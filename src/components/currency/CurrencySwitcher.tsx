@@ -46,7 +46,7 @@ export function CurrencySwitcher({
             variant="outline"
             role="combobox"
             aria-expanded={open}
-            aria-label="Select display currency"
+            aria-label="Seleccionar divisa de visualizacion"
             className={cn(
               'justify-between gap-2',
               compact ? 'w-auto px-3' : 'w-full sm:w-[260px]',
@@ -70,9 +70,9 @@ export function CurrencySwitcher({
       />
       <PopoverContent className="w-[260px] p-0" align={align}>
         <Command>
-          <CommandInput placeholder="Search currency..." />
+          <CommandInput placeholder="Buscar divisa..." />
           <CommandList>
-            <CommandEmpty>No currency found.</CommandEmpty>
+            <CommandEmpty>Divisa no encontrada.</CommandEmpty>
             <CommandGroup>
               {CURRENCIES.map((c) => (
                 <CommandItem

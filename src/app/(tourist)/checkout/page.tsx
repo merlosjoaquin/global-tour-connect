@@ -42,7 +42,7 @@ const PAYMENT_METHODS: Array<{
   { id: 'card-master', label: 'Mastercard',  sub: '•••• 8891', icon: <CreditCard className="h-4 w-4" /> },
   { id: 'card-amex',   label: 'American Express', sub: '•••• 1002', icon: <CreditCard className="h-4 w-4" /> },
   { id: 'apple',       label: 'Apple Pay',   sub: 'Touch ID', icon: <Smartphone className="h-4 w-4" /> },
-  { id: 'google',      label: 'Google Pay',  sub: 'Linked account', icon: <Smartphone className="h-4 w-4" /> },
+  { id: 'google',      label: 'Google Pay',  sub: 'Cuenta vinculada', icon: <Smartphone className="h-4 w-4" /> },
 ]
 
 const FEE_PCT = 0.02
@@ -72,22 +72,22 @@ export default function CheckoutPage() {
     setLoading(true)
     await new Promise((r) => setTimeout(r, 3000))
     setLoading(false)
-    toast.success('Payment confirmed!', {
-      description: `You paid ${totalDisplay}. Confirmation sent to your email.`,
+    toast.success('Pago confirmado', {
+      description: `Pagaste ${totalDisplay}. Confirmación enviada a tu correo.`,
     })
     setTimeout(() => router.push('/dashboard'), 600)
   }
 
   return (
     <div className="min-h-dvh bg-muted/30">
-      <DemoHeader title="Checkout" backHref="/dashboard" />
+      <DemoHeader title="Pago" backHref="/dashboard" />
       <main className="mx-auto max-w-3xl px-4 pb-24 pt-6 sm:pt-10">
         <div className="mb-6">
           <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
-            Confirm and pay
+            Confirmar y pagar
           </h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Review your tour and complete the payment in your currency.
+            Revisa tu tour y completa el pago en tu divisa.
           </p>
         </div>
 
@@ -124,7 +124,7 @@ export default function CheckoutPage() {
                     <MapPin className="h-3.5 w-3.5" aria-hidden="true" />
                     {tour.city}
                     <span aria-hidden="true">·</span>
-                    <span>with {tour.hostName}</span>
+                    <span>con {tour.hostName}</span>
                   </div>
                   <div className="mt-auto flex flex-wrap items-center gap-3 pt-2 text-xs">
                     <span className="inline-flex items-center gap-1 rounded-full bg-muted px-2 py-1">
@@ -144,11 +144,11 @@ export default function CheckoutPage() {
             <Card className="rounded-2xl p-5">
               <div className="flex items-center justify-between">
                 <h2 className="font-heading text-base font-semibold">
-                  Payment method
+                  Metodo de pago
                 </h2>
                 <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
                   <Lock className="h-3 w-3" aria-hidden="true" />
-                  Encrypted
+                  Encriptado
                 </span>
               </div>
               <div className="mt-3 grid gap-2">
@@ -210,19 +210,19 @@ export default function CheckoutPage() {
           <div className="space-y-4 lg:sticky lg:top-20 lg:self-start">
             <Card className="rounded-2xl p-5">
               <h2 className="font-heading text-base font-semibold">
-                Price details
+                Desglose del precio
               </h2>
               <div className="mt-1 flex items-center gap-2 text-xs text-muted-foreground">
-                <span>Paying in</span>
+                <span>Pagando en</span>
                 <CurrencyBadge code={active} />
               </div>
 
               <div className="mt-4 space-y-2.5 text-sm">
-                <Row label="Tour price" value={baseDisplay} />
+                <Row label="Precio del tour" value={baseDisplay} />
                 <Row
                   label={
                     <span className="inline-flex items-center gap-1">
-                      Global Tour fee
+                      Comision Global Tour
                       <span className="text-xs text-muted-foreground">
                         (2%)
                       </span>
@@ -243,15 +243,15 @@ export default function CheckoutPage() {
 
               <div className="mt-4 rounded-xl bg-muted/60 p-3 text-xs leading-relaxed text-muted-foreground">
                 <p>
-                  You&apos;re paying in{' '}
+                  Estas pagando en{' '}
                   <span className="font-semibold text-foreground">
                     {activeC.name} ({active})
                   </span>
-                  . Your host will receive{' '}
+                  . Tu anfitrion recibira{' '}
                   <span className="font-semibold text-foreground">
                     {hostReceives}
                   </span>{' '}
-                  in {hostCurrency}.
+                  en {hostCurrency}.
                 </p>
               </div>
 
@@ -263,19 +263,19 @@ export default function CheckoutPage() {
                 {loading ? (
                   <>
                     <Loader2 className="h-4 w-4 animate-spin" />
-                    Processing...
+                    Procesando...
                   </>
                 ) : (
                   <>
                     <Lock className="h-4 w-4" aria-hidden="true" />
-                    Confirm and pay {totalDisplay}
+                    Confirmar y pagar {totalDisplay}
                   </>
                 )}
               </Button>
 
               <div className="mt-3 flex items-center justify-center gap-1.5 text-xs text-muted-foreground">
                 <ShieldCheck className="h-3.5 w-3.5" aria-hidden="true" />
-                Funds held in escrow until tour completes
+                Fondos retenidos en garantia hasta que el tour se complete
               </div>
             </Card>
           </div>
