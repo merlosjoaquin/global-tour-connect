@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { useTranslation } from '@/stores/language-store'
@@ -18,18 +19,21 @@ const MapView = dynamic(() => import('@/components/map-view'), {
 
 export default function DashboardPage() {
   const { t } = useTranslation()
+  const [mapOverlayActive, setMapOverlayActive] = useState(false)
 
   return (
     <div className="fixed inset-0 bottom-[64px] z-0">
-      <MapView />
+      <MapView onOverlayChange={setMapOverlayActive} />
       {/* CTA to request a host */}
-      <Link
-        href="/solicitar"
-        className="absolute bottom-6 left-[12.5%] right-[12.5%] z-[1000] flex items-center justify-center gap-2 py-4 rounded-2xl font-semibold text-white shadow-lg active:scale-[0.98] transition-transform"
-        style={{ backgroundColor: '#0f766e' }}
-      >
-        {t('dashboard.requestHost')}
-      </Link>
+      {!mapOverlayActive && (
+        <Link
+          href="/solicitar"
+          className="absolute bottom-6 left-[12.5%] right-[12.5%] z-[1000] flex items-center justify-center gap-2 py-4 rounded-2xl font-semibold text-white shadow-lg active:scale-[0.98] transition-transform"
+          style={{ backgroundColor: '#0f766e' }}
+        >
+          {t('dashboard.requestHost')}
+        </Link>
+      )}
     </div>
   )
 }

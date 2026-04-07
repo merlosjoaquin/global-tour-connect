@@ -265,7 +265,7 @@ const CATEGORY_COLORS: Record<string, string> = {
 
 // --- Main Map Component ---
 
-export default function MapView() {
+export default function MapView({ onOverlayChange }: { onOverlayChange?: (active: boolean) => void }) {
   const router = useRouter()
   const [userCoords, setUserCoords] = useState<[number, number] | null>(null)
   const [mapCenter, setMapCenter] = useState<[number, number]>(DEFAULT_CENTER)
@@ -416,6 +416,7 @@ export default function MapView() {
     function handleClick(e: MouseEvent) {
       if (sheetRef.current && !sheetRef.current.contains(e.target as Node)) {
         setSelectedLandmark(null)
+        onOverlayChange?.(false)
       }
     }
     if (selectedLandmark) {
@@ -432,15 +433,18 @@ export default function MapView() {
   function handleHostClick(host: MapHost) {
     setSelectedLandmark(null)
     setSelectedHost(host)
+    onOverlayChange?.(true)
   }
 
   function handleLandmarkClick(landmark: MapLandmark) {
     setSelectedHost(null)
     setSelectedLandmark(landmark)
+    onOverlayChange?.(true)
   }
 
   function closeSheet() {
     setSelectedLandmark(null)
+    onOverlayChange?.(false)
   }
 
   return (
@@ -487,7 +491,7 @@ export default function MapView() {
 
         {/* Host bubble popup (inside MapContainer to access useMap) */}
         {selectedHost && (
-          <HostBubble host={selectedHost} onClose={() => setSelectedHost(null)} />
+          <HostBubble host={selectedHost} onClose={() => { setSelectedHost(null); onOverlayChange?.(false) }} />
         )}
       </MapContainer>
 
