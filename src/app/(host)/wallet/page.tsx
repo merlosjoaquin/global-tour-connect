@@ -47,6 +47,7 @@ import {
 import { BalanceCard } from '@/components/currency/BalanceCard'
 import { CurrencyBadge } from '@/components/currency/CurrencyBadge'
 import { DemoHeader } from '@/components/currency/DemoHeader'
+import { useTranslation } from '@/stores/language-store'
 
 const METHOD_ICON: Record<MockPayoutMethod['type'], React.ReactNode> = {
   bank: <Landmark className="h-4 w-4" />,
@@ -57,22 +58,22 @@ const METHOD_ICON: Record<MockPayoutMethod['type'], React.ReactNode> = {
 
 const STATUS_STYLES: Record<
   MockTransaction['status'],
-  { label: string; className: string; icon: React.ReactNode }
+  { labelKey: string; className: string; icon: React.ReactNode }
 > = {
   HELD: {
-    label: 'Retenido',
+    labelKey: 'wallet.statusHeld',
     className:
       'bg-amber-100 text-amber-900 dark:bg-amber-500/20 dark:text-amber-200',
     icon: <Clock3 className="h-3 w-3" />,
   },
   RELEASED: {
-    label: 'Liberado',
+    labelKey: 'wallet.statusReleased',
     className:
       'bg-emerald-100 text-emerald-900 dark:bg-emerald-500/20 dark:text-emerald-200',
     icon: <CheckCircle2 className="h-3 w-3" />,
   },
   PENDING: {
-    label: 'Pendiente',
+    labelKey: 'wallet.statusPending',
     className:
       'bg-slate-100 text-slate-900 dark:bg-slate-500/20 dark:text-slate-200',
     icon: <Clock3 className="h-3 w-3" />,
@@ -80,6 +81,7 @@ const STATUS_STYLES: Record<
 }
 
 export default function WalletPage() {
+  const { t } = useTranslation()
   const balance = MOCK_HOST_BALANCE
   const hostCurrency = balance.payoutCurrency
   const [withdrawOpen, setWithdrawOpen] = React.useState(false)
@@ -93,14 +95,14 @@ export default function WalletPage() {
 
   return (
     <div className="min-h-dvh bg-muted/30">
-      <DemoHeader title="Billetera" backHref="/perfil" />
+      <DemoHeader title={t('wallet.title')} backHref="/perfil" />
       <main className="mx-auto max-w-3xl px-4 pb-24 pt-6 sm:pt-10">
         <div className="mb-5">
           <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
-            Billetera
+            {t('wallet.title')}
           </h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Tus ganancias, transacciones y retiros.
+            {t('wallet.subtitle')}
           </p>
         </div>
 
@@ -115,7 +117,7 @@ export default function WalletPage() {
         <div className="mt-5 grid grid-cols-3 gap-3">
           <StatCard
             icon={<TrendingUp className="h-4 w-4" />}
-            label="Este mes"
+            label={t('wallet.thisMonth')}
             value={formatCurrency(
               convert(monthEarnedUSD, 'USD', hostCurrency),
               hostCurrency,
@@ -124,13 +126,13 @@ export default function WalletPage() {
           />
           <StatCard
             icon={<CalendarDays className="h-4 w-4" />}
-            label="Completados"
+            label={t('wallet.completed')}
             value={`${completedTours}`}
-            suffix="tours"
+            suffix={t('wallet.tours')}
           />
           <StatCard
             icon={<Star className="h-4 w-4" />}
-            label="Calificacion"
+            label={t('wallet.ratingLabel')}
             value="4.8"
             suffix="/ 5.0"
           />
@@ -140,9 +142,9 @@ export default function WalletPage() {
         <div className="mt-6">
           <Tabs defaultValue="transactions">
             <TabsList className="w-full">
-              <TabsTrigger value="transactions">Transacciones</TabsTrigger>
-              <TabsTrigger value="payouts">Retiros</TabsTrigger>
-              <TabsTrigger value="analytics">Analisis</TabsTrigger>
+              <TabsTrigger value="transactions">{t('wallet.transactions')}</TabsTrigger>
+              <TabsTrigger value="payouts">{t('wallet.withdrawals')}</TabsTrigger>
+              <TabsTrigger value="analytics">{t('wallet.analytics')}</TabsTrigger>
             </TabsList>
 
             <TabsContent value="transactions" className="mt-4">
@@ -160,10 +162,10 @@ export default function WalletPage() {
             <TabsContent value="payouts" className="mt-4">
               <Card className="rounded-2xl p-5">
                 <h3 className="font-heading text-sm font-semibold">
-                  Metodos de retiro
+                  {t('wallet.withdrawMethods')}
                 </h3>
                 <p className="mt-1 text-xs text-muted-foreground">
-                  Elige como quieres recibir tus fondos.
+                  {t('wallet.withdrawMethodsDesc')}
                 </p>
                 <div className="mt-3 space-y-2">
                   {MOCK_PAYOUT_METHODS.map((pm) => (
@@ -183,7 +185,7 @@ export default function WalletPage() {
                         </div>
                       </div>
                       <span className="text-xs text-muted-foreground">
-                        {(pm.feePct * 100).toFixed(1)}% comision
+                        {(pm.feePct * 100).toFixed(1)}% {t('wallet.commission')}
                       </span>
                     </div>
                   ))}
@@ -194,7 +196,7 @@ export default function WalletPage() {
             <TabsContent value="analytics" className="mt-4">
               <Card className="rounded-2xl p-5">
                 <h3 className="font-heading text-sm font-semibold">
-                  Ganancias totales
+                  {t('wallet.totalEarnings')}
                 </h3>
                 <div className="mt-3 text-3xl font-bold tabular-nums">
                   {formatCurrency(
@@ -203,7 +205,7 @@ export default function WalletPage() {
                   )}
                 </div>
                 <p className="mt-1 text-xs text-muted-foreground">
-                  {formatCurrency(balance.lifetimeEarnedUSD, 'USD')} base
+                  {formatCurrency(balance.lifetimeEarnedUSD, 'USD')} {t('wallet.base')}
                 </p>
                 <div className="mt-4 grid grid-cols-7 gap-1.5">
                   {[40, 65, 45, 80, 55, 90, 72].map((h, i) => (
@@ -276,6 +278,7 @@ function TransactionRow({
   tx: MockTransaction
   hostCurrency: CurrencyCode
 }) {
+  const { t } = useTranslation()
   const status = STATUS_STYLES[tx.status]
   const country = getCountry(tx.touristCountry)
   const hostReceivesUSD = tx.amountUSD * (1 - tx.feePct)
@@ -301,7 +304,7 @@ function TransactionRow({
               )}
             >
               {status.icon}
-              {status.label}
+              {t(status.labelKey)}
             </span>
           </div>
           <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
@@ -321,7 +324,7 @@ function TransactionRow({
             + {hostReceives}
           </div>
           <div className="mt-0.5 flex items-center justify-end gap-1 text-[11px] text-muted-foreground">
-            <span>de</span>
+            <span>{t('wallet.from')}</span>
             <CurrencyBadge code={tx.touristCurrency} className="px-1.5 py-0" />
           </div>
           <div className="text-[11px] tabular-nums text-muted-foreground">
@@ -344,6 +347,7 @@ function WithdrawDialog({
   balanceUSD: number
   hostCurrency: CurrencyCode
 }) {
+  const { t } = useTranslation()
   const balanceInHost = convert(balanceUSD, 'USD', hostCurrency)
   const [amount, setAmount] = React.useState(() =>
     balanceInHost.toFixed(hostCurrency === 'JPY' ? 0 : 2)
@@ -362,8 +366,8 @@ function WithdrawDialog({
     await new Promise((r) => setTimeout(r, 1500))
     setSubmitting(false)
     onOpenChange(false)
-    toast.success('Retiro solicitado', {
-      description: `${formatCurrency(receive, hostCurrency)} llegara via ${selectedMethod.label} en 1-2 dias habiles.`,
+    toast.success(t('wallet.withdrawRequested'), {
+      description: formatCurrency(receive, hostCurrency) + ' ' + t('wallet.withdrawDesc').replace('{method}', selectedMethod.label),
     })
   }
 
@@ -373,10 +377,10 @@ function WithdrawDialog({
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <ArrowDownRight className="h-5 w-5 text-primary" />
-            Retirar fondos
+            {t('wallet.withdrawFunds')}
           </DialogTitle>
           <DialogDescription>
-            Saldo disponible:{' '}
+            {t('wallet.availableBalance')}:{' '}
             <span className="font-semibold text-foreground">
               {formatCurrency(balanceInHost, hostCurrency)}
             </span>
@@ -389,7 +393,7 @@ function WithdrawDialog({
               htmlFor="wd-amount"
               className="mb-1.5 block text-sm font-medium"
             >
-              Monto ({hostCurrency})
+              {t('wallet.amount')} ({hostCurrency})
             </label>
             <Input
               id="wd-amount"
@@ -402,7 +406,7 @@ function WithdrawDialog({
 
           <div>
             <label className="mb-1.5 block text-sm font-medium">
-              Enviar a
+              {t('wallet.sendTo')}
             </label>
             <div className="space-y-1.5">
               {MOCK_PAYOUT_METHODS.map((pm) => {
@@ -443,20 +447,20 @@ function WithdrawDialog({
 
           <div className="space-y-1.5 rounded-xl bg-muted/60 p-3 text-xs">
             <div className="flex justify-between">
-              <span className="text-muted-foreground">Tasa de cambio est.</span>
+              <span className="text-muted-foreground">{t('wallet.estimatedRate')}</span>
               <span className="font-medium tabular-nums">
                 1 USD ≈ {rate.toFixed(hostCurrency === 'JPY' ? 2 : 4)}{' '}
                 {hostCurrency}
               </span>
             </div>
             <div className="flex justify-between">
-              <span className="text-muted-foreground">Comision</span>
+              <span className="text-muted-foreground">{t('wallet.commissionLabel')}</span>
               <span className="font-medium tabular-nums">
                 − {formatCurrency(feeAmount, hostCurrency)}
               </span>
             </div>
             <div className="flex justify-between border-t pt-1.5">
-              <span className="font-medium">Recibes</span>
+              <span className="font-medium">{t('wallet.youReceive')}</span>
               <span className="font-bold tabular-nums">
                 {formatCurrency(receive, hostCurrency)}
               </span>
@@ -469,8 +473,7 @@ function WithdrawDialog({
               aria-hidden="true"
             />
             <span>
-              La tasa de cambio final se fijara al momento de procesar el retiro
-              y puede variar ligeramente.
+              {t('wallet.rateDisclaimer')}
             </span>
           </div>
 
@@ -481,7 +484,7 @@ function WithdrawDialog({
               className="flex-1"
               disabled={submitting}
             >
-              Cancelar
+              {t('common.cancel')}
             </Button>
             <Button
               onClick={handleSubmit}
@@ -491,12 +494,12 @@ function WithdrawDialog({
               {submitting ? (
                 <>
                   <Loader2 className="h-4 w-4 animate-spin" />
-                  Procesando...
+                  {t('wallet.processing')}
                 </>
               ) : (
                 <>
                   <Wallet className="h-4 w-4" />
-                  Confirmar
+                  {t('common.confirm')}
                 </>
               )}
             </Button>

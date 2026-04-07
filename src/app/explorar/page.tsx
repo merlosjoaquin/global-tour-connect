@@ -7,12 +7,14 @@ import { Badge } from '@/components/ui/badge'
 import { ServiceCard } from '@/components/service-card'
 import { MOCK_SERVICES } from '@/lib/mock-data'
 import { SERVICE_TYPES } from '@/lib/constants'
+import { useTranslation } from '@/stores/language-store'
 import type { Service, ServiceType } from '@/types/database'
 
 export default function ExplorarPage() {
   const [search, setSearch] = useState('')
   const [selectedType, setSelectedType] = useState<ServiceType | null>(null)
   const [services, setServices] = useState<Service[]>(MOCK_SERVICES)
+  const { t } = useTranslation()
 
   // Filter services
   useEffect(() => {
@@ -42,7 +44,7 @@ export default function ExplorarPage() {
         <div className="relative">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
-            placeholder="Buscar servicios, ciudades..."
+            placeholder={t('explore.searchPlaceholder')}
             value={search}
             onChange={e => setSearch(e.target.value)}
             className="pl-10 h-11 rounded-full"
@@ -76,8 +78,8 @@ export default function ExplorarPage() {
           </div>
         ) : (
           <div className="text-center py-12 text-muted-foreground">
-            <p className="text-lg font-medium mb-1">No hay servicios</p>
-            <p className="text-sm">Intenta cambiar los filtros de busqueda</p>
+            <p className="text-lg font-medium mb-1">{t('explore.noServices')}</p>
+            <p className="text-sm">{t('explore.noServicesDesc')}</p>
           </div>
         )}
       </div>

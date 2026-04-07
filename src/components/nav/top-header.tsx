@@ -4,19 +4,11 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { ArrowLeft, Bell } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-
-const PAGE_TITLES: Record<string, string> = {
-  '/': 'Global Tour Connect',
-
-  '/publicar': 'Publicar Servicio',
-  '/chat': 'Mensajes',
-  '/perfil': 'Mi Perfil',
-  '/dashboard': 'Dashboard',
-  '/auth': 'Iniciar Sesion',
-}
+import { useTranslation } from '@/stores/language-store'
 
 export function TopHeader() {
   const pathname = usePathname()
+  const { t } = useTranslation()
 
   // Don't show on landing page, auth, intro, or dashboard (map view)
   if (pathname === '/' || pathname === '/auth' || pathname === '/intro' || pathname === '/dashboard' || pathname === '/solicitar') return null
@@ -27,6 +19,15 @@ export function TopHeader() {
     pathname === '/settings/currency' ||
     pathname === '/onboarding/country'
   ) return null
+
+  const PAGE_TITLES: Record<string, string> = {
+    '/': 'Global Tour Connect',
+    '/publicar': t('nav.publish') + ' ' + t('solicitar.stepService'),
+    '/chat': t('nav.messages'),
+    '/perfil': t('nav.myProfile'),
+    '/dashboard': t('nav.dashboard'),
+    '/auth': t('nav.login'),
+  }
 
   const title = PAGE_TITLES[pathname] || 'Global Tour Connect'
   const showBack = pathname !== '/dashboard'

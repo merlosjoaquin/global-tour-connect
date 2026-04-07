@@ -4,6 +4,7 @@ import { Providers } from '@/components/providers'
 import { BottomNav } from '@/components/nav/bottom-nav'
 import { TopHeader } from '@/components/nav/top-header'
 import { PWARegister } from '@/components/pwa-register'
+import { HtmlLangSync } from '@/components/html-lang'
 import './globals.css'
 
 const geistSans = Geist({
@@ -49,6 +50,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased font-sans`}
       >
         <Providers>
+          <HtmlLangSync />
           <PWARegister />
           <TopHeader />
           <main className="min-h-[calc(100dvh-8rem)] pb-20">

@@ -9,18 +9,19 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { toast } from 'sonner'
 import { Star, Shield, CreditCard, CheckCircle, X, ArrowLeft, MessageCircle, AlertTriangle } from 'lucide-react'
+import { useTranslation } from '@/stores/language-store'
 import { SERVICE_TYPES } from '@/lib/constants'
 import { MOCK_MAP_HOSTS } from '@/lib/map-data'
 import type { ServiceType } from '@/types/database'
 import type { MapHost } from '@/lib/map-data'
 
-const STEP_LABELS = ['Servicio', 'Anfitrion', 'Pago', 'En curso']
-
 function ProgressBar({ currentStep }: { currentStep: number }) {
+  const { t } = useTranslation()
+  const stepLabels = [t('solicitar.stepService'), t('solicitar.stepHost'), t('solicitar.stepPayment'), t('solicitar.stepActive')]
   return (
     <div className="w-full px-4 pt-4 pb-2">
       <div className="flex gap-2">
-        {STEP_LABELS.map((label, i) => (
+        {stepLabels.map((label, i) => (
           <div key={label} className="flex-1 flex flex-col items-center gap-1">
             <div
               className={`h-1.5 w-full rounded-full transition-colors ${
@@ -50,13 +51,14 @@ function StepHeader({
   subtitle?: string
   onBack?: () => void
 }) {
+  const { t } = useTranslation()
   return (
     <div className="flex items-start gap-3 px-4 pb-4">
       {onBack && (
         <button
           onClick={onBack}
           className="mt-1 p-1 rounded-full hover:bg-gray-100 transition-colors"
-          aria-label="Volver"
+          aria-label={t('common.back')}
         >
           <ArrowLeft className="h-5 w-5 text-gray-600" />
         </button>
@@ -77,6 +79,7 @@ function StepSelectService({
 }: {
   onSelect: (type: ServiceType) => void
 }) {
+  const { t } = useTranslation()
   const [selected, setSelected] = useState<ServiceType | null>(null)
 
   const handleSelect = (type: ServiceType) => {
@@ -87,7 +90,7 @@ function StepSelectService({
 
   return (
     <>
-      <StepHeader title="Que servicio necesitas?" />
+      <StepHeader title={t('solicitar.whatServiceNeed')} />
       <div className="px-4 grid grid-cols-2 gap-3">
         {(Object.entries(SERVICE_TYPES) as [ServiceType, { label: string; emoji: string }][]).map(
           ([type, { label, emoji }]) => (
@@ -124,6 +127,7 @@ function StepBrowseHosts({
   onSelect: (host: MapHost, serviceIndex: number) => void
   onBack: () => void
 }) {
+  const { t } = useTranslation()
   const serviceLabel = SERVICE_TYPES[serviceType].label
 
   // Filter: online hosts with matching service type, sorted by rating desc
@@ -134,8 +138,8 @@ function StepBrowseHosts({
   return (
     <>
       <StepHeader
-        title="Anfitriones disponibles cerca de ti"
-        subtitle={`Mostrando anfitriones en linea con ${serviceLabel}`}
+        title={t('solicitar.availableHosts')}
+        subtitle={t('solicitar.showingHosts') + ' ' + serviceLabel}
         onBack={onBack}
       />
       <div className="px-4 space-y-3">
@@ -143,7 +147,7 @@ function StepBrowseHosts({
           <div className="flex flex-col items-center justify-center py-16 text-center">
             <AlertTriangle className="h-10 w-10 text-gray-300 mb-3" />
             <p className="text-gray-500 font-medium">
-              No hay anfitriones disponibles para este servicio en este momento
+              {t('solicitar.noHostsAvailable')}
             </p>
           </div>
         ) : (
@@ -176,7 +180,7 @@ function StepBrowseHosts({
                           variant="secondary"
                           className="bg-green-100 text-green-700 text-[10px] shrink-0"
                         >
-                          En linea
+                          {t('chat.online')}
                         </Badge>
                       </div>
                       <div className="flex items-center gap-1 mt-0.5">
@@ -197,7 +201,7 @@ function StepBrowseHosts({
                           className="rounded-full bg-teal-700 hover:bg-teal-600 text-white"
                           onClick={() => onSelect(host, matchingServiceIdx)}
                         >
-                          Contratar
+                          {t('solicitar.hire')}
                         </Button>
                       </div>
                     </div>
@@ -225,6 +229,7 @@ function StepPayment({
   onBack: () => void
 }) {
   const router = useRouter()
+  const { t } = useTranslation()
   const service = host.services[serviceIndex]
 
   const handleContinueToCheckout = () => {
@@ -233,7 +238,7 @@ function StepPayment({
 
   return (
     <>
-      <StepHeader title="Resumen de solicitud" onBack={onBack} />
+      <StepHeader title={t('solicitar.requestSummary')} onBack={onBack} />
       <div className="px-4 space-y-4">
         {/* Host & service summary */}
         <Card className="rounded-2xl">
@@ -271,9 +276,7 @@ function StepPayment({
         <div className="flex gap-3 p-4 bg-teal-50 dark:bg-teal-950/30 rounded-2xl border border-teal-200 dark:border-teal-800">
           <Shield className="h-5 w-5 text-teal-700 shrink-0 mt-0.5" />
           <p className="text-sm text-teal-800 dark:text-teal-200 leading-relaxed">
-            Tu pago queda retenido de forma segura hasta que el servicio sea
-            completado. Si el servicio no se brinda correctamente, puedes
-            cancelar y se te devolvera el dinero.
+            {t('solicitar.escrowExplanation')}
           </p>
         </div>
 
@@ -282,7 +285,7 @@ function StepPayment({
           onClick={handleContinueToCheckout}
         >
           <CreditCard className="h-5 w-5" />
-          Continuar al pago
+          {t('solicitar.continueToPay')}
         </Button>
       </div>
     </>
@@ -300,32 +303,31 @@ function StepActiveService({
   serviceIndex: number
 }) {
   const router = useRouter()
+  const { t } = useTranslation()
   const service = host.services[serviceIndex]
 
   const handleComplete = () => {
-    toast.success('Servicio completado! Pago liberado al anfitrion.')
+    toast.success(t('solicitar.paymentReleasedToHost'))
     router.push('/dashboard')
   }
 
   const handleCancel = () => {
-    const confirmed = window.confirm(
-      'Estas seguro que deseas cancelar el servicio? Se iniciara el proceso de devolucion.'
-    )
+    const confirmed = window.confirm(t('solicitar.confirmCancel'))
     if (confirmed) {
-      toast.info('Servicio cancelado. Tu dinero sera devuelto en 3-5 dias habiles.')
+      toast.info(t('solicitar.cancelledRefund'))
       router.push('/dashboard')
     }
   }
 
   return (
     <>
-      <StepHeader title="Servicio en curso" />
+      <StepHeader title={t('solicitar.serviceInProgress')} />
       <div className="px-4 space-y-4">
         {/* Success confirmation */}
         <div className="flex flex-col items-center py-4">
           <CheckCircle className="h-12 w-12 text-green-500 mb-2" />
           <p className="text-lg font-semibold text-gray-900">
-            Pago retenido — ${service.price} {service.currency}
+            {t('solicitar.paymentHeld')} — ${service.price} {service.currency}
           </p>
         </div>
 
@@ -341,14 +343,14 @@ function StepActiveService({
             />
             <div>
               <h3 className="font-semibold text-gray-900">{host.name}</h3>
-              <p className="text-sm text-gray-500">Tu anfitrion</p>
+              <p className="text-sm text-gray-500">{t('solicitar.yourHost')}</p>
             </div>
           </CardContent>
         </Card>
 
         {/* Info text */}
         <p className="text-sm text-gray-600 text-center">
-          Contacta a tu anfitrion para coordinar el punto de encuentro
+          {t('solicitar.contactHost')}
         </p>
 
         {/* Action buttons */}
@@ -358,7 +360,7 @@ function StepActiveService({
             className="w-full rounded-2xl bg-teal-700 hover:bg-teal-600 text-white h-12 text-base font-semibold flex items-center gap-2"
           >
             <MessageCircle className="h-5 w-5" />
-            Chatear con {host.name}
+            {t('solicitar.chatWith')} {host.name}
           </Button>
 
           <Button
@@ -367,7 +369,7 @@ function StepActiveService({
             onClick={handleComplete}
           >
             <CheckCircle className="h-5 w-5 mr-2" />
-            Servicio completado
+            {t('solicitar.serviceCompleted')}
           </Button>
 
           <Button
@@ -376,7 +378,7 @@ function StepActiveService({
             onClick={handleCancel}
           >
             <X className="h-5 w-5 mr-2" />
-            Cancelar servicio
+            {t('solicitar.cancelService')}
           </Button>
         </div>
 
@@ -384,8 +386,7 @@ function StepActiveService({
         <div className="flex gap-3 p-4 bg-yellow-50 rounded-2xl border border-yellow-200">
           <AlertTriangle className="h-5 w-5 text-yellow-600 shrink-0 mt-0.5" />
           <p className="text-sm text-yellow-800 leading-relaxed">
-            El pago se libera al anfitrion solo cuando confirmes que el servicio
-            fue completado correctamente.
+            {t('solicitar.paymentReleaseWarning')}
           </p>
         </div>
       </div>
@@ -398,6 +399,7 @@ function StepActiveService({
 /* ------------------------------------------------------------------ */
 export default function SolicitarPage() {
   const router = useRouter()
+  const { t } = useTranslation()
   const [step, setStep] = useState(0)
   const [selectedType, setSelectedType] = useState<ServiceType | null>(null)
   const [selectedHost, setSelectedHost] = useState<MapHost | null>(null)
@@ -410,12 +412,12 @@ export default function SolicitarPage() {
         <button
           onClick={() => router.push('/dashboard')}
           className="p-1.5 rounded-full hover:bg-gray-200 transition-colors"
-          aria-label="Cerrar"
+          aria-label={t('common.close')}
         >
           <X className="h-5 w-5 text-gray-600" />
         </button>
         <span className="text-sm font-medium text-gray-500">
-          Solicitar anfitrion
+          {t('solicitar.title')}
         </span>
         <div className="w-8" /> {/* spacer */}
       </div>

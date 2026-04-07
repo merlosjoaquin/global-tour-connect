@@ -16,12 +16,14 @@ import { Separator } from '@/components/ui/separator'
 import { StarRating } from '@/components/star-rating'
 import { getServiceWithHost, MOCK_REVIEWS } from '@/lib/mock-data'
 import { SERVICE_TYPES } from '@/lib/constants'
+import { useTranslation } from '@/stores/language-store'
 
 export default function ServiceDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params)
   const router = useRouter()
   const [currentPhoto, setCurrentPhoto] = useState(0)
   const [liked, setLiked] = useState(false)
+  const { t } = useTranslation()
 
   const service = getServiceWithHost(id)
 
@@ -29,9 +31,9 @@ export default function ServiceDetailPage({ params }: { params: Promise<{ id: st
     return (
       <div className="flex items-center justify-center min-h-[50vh]">
         <div className="text-center">
-          <p className="text-lg font-medium">Servicio no encontrado</p>
-          <Button render={<Link href="/dashboard" />} variant="link" className="text-teal-700 mt-2">
-            Volver al inicio
+          <p className="text-lg font-medium">{t('service.notFound')}</p>
+          <Button render={<Link href="/dashboard" />} variant="link" className="text-teal-700 dark:text-teal-400 mt-2">
+            {t('service.backToHome')}
           </Button>
         </div>
       </div>
@@ -93,12 +95,12 @@ export default function ServiceDetailPage({ params }: { params: Promise<{ id: st
         <div className="absolute top-4 right-4 flex gap-2">
           <button
             onClick={() => setLiked(!liked)}
-            className="w-9 h-9 bg-white/90 rounded-full flex items-center justify-center shadow"
+            className="w-9 h-9 bg-white/90 dark:bg-black/50 rounded-full flex items-center justify-center shadow"
           >
-            <Heart className={`h-5 w-5 ${liked ? 'fill-red-500 text-red-500' : 'text-gray-600'}`} />
+            <Heart className={`h-5 w-5 ${liked ? 'fill-red-500 text-red-500' : 'text-gray-600 dark:text-gray-300'}`} />
           </button>
-          <button className="w-9 h-9 bg-white/90 rounded-full flex items-center justify-center shadow">
-            <Share2 className="h-5 w-5 text-gray-600" />
+          <button className="w-9 h-9 bg-white/90 dark:bg-black/50 rounded-full flex items-center justify-center shadow">
+            <Share2 className="h-5 w-5 text-gray-600 dark:text-gray-300" />
           </button>
         </div>
       </div>
@@ -107,7 +109,7 @@ export default function ServiceDetailPage({ params }: { params: Promise<{ id: st
       <div className="px-4 py-4 space-y-4">
         {/* Header */}
         <div>
-          <Badge className="mb-2 bg-teal-50 text-teal-800 border-teal-200">
+          <Badge className="mb-2 bg-teal-50 text-teal-800 dark:bg-teal-950/40 dark:text-teal-300 border-teal-200 dark:border-teal-800">
             {typeInfo.emoji} {typeInfo.label}
           </Badge>
           <h1 className="text-2xl font-bold">{service.title}</h1>
@@ -115,7 +117,7 @@ export default function ServiceDetailPage({ params }: { params: Promise<{ id: st
             <div className="flex items-center gap-1">
               <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
               <span className="font-medium text-foreground">{service.rating_avg}</span>
-              <span>({service.total_bookings} reservas)</span>
+              <span>({service.total_bookings} {t('service.bookings')})</span>
             </div>
             <div className="flex items-center gap-1">
               <MapPin className="h-4 w-4" />
@@ -129,10 +131,10 @@ export default function ServiceDetailPage({ params }: { params: Promise<{ id: st
         {/* Price & duration */}
         <div className="flex items-center justify-between">
           <div>
-            <span className="text-3xl font-bold text-teal-700">${service.price}</span>
+            <span className="text-3xl font-bold text-teal-700 dark:text-teal-400">${service.price}</span>
             <span className="text-sm text-muted-foreground ml-1">USD</span>
             {service.type === 'language_assistant' && (
-              <span className="text-sm text-muted-foreground"> /min</span>
+              <span className="text-sm text-muted-foreground"> {t('service.perMin')}</span>
             )}
           </div>
           <div className="flex items-center gap-1 text-sm text-muted-foreground">
@@ -145,7 +147,7 @@ export default function ServiceDetailPage({ params }: { params: Promise<{ id: st
 
         {/* Description */}
         <div>
-          <h2 className="font-semibold mb-2">Descripcion</h2>
+          <h2 className="font-semibold mb-2">{t('service.description')}</h2>
           <p className="text-sm text-muted-foreground leading-relaxed">
             {service.description}
           </p>
@@ -155,7 +157,7 @@ export default function ServiceDetailPage({ params }: { params: Promise<{ id: st
 
         {/* Host profile */}
         <div>
-          <h2 className="font-semibold mb-3">Tu anfitrion</h2>
+          <h2 className="font-semibold mb-3">{t('service.yourHost')}</h2>
           <Card className="rounded-2xl">
             <CardContent className="p-4">
               <div className="flex items-center gap-3">
@@ -167,13 +169,13 @@ export default function ServiceDetailPage({ params }: { params: Promise<{ id: st
                   <div className="flex items-center gap-2">
                     <p className="font-semibold">{host.full_name}</p>
                     {host.badges.includes('verified') && (
-                      <Shield className="h-4 w-4 text-teal-700" />
+                      <Shield className="h-4 w-4 text-teal-700 dark:text-teal-400" />
                     )}
                   </div>
                   <div className="flex items-center gap-1 text-sm text-muted-foreground">
                     <Star className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />
                     <span>{host.rating_avg}</span>
-                    <span>({host.total_reviews} resenas)</span>
+                    <span>({host.total_reviews} {t('profile.reviews')})</span>
                   </div>
                   <p className="text-xs text-muted-foreground mt-1">
                     {host.city}, {host.country}
@@ -191,8 +193,8 @@ export default function ServiceDetailPage({ params }: { params: Promise<{ id: st
                 ))}
               </div>
               {host.badges.includes('super_host') && (
-                <Badge className="mt-2 bg-yellow-100 text-yellow-800 border-yellow-300">
-                  Super Anfitrion
+                <Badge className="mt-2 bg-yellow-100 text-yellow-800 dark:bg-yellow-900/40 dark:text-yellow-300 border-yellow-300 dark:border-yellow-800">
+                  {t('profile.superHost')}
                 </Badge>
               )}
             </CardContent>
@@ -203,7 +205,7 @@ export default function ServiceDetailPage({ params }: { params: Promise<{ id: st
 
         {/* Reviews */}
         <div>
-          <h2 className="font-semibold mb-3">Resenas</h2>
+          <h2 className="font-semibold mb-3">{t('service.reviews')}</h2>
           {reviews.length > 0 ? (
             <div className="space-y-3">
               {reviews.map(review => (
@@ -228,16 +230,16 @@ export default function ServiceDetailPage({ params }: { params: Promise<{ id: st
               ))}
             </div>
           ) : (
-            <p className="text-sm text-muted-foreground">Aun no hay resenas para este servicio.</p>
+            <p className="text-sm text-muted-foreground">{t('service.noReviews')}</p>
           )}
         </div>
       </div>
 
-      {/* Fixed bottom CTA — simplified */}
+      {/* Fixed bottom CTA */}
       <div className="fixed bottom-16 left-0 right-0 p-4 bg-background/95 backdrop-blur border-t">
         <div className="max-w-lg mx-auto flex items-center gap-3">
           <div className="flex-1">
-            <span className="text-2xl font-bold text-teal-700">${service.price}</span>
+            <span className="text-2xl font-bold text-teal-700 dark:text-teal-400">${service.price}</span>
             <span className="text-sm text-muted-foreground ml-1">USD</span>
           </div>
           <Button
@@ -245,7 +247,7 @@ export default function ServiceDetailPage({ params }: { params: Promise<{ id: st
             className="bg-teal-700 hover:bg-teal-600 px-8 rounded-full"
             size="lg"
           >
-            Reservar
+            {t('service.book')}
           </Button>
         </div>
       </div>

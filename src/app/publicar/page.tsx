@@ -17,6 +17,7 @@ import {
   Image as ImageIcon, DollarSign, Clock, CheckCircle
 } from 'lucide-react'
 import { SERVICE_TYPES } from '@/lib/constants'
+import { useTranslation } from '@/stores/language-store'
 import type { ServiceType } from '@/types/database'
 
 const serviceIcons: Record<ServiceType, typeof MapPin> = {
@@ -42,6 +43,7 @@ export default function PublicarPage() {
   const [step, setStep] = useState(1)
   const [selectedType, setSelectedType] = useState<ServiceType | null>(null)
   const [loading, setLoading] = useState(false)
+  const { t } = useTranslation()
 
   const { register, handleSubmit, watch, formState: { errors } } = useForm<ServiceForm>({
     defaultValues: {
@@ -55,11 +57,8 @@ export default function PublicarPage() {
   async function onSubmit(data: ServiceForm) {
     if (!selectedType) return
     setLoading(true)
-
-    // Simulate API call
     await new Promise(r => setTimeout(r, 1500))
-
-    toast.success('Servicio publicado exitosamente!')
+    toast.success(t('publish.publishSuccess'))
     setLoading(false)
     router.push('/dashboard')
   }
@@ -82,8 +81,8 @@ export default function PublicarPage() {
       {step === 1 && (
         <Card>
           <CardHeader>
-            <CardTitle>Que tipo de servicio ofreces?</CardTitle>
-            <CardDescription>Selecciona la categoria que mejor describa tu servicio</CardDescription>
+            <CardTitle>{t('publish.whatType')}</CardTitle>
+            <CardDescription>{t('publish.selectCategory')}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
             {Object.entries(SERVICE_TYPES).map(([key, { label, emoji }]) => {
@@ -97,12 +96,12 @@ export default function PublicarPage() {
                   }}
                   className={`w-full flex items-center gap-4 p-4 rounded-2xl border transition-all hover:shadow-md ${
                     selectedType === key
-                      ? 'border-teal-700 bg-teal-50'
-                      : 'border-border hover:border-teal-300'
+                      ? 'border-teal-700 bg-teal-50 dark:bg-teal-950/30'
+                      : 'border-border hover:border-teal-300 dark:hover:border-teal-700'
                   }`}
                 >
-                  <div className="w-12 h-12 rounded-xl bg-teal-50 flex items-center justify-center flex-shrink-0">
-                    <Icon className="h-6 w-6 text-teal-700" />
+                  <div className="w-12 h-12 rounded-xl bg-teal-50 dark:bg-teal-950/40 flex items-center justify-center flex-shrink-0">
+                    <Icon className="h-6 w-6 text-teal-700 dark:text-teal-400" />
                   </div>
                   <div className="text-left">
                     <p className="font-medium">{emoji} {label}</p>
@@ -119,34 +118,34 @@ export default function PublicarPage() {
         <form onSubmit={handleSubmit(() => setStep(3))} className="space-y-4">
           <Card>
             <CardHeader>
-              <CardTitle>Detalles del servicio</CardTitle>
+              <CardTitle>{t('publish.serviceDetails')}</CardTitle>
               <CardDescription>
                 {SERVICE_TYPES[selectedType].emoji} {SERVICE_TYPES[selectedType].label}
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-1">
-                <Label htmlFor="title">Titulo</Label>
+                <Label htmlFor="title">{t('publish.title')}</Label>
                 <Input
                   id="title"
                   {...register('title', { required: true, minLength: 5 })}
-                  placeholder="Ej: Tour secreto por el Centro Historico"
+                  placeholder={t('publish.titlePlaceholder')}
                 />
                 {errors.title && (
-                  <p className="text-xs text-destructive">{errors.title.message || 'Requerido'}</p>
+                  <p className="text-xs text-destructive">{errors.title.message || t('common.required')}</p>
                 )}
               </div>
 
               <div className="space-y-1">
-                <Label htmlFor="description">Descripcion</Label>
+                <Label htmlFor="description">{t('publish.description')}</Label>
                 <Textarea
                   id="description"
                   {...register('description', { required: true, minLength: 20 })}
-                  placeholder="Describe tu servicio con detalle..."
+                  placeholder={t('publish.descriptionPlaceholder')}
                   rows={4}
                 />
                 {errors.description && (
-                  <p className="text-xs text-destructive">{errors.description.message || 'Requerido'}</p>
+                  <p className="text-xs text-destructive">{errors.description.message || t('common.required')}</p>
                 )}
               </div>
 
@@ -154,7 +153,7 @@ export default function PublicarPage() {
                 <div className="space-y-1">
                   <Label htmlFor="price">
                     <DollarSign className="inline h-3.5 w-3.5" />
-                    Precio (USD)
+                    {t('publish.priceUSD')}
                   </Label>
                   <Input
                     id="price"
@@ -167,7 +166,7 @@ export default function PublicarPage() {
                 <div className="space-y-1">
                   <Label htmlFor="duration">
                     <Clock className="inline h-3.5 w-3.5" />
-                    Duracion (min)
+                    {t('publish.durationMin')}
                   </Label>
                   <Input
                     id="duration"
@@ -182,34 +181,33 @@ export default function PublicarPage() {
               <div className="space-y-1">
                 <Label htmlFor="address">
                   <MapPin className="inline h-3.5 w-3.5" />
-                  Ubicacion
+                  {t('publish.location')}
                 </Label>
                 <Input
                   id="address"
                   {...register('address', { required: true, minLength: 5 })}
-                  placeholder="Ej: Zocalo, Centro Historico, CDMX"
+                  placeholder={t('publish.locationPlaceholder')}
                 />
                 {errors.address && (
-                  <p className="text-xs text-destructive">{errors.address.message || 'Requerido'}</p>
+                  <p className="text-xs text-destructive">{errors.address.message || t('common.required')}</p>
                 )}
               </div>
 
-              {/* Photo upload placeholder */}
               <div className="space-y-1">
-                <Label>Fotos</Label>
-                <div className="border-2 border-dashed rounded-lg p-6 text-center text-muted-foreground hover:border-teal-300 transition-colors cursor-pointer">
+                <Label>{t('publish.photos')}</Label>
+                <div className="border-2 border-dashed rounded-lg p-6 text-center text-muted-foreground hover:border-teal-300 dark:hover:border-teal-700 transition-colors cursor-pointer">
                   <ImageIcon className="h-8 w-8 mx-auto mb-2" />
-                  <p className="text-sm">Toca para agregar fotos</p>
-                  <p className="text-xs">PNG, JPG hasta 5MB</p>
+                  <p className="text-sm">{t('publish.tapToAddPhotos')}</p>
+                  <p className="text-xs">{t('publish.photoFormat')}</p>
                 </div>
               </div>
 
               <div className="flex gap-2">
                 <Button type="button" variant="outline" onClick={() => setStep(1)} className="flex-1 rounded-full">
-                  Atras
+                  {t('common.previous')}
                 </Button>
                 <Button type="submit" className="flex-1 bg-teal-700 hover:bg-teal-600 rounded-full">
-                  Vista previa
+                  {t('publish.previewBtn')}
                 </Button>
               </div>
             </CardContent>
@@ -222,29 +220,29 @@ export default function PublicarPage() {
         <div className="space-y-4">
           <Card>
             <CardHeader>
-              <CardTitle>Vista previa</CardTitle>
-              <CardDescription>Asi se vera tu servicio para los exploradores</CardDescription>
+              <CardTitle>{t('publish.preview')}</CardTitle>
+              <CardDescription>{t('publish.previewDesc')}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="rounded-lg bg-muted h-40 flex items-center justify-center">
                 <div className="text-center">
                   <ImageIcon className="h-10 w-10 text-muted-foreground mx-auto mb-1" />
-                  <p className="text-xs text-muted-foreground">Sin fotos</p>
+                  <p className="text-xs text-muted-foreground">{t('publish.noPhotos')}</p>
                 </div>
               </div>
 
-              <Badge className="bg-teal-50 text-teal-800 border-teal-200">
+              <Badge className="bg-teal-50 text-teal-800 dark:bg-teal-950/40 dark:text-teal-300 border-teal-200 dark:border-teal-800">
                 {SERVICE_TYPES[selectedType].emoji} {SERVICE_TYPES[selectedType].label}
               </Badge>
 
-              <h3 className="text-xl font-bold">{formValues.title || 'Sin titulo'}</h3>
-              <p className="text-sm text-muted-foreground">{formValues.description || 'Sin descripcion'}</p>
+              <h3 className="text-xl font-bold">{formValues.title || t('publish.noTitle')}</h3>
+              <p className="text-sm text-muted-foreground">{formValues.description || t('publish.noDescription')}</p>
 
               <Separator />
 
               <div className="flex items-center justify-between text-sm">
                 <div className="flex items-center gap-2">
-                  <DollarSign className="h-4 w-4 text-teal-700" />
+                  <DollarSign className="h-4 w-4 text-teal-700 dark:text-teal-400" />
                   <span className="font-bold text-lg">${formValues.price || 0} USD</span>
                 </div>
                 <div className="flex items-center gap-2 text-muted-foreground">
@@ -255,15 +253,15 @@ export default function PublicarPage() {
 
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <MapPin className="h-4 w-4" />
-                <span>{formValues.address || 'Sin ubicacion'}</span>
+                <span>{formValues.address || t('publish.noLocation')}</span>
               </div>
 
               <Separator />
 
               <div className="bg-muted/50 rounded-lg p-3 text-xs text-muted-foreground">
-                <p className="font-medium text-foreground mb-1">Comision de la plataforma</p>
-                <p>Se aplicara una comision del {(formValues.price || 0) < 50 ? '20%' : '15%'} por transaccion.</p>
-                <p className="mt-1">Tu recibiras: <span className="font-bold text-teal-700">
+                <p className="font-medium text-foreground mb-1">{t('publish.platformCommission')}</p>
+                <p>{(formValues.price || 0) < 50 ? t('publish.commissionDesc20') : t('publish.commissionDesc15')}</p>
+                <p className="mt-1">{t('publish.youReceive')}: <span className="font-bold text-teal-700 dark:text-teal-400">
                   ${((formValues.price || 0) * (1 - ((formValues.price || 0) < 50 ? 0.20 : 0.15))).toFixed(2)} USD
                 </span></p>
               </div>
@@ -272,7 +270,7 @@ export default function PublicarPage() {
 
           <div className="flex gap-2">
             <Button variant="outline" onClick={() => setStep(2)} className="flex-1 rounded-full">
-              Editar
+              {t('common.edit')}
             </Button>
             <Button
               onClick={handleSubmit(onSubmit)}
@@ -284,7 +282,7 @@ export default function PublicarPage() {
               ) : (
                 <CheckCircle className="mr-2 h-4 w-4" />
               )}
-              Publicar
+              {t('publish.publishBtn')}
             </Button>
           </div>
         </div>

@@ -17,14 +17,16 @@ import {
 } from 'lucide-react'
 import { getServiceWithHost } from '@/lib/mock-data'
 import { SERVICE_TYPES, getCommissionRate } from '@/lib/constants'
+import { useTranslation } from '@/stores/language-store'
 
 export default function ReservaPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params)
   const router = useRouter()
-  const [step, setStep] = useState(1) // 1: date, 2: payment, 3: confirmation
+  const [step, setStep] = useState(1)
   const [selectedDate, setSelectedDate] = useState('')
   const [selectedTime, setSelectedTime] = useState('')
   const [loading, setLoading] = useState(false)
+  const { t } = useTranslation()
 
   const service = getServiceWithHost(id)
 
@@ -32,9 +34,9 @@ export default function ReservaPage({ params }: { params: Promise<{ id: string }
     return (
       <div className="flex items-center justify-center min-h-[50vh]">
         <div className="text-center">
-          <p className="text-lg font-medium">Servicio no encontrado</p>
-          <Button render={<Link href="/dashboard" />} variant="link" className="text-teal-700 mt-2">
-            Volver al inicio
+          <p className="text-lg font-medium">{t('service.notFound')}</p>
+          <Button render={<Link href="/dashboard" />} variant="link" className="text-teal-700 dark:text-teal-400 mt-2">
+            {t('service.backToHome')}
           </Button>
         </div>
       </div>
@@ -43,8 +45,6 @@ export default function ReservaPage({ params }: { params: Promise<{ id: string }
 
   const host = service.host!
   const typeInfo = SERVICE_TYPES[service.type]
-  const commissionRate = getCommissionRate(service.price)
-  const commissionAmount = service.price * commissionRate
 
   const availableTimes = [
     '09:00', '09:30', '10:00', '10:30', '11:00', '11:30',
@@ -54,16 +54,12 @@ export default function ReservaPage({ params }: { params: Promise<{ id: string }
 
   async function handlePayment() {
     setLoading(true)
-
-    // Simulate Stripe payment
     await new Promise(r => setTimeout(r, 2000))
-
     setLoading(false)
     setStep(3)
-    toast.success('Reserva confirmada!')
+    toast.success(t('booking.bookingConfirmed'))
   }
 
-  // Get min date (tomorrow)
   const minDate = new Date()
   minDate.setDate(minDate.getDate() + 1)
   const minDateStr = minDate.toISOString().split('T')[0]
@@ -72,21 +68,21 @@ export default function ReservaPage({ params }: { params: Promise<{ id: string }
     <div className="max-w-lg mx-auto px-4 py-6 space-y-4">
       {/* Progress */}
       <div className="flex items-center gap-2 mb-2">
-        {['Fecha', 'Pago', 'Confirmacion'].map((label, i) => (
+        {[t('booking.progressDate'), t('booking.progressPayment'), t('booking.progressConfirmation')].map((label, i) => (
           <div key={label} className="flex-1 text-center">
             <div
               className={`h-1.5 rounded-full mb-1 ${
                 i + 1 <= step ? 'bg-teal-700' : 'bg-muted'
               }`}
             />
-            <span className={`text-[10px] ${i + 1 <= step ? 'text-teal-700 font-medium' : 'text-muted-foreground'}`}>
+            <span className={`text-[10px] ${i + 1 <= step ? 'text-teal-700 dark:text-teal-400 font-medium' : 'text-muted-foreground'}`}>
               {label}
             </span>
           </div>
         ))}
       </div>
 
-      {/* Service summary (always visible) */}
+      {/* Service summary */}
       <Card>
         <CardContent className="p-3">
           <div className="flex items-center gap-3">
@@ -98,7 +94,7 @@ export default function ReservaPage({ params }: { params: Promise<{ id: string }
               )}
             </div>
             <div className="flex-1 min-w-0">
-              <Badge className="text-[10px] mb-1 bg-teal-50 text-teal-800">{typeInfo.label}</Badge>
+              <Badge className="text-[10px] mb-1 bg-teal-50 text-teal-800 dark:bg-teal-950/40 dark:text-teal-300">{typeInfo.label}</Badge>
               <p className="font-semibold text-sm truncate">{service.title}</p>
               <div className="flex items-center gap-2 text-xs text-muted-foreground">
                 <span className="flex items-center gap-0.5">
@@ -110,7 +106,7 @@ export default function ReservaPage({ params }: { params: Promise<{ id: string }
               </div>
             </div>
             <div className="text-right">
-              <p className="text-lg font-bold text-teal-700">${service.price}</p>
+              <p className="text-lg font-bold text-teal-700 dark:text-teal-400">${service.price}</p>
               <p className="text-[10px] text-muted-foreground">USD</p>
             </div>
           </div>
@@ -122,14 +118,14 @@ export default function ReservaPage({ params }: { params: Promise<{ id: string }
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Calendar className="h-5 w-5 text-teal-700" />
-              Selecciona fecha y hora
+              <Calendar className="h-5 w-5 text-teal-700 dark:text-teal-400" />
+              {t('booking.selectDateTime')}
             </CardTitle>
-            <CardDescription>Elige cuando quieres vivir esta experiencia</CardDescription>
+            <CardDescription>{t('booking.selectDateTimeDesc')}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-1">
-              <Label htmlFor="date">Fecha</Label>
+              <Label htmlFor="date">{t('booking.date')}</Label>
               <Input
                 id="date"
                 type="date"
@@ -141,7 +137,7 @@ export default function ReservaPage({ params }: { params: Promise<{ id: string }
 
             {selectedDate && (
               <div className="space-y-2">
-                <Label>Hora disponible</Label>
+                <Label>{t('booking.availableTime')}</Label>
                 <div className="grid grid-cols-4 gap-2">
                   {availableTimes.map(time => (
                     <button
@@ -150,7 +146,7 @@ export default function ReservaPage({ params }: { params: Promise<{ id: string }
                       className={`py-2 px-1 rounded-full text-sm font-medium transition-colors ${
                         selectedTime === time
                           ? 'bg-teal-700 text-white'
-                          : 'bg-muted hover:bg-teal-50 text-foreground'
+                          : 'bg-muted hover:bg-teal-50 dark:hover:bg-teal-950/30 text-foreground'
                       }`}
                     >
                       {time}
@@ -165,7 +161,7 @@ export default function ReservaPage({ params }: { params: Promise<{ id: string }
               className="w-full bg-teal-700 hover:bg-teal-600"
               disabled={!selectedDate || !selectedTime}
             >
-              Continuar al pago
+              {t('booking.continueToPay')}
             </Button>
           </CardContent>
         </Card>
@@ -176,46 +172,44 @@ export default function ReservaPage({ params }: { params: Promise<{ id: string }
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <CreditCard className="h-5 w-5 text-teal-700" />
-              Pago seguro
+              <CreditCard className="h-5 w-5 text-teal-700 dark:text-teal-400" />
+              {t('booking.securePayment')}
             </CardTitle>
-            <CardDescription>Procesado por Stripe</CardDescription>
+            <CardDescription>{t('booking.processedByStripe')}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            {/* Reservation summary */}
             <div className="bg-muted/50 rounded-lg p-3 space-y-2 text-sm">
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Fecha</span>
+                <span className="text-muted-foreground">{t('booking.dateLabel')}</span>
                 <span className="font-medium">{new Date(selectedDate).toLocaleDateString('es', { weekday: 'long', day: 'numeric', month: 'long' })}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Hora</span>
+                <span className="text-muted-foreground">{t('booking.timeLabel')}</span>
                 <span className="font-medium">{selectedTime}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Anfitrion</span>
+                <span className="text-muted-foreground">{t('booking.hostLabel')}</span>
                 <span className="font-medium">{host.full_name}</span>
               </div>
               <Separator />
               <div className="flex justify-between font-bold">
-                <span>Total</span>
-                <span className="text-teal-700">${service.price} USD</span>
+                <span>{t('booking.total')}</span>
+                <span className="text-teal-700 dark:text-teal-400">${service.price} USD</span>
               </div>
             </div>
 
-            {/* Stripe card form (mock) */}
             <div className="space-y-3">
               <div className="space-y-1">
-                <Label>Numero de tarjeta</Label>
+                <Label>{t('booking.cardNumber')}</Label>
                 <Input placeholder="4242 4242 4242 4242" defaultValue="4242 4242 4242 4242" />
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-1">
-                  <Label>Vencimiento</Label>
+                  <Label>{t('booking.expiry')}</Label>
                   <Input placeholder="MM/AA" defaultValue="12/28" />
                 </div>
                 <div className="space-y-1">
-                  <Label>CVC</Label>
+                  <Label>{t('booking.cvc')}</Label>
                   <Input placeholder="123" defaultValue="123" />
                 </div>
               </div>
@@ -223,12 +217,12 @@ export default function ReservaPage({ params }: { params: Promise<{ id: string }
 
             <div className="flex items-center gap-2 text-xs text-muted-foreground">
               <Shield className="h-4 w-4 text-green-600" />
-              <span>Pago seguro con encriptacion SSL. Modo de prueba — no se cobrara.</span>
+              <span>{t('booking.securePaymentNote')}</span>
             </div>
 
             <div className="flex gap-2">
               <Button variant="outline" onClick={() => setStep(1)} className="flex-1">
-                Atras
+                {t('common.previous')}
               </Button>
               <Button
                 onClick={handlePayment}
@@ -240,7 +234,7 @@ export default function ReservaPage({ params }: { params: Promise<{ id: string }
                 ) : (
                   <DollarSign className="mr-2 h-4 w-4" />
                 )}
-                Pagar ${service.price}
+                {t('booking.payAmount')} ${service.price}
               </Button>
             </div>
           </CardContent>
@@ -251,41 +245,43 @@ export default function ReservaPage({ params }: { params: Promise<{ id: string }
       {step === 3 && (
         <Card>
           <CardContent className="p-8 text-center space-y-4">
-            <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto">
-              <CheckCircle className="h-8 w-8 text-green-600" />
+            <div className="w-16 h-16 rounded-full bg-green-100 dark:bg-green-900/40 flex items-center justify-center mx-auto">
+              <CheckCircle className="h-8 w-8 text-green-600 dark:text-green-400" />
             </div>
-            <h2 className="text-xl font-bold">Reserva confirmada!</h2>
+            <h2 className="text-xl font-bold">{t('booking.confirmed')}</h2>
             <p className="text-sm text-muted-foreground">
-              Tu experiencia con {host.full_name} esta confirmada para el{' '}
-              {new Date(selectedDate).toLocaleDateString('es', { day: 'numeric', month: 'long' })} a las {selectedTime}.
+              {t('booking.confirmedDesc')
+                .replace('{host}', host.full_name)
+                .replace('{date}', new Date(selectedDate).toLocaleDateString('es', { day: 'numeric', month: 'long' }))
+                .replace('{time}', selectedTime)}
             </p>
 
             <div className="bg-muted/50 rounded-lg p-4 text-sm space-y-2">
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Servicio</span>
+                <span className="text-muted-foreground">{t('booking.serviceLabel')}</span>
                 <span className="font-medium">{service.title}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Duracion</span>
+                <span className="text-muted-foreground">{t('booking.durationLabel')}</span>
                 <span>{service.duration_minutes} min</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Punto de encuentro</span>
+                <span className="text-muted-foreground">{t('booking.meetingPoint')}</span>
                 <span className="text-right max-w-[60%]">{service.address}</span>
               </div>
               <Separator />
               <div className="flex justify-between font-bold">
-                <span>Total pagado</span>
-                <span className="text-teal-700">${service.price} USD</span>
+                <span>{t('booking.totalPaid')}</span>
+                <span className="text-teal-700 dark:text-teal-400">${service.price} USD</span>
               </div>
             </div>
 
             <div className="flex flex-col gap-2">
               <Button render={<Link href="/chat" />} className="bg-teal-700 hover:bg-teal-600">
-                Chatear con {host.full_name}
+                {t('booking.chatWith')} {host.full_name}
               </Button>
               <Button render={<Link href="/dashboard" />} variant="outline">
-                Ir al dashboard
+                {t('booking.goToDashboard')}
               </Button>
             </div>
           </CardContent>

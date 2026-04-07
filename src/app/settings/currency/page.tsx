@@ -11,8 +11,10 @@ import { Card } from '@/components/ui/card'
 import { Switch } from '@/components/ui/switch'
 import { CurrencySwitcher } from '@/components/currency/CurrencySwitcher'
 import { DemoHeader } from '@/components/currency/DemoHeader'
+import { useTranslation } from '@/stores/language-store'
 
 export default function CurrencySettingsPage() {
+  const { t } = useTranslation()
   const {
     preferredCurrency,
     detectedCurrency,
@@ -35,28 +37,28 @@ export default function CurrencySettingsPage() {
     setPreferredCurrency(draft)
     setAutoDetect(draftAuto)
     setSaving(false)
-    toast.success('Preferencias guardadas', {
-      description: `Divisa de visualizacion: ${currency.name} (${draft}).`,
+    toast.success(t('currencySettings.saved'), {
+      description: t('currencySettings.savedDesc') + ': ' + currency.name + ' (' + draft + ').',
     })
   }
 
   return (
     <div className="min-h-dvh bg-muted/30">
-      <DemoHeader title="Divisa" backHref="/settings" />
+      <DemoHeader title={t('currencySettings.title')} backHref="/settings" />
       <main className="mx-auto max-w-2xl px-4 pb-24 pt-6 sm:pt-10">
         <div className="mb-5">
           <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
-            Preferencias de divisa
+            {t('currencySettings.heading')}
           </h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Controla como se muestran los precios y ganancias en la app.
+            {t('currencySettings.subtitle')}
           </p>
         </div>
 
         {/* Current currency */}
         <Card className="overflow-hidden rounded-2xl border-0 bg-gradient-to-br from-primary/10 via-primary/5 to-transparent p-5 ring-1 ring-primary/20">
           <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
-            Divisa de visualizacion actual
+            {t('currencySettings.currentCurrency')}
           </p>
           <div className="mt-2 flex items-center gap-3">
             <span className="text-5xl leading-none" aria-hidden="true">
@@ -79,10 +81,10 @@ export default function CurrencySettingsPage() {
         {/* Currency switcher */}
         <Card className="mt-4 rounded-2xl p-5">
           <h2 className="font-heading text-sm font-semibold">
-            Cambiar divisa de visualizacion
+            {t('currencySettings.changeCurrency')}
           </h2>
           <p className="mt-1 text-xs text-muted-foreground">
-            Busca y elige entre 12 divisas disponibles.
+            {t('currencySettings.searchCurrencies')}
           </p>
           <div className="mt-3">
             <CurrencySwitcher value={draft} onChange={setDraft} />
@@ -94,23 +96,22 @@ export default function CurrencySettingsPage() {
           <div className="flex items-start justify-between gap-4">
             <div className="min-w-0 flex-1">
               <h2 className="font-heading text-sm font-semibold">
-                Detectar automaticamente por ubicacion
+                {t('currencySettings.autoDetect')}
               </h2>
               <p className="mt-1 text-xs text-muted-foreground">
-                Cuando esta activo, mostraremos los precios en tu divisa local
-                detectada cuando viajes.
+                {t('currencySettings.autoDetectDesc')}
               </p>
               {detectedCurrency && (
                 <div className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-muted px-2.5 py-1 text-xs">
                   <Check className="h-3 w-3 text-primary" aria-hidden="true" />
-                  Detectada: {detectedCurrency}
+                  {t('currencySettings.detected')}: {detectedCurrency}
                 </div>
               )}
             </div>
             <Switch
               checked={draftAuto}
               onCheckedChange={setDraftAuto}
-              aria-label="Detectar divisa automaticamente por ubicacion"
+              aria-label={t('currencySettings.autoDetect')}
             />
           </div>
         </Card>
@@ -122,10 +123,8 @@ export default function CurrencySettingsPage() {
             aria-hidden="true"
           />
           <p>
-            Tu saldo se almacena en{' '}
-            <span className="font-semibold text-foreground">USD</span>. La divisa
-            de visualizacion solo afecta como se muestran los montos — la conversion
-            real ocurre al momento del retiro, a la tasa de mercado vigente.
+            {t('currencySettings.infoNote')}{' '}
+            <span className="font-semibold text-foreground">{t('currencySettings.infoNoteUSD')}</span>{t('currencySettings.infoNoteDesc')}
           </p>
         </div>
 
@@ -138,18 +137,18 @@ export default function CurrencySettingsPage() {
         >
           <div className="flex items-center gap-2 rounded-full border bg-background/95 p-1.5 pl-4 shadow-lg backdrop-blur">
             <span className="text-xs text-muted-foreground">
-              Tienes cambios sin guardar
+              {t('currencySettings.unsavedChanges')}
             </span>
             <Button onClick={handleSave} disabled={saving} className="gap-1.5">
               {saving ? (
                 <>
                   <Save className="h-4 w-4 animate-pulse" />
-                  Guardando...
+                  {t('currencySettings.saving')}
                 </>
               ) : (
                 <>
                   <Save className="h-4 w-4" />
-                  Guardar preferencias
+                  {t('currencySettings.savePreferences')}
                 </>
               )}
             </Button>

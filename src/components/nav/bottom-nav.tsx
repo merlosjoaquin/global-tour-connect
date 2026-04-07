@@ -4,18 +4,20 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Home, MessageCircle, User } from 'lucide-react'
 import { cn } from '@/lib/utils'
-
-const NAV_ITEMS = [
-  { href: '/dashboard', icon: Home, label: 'Inicio' },
-  { href: '/chat', icon: MessageCircle, label: 'Chat' },
-  { href: '/perfil', icon: User, label: 'Perfil' },
-]
+import { useTranslation } from '@/stores/language-store'
 
 export function BottomNav() {
   const pathname = usePathname()
+  const { t } = useTranslation()
 
   // Don't show on auth or intro pages
   if (pathname === '/auth' || pathname === '/intro' || pathname === '/onboarding' || pathname === '/solicitar') return null
+
+  const NAV_ITEMS = [
+    { href: '/dashboard', icon: Home, label: t('nav.home') },
+    { href: '/chat', icon: MessageCircle, label: t('nav.chat') },
+    { href: '/perfil', icon: User, label: t('nav.profile') },
+  ]
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 border-t bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 safe-area-bottom">

@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Send, ArrowLeft, Phone, MoreVertical } from 'lucide-react'
 import { MOCK_PROFILES } from '@/lib/mock-data'
+import { useTranslation } from '@/stores/language-store'
 
 interface ChatMessage {
   id: string
@@ -54,6 +55,7 @@ export default function ChatPage() {
   const [newMessage, setNewMessage] = useState('')
   const [messages, setMessages] = useState<Record<string, ChatMessage[]>>(MOCK_MESSAGES)
   const messagesEndRef = useRef<HTMLDivElement>(null)
+  const { t } = useTranslation()
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -84,7 +86,7 @@ export default function ChatPage() {
       const reply: ChatMessage = {
         id: `m-reply-${Date.now()}`,
         senderId: conv?.hostId || '',
-        content: `${host?.full_name || 'Anfitrion'}: Recibido! Te respondere pronto.`,
+        content: `${host?.full_name || t('chat.host')}: ${t('chat.received')}`,
         timestamp: new Date().toLocaleTimeString('es', { hour: '2-digit', minute: '2-digit' }),
         isMe: false,
       }
@@ -114,7 +116,7 @@ export default function ChatPage() {
           </Avatar>
           <div className="flex-1 min-w-0">
             <p className="font-semibold text-sm truncate">{host.full_name}</p>
-            <p className="text-xs text-green-600">En linea</p>
+            <p className="text-xs text-green-600">{t('chat.online')}</p>
           </div>
           <button className="p-2"><Phone className="h-4 w-4 text-muted-foreground" /></button>
           <button className="p-2"><MoreVertical className="h-4 w-4 text-muted-foreground" /></button>
@@ -146,7 +148,7 @@ export default function ChatPage() {
           <Input
             value={newMessage}
             onChange={e => setNewMessage(e.target.value)}
-            placeholder="Escribe un mensaje..."
+            placeholder={t('chat.writeMessage')}
             className="flex-1 rounded-full"
             autoFocus
           />
@@ -166,9 +168,9 @@ export default function ChatPage() {
           <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center mb-4">
             <Send className="h-8 w-8 text-muted-foreground" />
           </div>
-          <p className="font-medium">Sin mensajes</p>
+          <p className="font-medium">{t('chat.noMessages')}</p>
           <p className="text-sm text-muted-foreground mt-1">
-            Tus conversaciones con anfitriones apareceran aqui
+            {t('chat.noMessagesDesc')}
           </p>
         </div>
       ) : (

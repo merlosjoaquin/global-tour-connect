@@ -17,39 +17,39 @@ import {
   Check,
 } from 'lucide-react'
 import { useCurrencyStore } from '@/stores/currency-store'
+import { useLanguageStore, useTranslation } from '@/stores/language-store'
 import { getCurrency } from '@/lib/fx-rates'
+import type { Language } from '@/lib/translations'
 
 const LANGUAGES = [
-  { code: 'es', label: 'Espanol', flag: '\uD83C\uDDEA\uD83C\uDDF8' },
-  { code: 'en', label: 'English', flag: '\uD83C\uDDFA\uD83C\uDDF8' },
-  { code: 'fr', label: 'Francais', flag: '\uD83C\uDDEB\uD83C\uDDF7' },
-  { code: 'pt', label: 'Portugues', flag: '\uD83C\uDDE7\uD83C\uDDF7' },
-  { code: 'ja', label: '\u65E5\u672C\u8A9E', flag: '\uD83C\uDDEF\uD83C\uDDF5' },
-  { code: 'zh', label: '\u4E2D\u6587', flag: '\uD83C\uDDE8\uD83C\uDDF3' },
+  { code: 'es' as Language, label: 'Espanol', flag: '\uD83C\uDDEA\uD83C\uDDF8' },
+  { code: 'en' as Language, label: 'English', flag: '\uD83C\uDDFA\uD83C\uDDF8' },
+  { code: 'fr' as Language, label: 'Francais', flag: '\uD83C\uDDEB\uD83C\uDDF7' },
+  { code: 'pt' as Language, label: 'Portugues', flag: '\uD83C\uDDE7\uD83C\uDDF7' },
+  { code: 'ja' as Language, label: '\u65E5\u672C\u8A9E', flag: '\uD83C\uDDEF\uD83C\uDDF5' },
+  { code: 'zh' as Language, label: '\u4E2D\u6587', flag: '\uD83C\uDDE8\uD83C\uDDF3' },
 ]
 
 export default function SettingsPage() {
   const router = useRouter()
   const { resolvedTheme, setTheme } = useTheme()
   const { preferredCurrency } = useCurrencyStore()
+  const { language, setLanguage } = useLanguageStore()
+  const { t } = useTranslation()
   const currency = getCurrency(preferredCurrency)
   const [mounted, setMounted] = useState(false)
-  const [selectedLang, setSelectedLang] = useState('es')
 
   useEffect(() => {
     setMounted(true)
-    const saved = localStorage.getItem('gtc_app_language')
-    if (saved) setSelectedLang(saved)
   }, [])
 
   const isDark = mounted && resolvedTheme === 'dark'
 
-  const handleLangChange = (code: string) => {
-    setSelectedLang(code)
-    localStorage.setItem('gtc_app_language', code)
+  const handleLangChange = (code: Language) => {
+    setLanguage(code)
     const lang = LANGUAGES.find((l) => l.code === code)
-    toast.success(`Idioma cambiado a ${lang?.label}`, {
-      description: 'Los cambios se aplicaran en la proxima carga.',
+    toast.success(`${t('settings.languageChanged')} ${lang?.label}`, {
+      description: t('settings.languageChangeDesc'),
     })
   }
 
@@ -60,11 +60,11 @@ export default function SettingsPage() {
         <button
           onClick={() => router.back()}
           className="p-1.5 rounded-full hover:bg-muted transition-colors"
-          aria-label="Volver"
+          aria-label={t('common.back')}
         >
           <ArrowLeft className="h-5 w-5 text-muted-foreground" />
         </button>
-        <h1 className="text-lg font-bold">Configuracion</h1>
+        <h1 className="text-lg font-bold">{t('settings.title')}</h1>
       </div>
 
       <div className="max-w-lg mx-auto px-4 pb-8 space-y-4">
@@ -76,7 +76,7 @@ export default function SettingsPage() {
                 <Coins className="h-5 w-5 text-teal-700 dark:text-teal-400" />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="font-medium text-sm">Divisa preferida</p>
+                <p className="font-medium text-sm">{t('settings.currency')}</p>
                 <p className="text-xs text-muted-foreground">
                   {currency.flag} {currency.name} ({preferredCurrency})
                 </p>
@@ -97,16 +97,16 @@ export default function SettingsPage() {
               )}
             </div>
             <div className="flex-1 min-w-0">
-              <p className="font-medium text-sm">Modo nocturno</p>
+              <p className="font-medium text-sm">{t('settings.darkMode')}</p>
               <p className="text-xs text-muted-foreground">
-                {mounted ? (isDark ? 'Activado' : 'Desactivado') : '...'}
+                {mounted ? (isDark ? t('settings.darkModeEnabled') : t('settings.darkModeDisabled')) : '...'}
               </p>
             </div>
             {mounted && (
               <Switch
                 checked={isDark}
                 onCheckedChange={(checked) => setTheme(checked ? 'dark' : 'light')}
-                aria-label="Cambiar modo nocturno"
+                aria-label={t('settings.toggleDarkMode')}
               />
             )}
           </CardContent>
@@ -120,9 +120,9 @@ export default function SettingsPage() {
                 <Globe className="h-5 w-5 text-blue-700 dark:text-blue-400" />
               </div>
               <div>
-                <p className="font-medium text-sm">Idioma de la app</p>
+                <p className="font-medium text-sm">{t('settings.language')}</p>
                 <p className="text-xs text-muted-foreground">
-                  {LANGUAGES.find((l) => l.code === selectedLang)?.label}
+                  {LANGUAGES.find((l) => l.code === language)?.label}
                 </p>
               </div>
             </div>
@@ -132,7 +132,7 @@ export default function SettingsPage() {
                   key={lang.code}
                   onClick={() => handleLangChange(lang.code)}
                   className={`flex items-center gap-2 p-2.5 rounded-xl border transition-all text-left ${
-                    selectedLang === lang.code
+                    language === lang.code
                       ? 'border-teal-700 bg-teal-50 dark:bg-teal-950/30 dark:border-teal-600'
                       : 'border-border hover:border-muted-foreground/30'
                   }`}
@@ -141,7 +141,7 @@ export default function SettingsPage() {
                     {lang.flag}
                   </span>
                   <span className="text-sm font-medium flex-1">{lang.label}</span>
-                  {selectedLang === lang.code && (
+                  {language === lang.code && (
                     <Check className="h-3.5 w-3.5 text-teal-700 dark:text-teal-400" />
                   )}
                 </button>

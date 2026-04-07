@@ -11,6 +11,7 @@ import { Separator } from '@/components/ui/separator'
 import { toast } from 'sonner'
 import { MapPin, Loader2 } from 'lucide-react'
 import { Suspense } from 'react'
+import { useTranslation } from '@/stores/language-store'
 
 function AuthForm() {
   const [isLogin, setIsLogin] = useState(true)
@@ -21,6 +22,7 @@ function AuthForm() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const redirect = searchParams.get('redirect') || '/dashboard'
+  const { t } = useTranslation()
 
   const supabase = createClient()
 
@@ -32,7 +34,7 @@ function AuthForm() {
       if (isLogin) {
         const { error } = await supabase.auth.signInWithPassword({ email, password })
         if (error) throw error
-        toast.success('Bienvenido de vuelta!')
+        toast.success(t('auth.welcomeBack'))
         router.push(redirect)
       } else {
         const { error } = await supabase.auth.signUp({
@@ -43,12 +45,12 @@ function AuthForm() {
           },
         })
         if (error) throw error
-        toast.success('Cuenta creada! Revisa tu email para confirmar.')
+        toast.success(t('auth.accountCreated'))
         router.push('/onboarding')
       }
     } catch (err: unknown) {
       const error = err as { message?: string }
-      toast.error(error.message || 'Error de autenticacion')
+      toast.error(error.message || t('auth.authError'))
     } finally {
       setLoading(false)
     }
@@ -64,10 +66,9 @@ function AuthForm() {
     if (error) toast.error(error.message)
   }
 
-  // Demo mode - skip auth, go to onboarding
   function handleDemoMode() {
     document.cookie = 'gtc_demo=true; path=/; max-age=86400'
-    toast.success('Modo demo activado!')
+    toast.success(t('auth.demoActivated'))
     window.location.href = '/onboarding'
   }
 
@@ -81,19 +82,17 @@ function AuthForm() {
           </div>
           <h1 className="text-xl font-bold">Global Tour Connect</h1>
           <p className="text-sm text-muted-foreground">
-            {isLogin ? 'Inicia sesion para continuar' : 'Crea tu cuenta gratis'}
+            {isLogin ? t('auth.loginSubtitle') : t('auth.signupSubtitle')}
           </p>
         </div>
 
         <Card className="rounded-2xl">
           <CardHeader className="pb-4">
             <CardTitle className="text-lg">
-              {isLogin ? 'Iniciar sesion' : 'Crear cuenta'}
+              {isLogin ? t('auth.loginTitle') : t('auth.signupTitle')}
             </CardTitle>
             <CardDescription>
-              {isLogin
-                ? 'Usa tu email o Google para entrar'
-                : 'Completa tus datos para registrarte'}
+              {isLogin ? t('auth.loginDesc') : t('auth.signupDesc')}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -122,13 +121,13 @@ function AuthForm() {
                   fill="#EA4335"
                 />
               </svg>
-              Continuar con Google
+              {t('auth.continueWithGoogle')}
             </Button>
 
             <div className="relative">
               <Separator />
               <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-card px-2 text-xs text-muted-foreground">
-                o con email
+                {t('auth.orWithEmail')}
               </span>
             </div>
 
@@ -136,18 +135,18 @@ function AuthForm() {
             <form onSubmit={handleEmailAuth} className="space-y-3">
               {!isLogin && (
                 <div className="space-y-1">
-                  <Label htmlFor="fullName">Nombre completo</Label>
+                  <Label htmlFor="fullName">{t('auth.fullName')}</Label>
                   <Input
                     id="fullName"
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
-                    placeholder="Tu nombre"
+                    placeholder={t('auth.namePlaceholder')}
                     required={!isLogin}
                   />
                 </div>
               )}
               <div className="space-y-1">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email">{t('auth.email')}</Label>
                 <Input
                   id="email"
                   type="email"
@@ -158,20 +157,20 @@ function AuthForm() {
                 />
               </div>
               <div className="space-y-1">
-                <Label htmlFor="password">Contrasena</Label>
+                <Label htmlFor="password">{t('auth.password')}</Label>
                 <Input
                   id="password"
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Min. 6 caracteres"
+                  placeholder={t('auth.passwordPlaceholder')}
                   minLength={6}
                   required
                 />
               </div>
               <Button type="submit" className="w-full bg-teal-700 hover:bg-teal-600 rounded-full" disabled={loading}>
                 {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                {isLogin ? 'Iniciar sesion' : 'Crear cuenta'}
+                {isLogin ? t('auth.loginBtn') : t('auth.signupBtn')}
               </Button>
             </form>
 
@@ -179,9 +178,9 @@ function AuthForm() {
               <button
                 type="button"
                 onClick={() => setIsLogin(!isLogin)}
-                className="text-sm text-teal-700 hover:underline"
+                className="text-sm text-teal-700 dark:text-teal-400 hover:underline"
               >
-                {isLogin ? 'No tienes cuenta? Registrate' : 'Ya tienes cuenta? Inicia sesion'}
+                {isLogin ? t('auth.noAccount') : t('auth.hasAccount')}
               </button>
             </div>
 
@@ -194,7 +193,7 @@ function AuthForm() {
               onClick={handleDemoMode}
               type="button"
             >
-              Entrar en modo demo
+              {t('auth.demoMode')}
             </Button>
           </CardContent>
         </Card>

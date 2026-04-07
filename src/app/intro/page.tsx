@@ -4,30 +4,33 @@ import { useState, useCallback, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-
-const SLIDES = [
-  {
-    image: '/onboarding-slide1.png',
-    title: 'Viaja y conecta con el mundo',
-    subtitle: 'Contrata anfitriones locales en tus vacaciones, o se el anfitrion de tu propia ciudad!',
-    bg: 'from-teal-50 to-white',
-  },
-  {
-    image: '/onboarding-slide2.png',
-    title: 'Reserva en minutos',
-    subtitle: 'Pago seguro, chat directo y calificaciones reales',
-    bg: 'from-yellow-50 to-white',
-  },
-]
+import { useTranslation } from '@/stores/language-store'
 
 const SWIPE_THRESHOLD = 50
 
 export default function IntroPage() {
   const [current, setCurrent] = useState(0)
   const router = useRouter()
-  const isLast = current === SLIDES.length - 1
+  const { t } = useTranslation()
   const touchStartX = useRef(0)
   const touchEndX = useRef(0)
+
+  const SLIDES = [
+    {
+      image: '/onboarding-slide1.png',
+      title: t('intro.slide1Title'),
+      subtitle: t('intro.slide1Subtitle'),
+      bg: 'from-teal-50 to-white dark:from-teal-950/30 dark:to-background',
+    },
+    {
+      image: '/onboarding-slide2.png',
+      title: t('intro.slide2Title'),
+      subtitle: t('intro.slide2Subtitle'),
+      bg: 'from-yellow-50 to-white dark:from-yellow-950/30 dark:to-background',
+    },
+  ]
+
+  const isLast = current === SLIDES.length - 1
 
   const finish = useCallback(() => {
     localStorage.setItem('gtc_intro_seen', 'true')
@@ -54,8 +57,8 @@ export default function IntroPage() {
   const onTouchEnd = () => {
     const diff = touchStartX.current - touchEndX.current
     if (Math.abs(diff) < SWIPE_THRESHOLD) return
-    if (diff > 0) goNext()   // swipe left → next
-    else goPrev()            // swipe right → prev
+    if (diff > 0) goNext()
+    else goPrev()
   }
 
   const slide = SLIDES[current]
@@ -75,7 +78,7 @@ export default function IntroPage() {
             onClick={finish}
             className="text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
-            Saltar
+            {t('intro.skip')}
           </button>
         </div>
       )}
@@ -109,26 +112,25 @@ export default function IntroPage() {
               key={i}
               onClick={() => setCurrent(i)}
               className={`h-2 rounded-full transition-all duration-300 ${
-                i === current ? 'w-6 bg-teal-700' : 'w-2 bg-teal-200'
+                i === current ? 'w-6 bg-teal-700' : 'w-2 bg-teal-200 dark:bg-teal-800'
               }`}
               aria-label={`Slide ${i + 1}`}
             />
           ))}
         </div>
 
-        {/* Swipe hint on first slide, Comenzar button on last */}
         {isLast ? (
           <Button
             onClick={finish}
             size="lg"
             className="w-full rounded-full bg-teal-700 hover:bg-teal-600 text-base font-semibold h-14"
           >
-            Comenzar
+            {t('intro.start')}
             <ArrowRight className="ml-2 h-5 w-5" />
           </Button>
         ) : (
           <p className="text-center text-sm text-muted-foreground animate-pulse">
-            Desliza para continuar →
+            {t('intro.swipeHint')} &rarr;
           </p>
         )}
       </div>

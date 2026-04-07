@@ -11,6 +11,7 @@ import { Badge } from '@/components/ui/badge'
 import { toast } from 'sonner'
 import { Loader2, Compass, Home } from 'lucide-react'
 import { LANGUAGES } from '@/lib/constants'
+import { useTranslation } from '@/stores/language-store'
 
 type Role = 'explorer' | 'host' | null
 
@@ -21,8 +22,8 @@ export default function OnboardingPage() {
   const [step, setStep] = useState(1)
   const [role, setRole] = useState<Role>(null)
   const [ready, setReady] = useState(false)
+  const { t } = useTranslation()
 
-  // Redirect to country selection if user hasn't picked a country/currency yet
   useEffect(() => {
     const prefs = localStorage.getItem('gtc-currency-prefs')
     if (!prefs) {
@@ -53,8 +54,8 @@ export default function OnboardingPage() {
   const onTouchEnd = () => {
     const diff = touchStartX.current - touchEndX.current
     if (Math.abs(diff) < SWIPE_THRESHOLD) return
-    if (diff > 0 && step === 1 && role) setStep(2)  // swipe left → next (only if role selected)
-    if (diff < 0 && step === 2) setStep(1)           // swipe right → back
+    if (diff > 0 && step === 1 && role) setStep(2)
+    if (diff < 0 && step === 2) setStep(1)
   }
 
   function toggleLang(lang: string) {
@@ -71,14 +72,14 @@ export default function OnboardingPage() {
         'gtc_user_profile',
         JSON.stringify({ fullName, bio, city, country, languages: selectedLangs })
       )
-      toast.success('Perfil completado!')
+      toast.success(t('onboarding.profileCompleted'))
       if (role === 'host') {
         router.push('/publicar')
       } else {
         router.push('/dashboard')
       }
     } catch {
-      toast.error('Error al guardar perfil')
+      toast.error(t('onboarding.profileError'))
     } finally {
       setLoading(false)
     }
@@ -87,7 +88,7 @@ export default function OnboardingPage() {
   if (!ready) {
     return (
       <div className="min-h-dvh flex items-center justify-center">
-        <div className="animate-pulse text-muted-foreground">Cargando...</div>
+        <div className="animate-pulse text-muted-foreground">{t('common.loading')}</div>
       </div>
     )
   }
@@ -113,16 +114,15 @@ export default function OnboardingPage() {
           ))}
         </div>
 
-        {/* Step 1 — Choose role */}
+        {/* Step 1 -- Choose role */}
         {step === 1 && (
           <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-300">
             <div className="text-center space-y-1">
-              <h1 className="text-xl font-bold">Como quieres comenzar?</h1>
-              <p className="text-sm text-muted-foreground">Siempre podras cambiar despues</p>
+              <h1 className="text-xl font-bold">{t('onboarding.howToStart')}</h1>
+              <p className="text-sm text-muted-foreground">{t('onboarding.canChangeLater')}</p>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
-              {/* Explorer card */}
               <button
                 type="button"
                 onClick={() => setRole('explorer')}
@@ -140,14 +140,13 @@ export default function OnboardingPage() {
                   <Compass className="h-7 w-7" />
                 </div>
                 <div>
-                  <p className="font-semibold text-sm">Quiero explorar</p>
+                  <p className="font-semibold text-sm">{t('onboarding.wantExplore')}</p>
                   <p className="text-xs text-muted-foreground mt-1 leading-snug">
-                    Busca anfitriones y reserva experiencias
+                    {t('onboarding.wantExploreDesc')}
                   </p>
                 </div>
               </button>
 
-              {/* Host card */}
               <button
                 type="button"
                 onClick={() => setRole('host')}
@@ -165,9 +164,9 @@ export default function OnboardingPage() {
                   <Home className="h-7 w-7" />
                 </div>
                 <div>
-                  <p className="font-semibold text-sm">Quiero ser anfitrion</p>
+                  <p className="font-semibold text-sm">{t('onboarding.wantHost')}</p>
                   <p className="text-xs text-muted-foreground mt-1 leading-snug">
-                    Ofrece servicios y gana dinero
+                    {t('onboarding.wantHostDesc')}
                   </p>
                 </div>
               </button>
@@ -178,63 +177,63 @@ export default function OnboardingPage() {
               className="w-full bg-teal-700 hover:bg-teal-600 rounded-full"
               disabled={!role}
             >
-              Siguiente
+              {t('common.next')}
             </Button>
           </div>
         )}
 
-        {/* Step 2 — Profile data */}
+        {/* Step 2 -- Profile data */}
         {step === 2 && (
           <Card className="rounded-2xl animate-in fade-in slide-in-from-right-4 duration-300">
             <CardHeader>
-              <CardTitle>Completa tu perfil</CardTitle>
+              <CardTitle>{t('onboarding.completeProfile')}</CardTitle>
               <CardDescription>
-                Estos datos ayudan a otros usuarios a conocerte
+                {t('onboarding.completeProfileDesc')}
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-1">
-                <Label htmlFor="name">Nombre completo</Label>
+                <Label htmlFor="name">{t('onboarding.fullName')}</Label>
                 <Input
                   id="name"
                   value={fullName}
                   onChange={e => setFullName(e.target.value)}
-                  placeholder="Tu nombre"
+                  placeholder={t('auth.namePlaceholder')}
                 />
               </div>
               <div className="space-y-1">
-                <Label htmlFor="bio">Bio corta</Label>
+                <Label htmlFor="bio">{t('onboarding.shortBio')}</Label>
                 <Textarea
                   id="bio"
                   value={bio}
                   onChange={e => setBio(e.target.value)}
-                  placeholder="Cuentanos algo sobre ti..."
+                  placeholder={t('onboarding.bioPlaceholder')}
                   rows={3}
                 />
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-1">
-                  <Label htmlFor="city">Ciudad</Label>
+                  <Label htmlFor="city">{t('onboarding.city')}</Label>
                   <Input
                     id="city"
                     value={city}
                     onChange={e => setCity(e.target.value)}
-                    placeholder="Ej: CDMX"
+                    placeholder={t('onboarding.cityPlaceholder')}
                   />
                 </div>
                 <div className="space-y-1">
-                  <Label htmlFor="country">Pais</Label>
+                  <Label htmlFor="country">{t('onboarding.country')}</Label>
                   <Input
                     id="country"
                     value={country}
                     onChange={e => setCountry(e.target.value)}
-                    placeholder="Ej: Mexico"
+                    placeholder={t('onboarding.countryPlaceholder')}
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <Label>Idiomas que hablas</Label>
+                <Label>{t('onboarding.spokenLanguages')}</Label>
                 <div className="flex flex-wrap gap-2">
                   {LANGUAGES.map(lang => (
                     <Badge
@@ -259,7 +258,7 @@ export default function OnboardingPage() {
                   onClick={() => setStep(1)}
                   className="flex-1 rounded-full"
                 >
-                  Atras
+                  {t('common.previous')}
                 </Button>
                 <Button
                   onClick={handleComplete}
@@ -267,7 +266,7 @@ export default function OnboardingPage() {
                   disabled={loading || !fullName || !city || selectedLangs.length === 0}
                 >
                   {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                  Completar
+                  {t('onboarding.complete')}
                 </Button>
               </div>
             </CardContent>

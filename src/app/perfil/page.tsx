@@ -12,18 +12,20 @@ import {
   MapPin, Star, Award, Settings,
   LogOut, ChevronRight, Globe, Shield, PlusCircle
 } from 'lucide-react'
+import { useTranslation } from '@/stores/language-store'
 import type { Profile } from '@/types/database'
-
-const BADGE_INFO: Record<string, { label: string; color: string }> = {
-  verified: { label: 'Verificado', color: 'bg-blue-100 text-blue-800' },
-  super_host: { label: 'Super Anfitrion', color: 'bg-yellow-100 text-yellow-800' },
-  top_rated: { label: 'Top Rated', color: 'bg-green-100 text-green-800' },
-  explorer_10: { label: '10 Ciudades', color: 'bg-purple-100 text-purple-800' },
-}
 
 export default function PerfilPage() {
   const [profile, setProfile] = useState<Profile | null>(null)
   const supabase = createClient()
+  const { t } = useTranslation()
+
+  const BADGE_INFO: Record<string, { label: string; color: string }> = {
+    verified: { label: t('profile.verified'), color: 'bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300' },
+    super_host: { label: t('profile.superHost'), color: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/40 dark:text-yellow-300' },
+    top_rated: { label: t('profile.topRated'), color: 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300' },
+    explorer_10: { label: t('profile.explorer10'), color: 'bg-purple-100 text-purple-800 dark:bg-purple-900/40 dark:text-purple-300' },
+  }
 
   useEffect(() => {
     async function loadProfile() {
@@ -63,7 +65,7 @@ export default function PerfilPage() {
   if (!profile) {
     return (
       <div className="flex items-center justify-center min-h-[50vh]">
-        <div className="animate-pulse text-muted-foreground">Cargando perfil...</div>
+        <div className="animate-pulse text-muted-foreground">{t('common.loadingProfile')}</div>
       </div>
     )
   }
@@ -84,7 +86,7 @@ export default function PerfilPage() {
         <div className="flex items-center gap-1 mt-1">
           <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
           <span className="font-medium">{profile.rating_avg}</span>
-          <span className="text-sm text-muted-foreground">({profile.total_reviews} resenas)</span>
+          <span className="text-sm text-muted-foreground">({profile.total_reviews} {t('profile.reviews')})</span>
         </div>
       </div>
 
@@ -107,8 +109,8 @@ export default function PerfilPage() {
       <Card className="rounded-2xl">
         <CardContent className="p-4">
           <div className="flex items-center gap-2 mb-2">
-            <Globe className="h-4 w-4 text-teal-700" />
-            <span className="font-medium text-sm">Idiomas</span>
+            <Globe className="h-4 w-4 text-teal-700 dark:text-teal-400" />
+            <span className="font-medium text-sm">{t('profile.languages')}</span>
           </div>
           <div className="flex flex-wrap gap-1">
             {profile.languages.map(lang => (
@@ -122,12 +124,12 @@ export default function PerfilPage() {
       {profile.is_host && (
         <Card className="rounded-2xl bg-gradient-to-r from-teal-700 to-emerald-700 text-white">
           <CardContent className="p-4">
-            <p className="text-sm text-white/80 mb-1">Ganancias como Anfitrion</p>
+            <p className="text-sm text-white/80 mb-1">{t('profile.hostEarnings')}</p>
             <p className="text-3xl font-bold">${hostEarnings.toFixed(2)}</p>
-            <p className="text-xs text-white/60 mt-1">Disponible para retiro</p>
+            <p className="text-xs text-white/60 mt-1">{t('profile.availableForWithdraw')}</p>
             <Link href="/wallet">
               <Button size="sm" className="mt-3 bg-white/20 hover:bg-white/30 text-white rounded-full">
-                Retirar fondos
+                {t('profile.withdrawFunds')}
               </Button>
             </Link>
           </CardContent>
@@ -136,14 +138,14 @@ export default function PerfilPage() {
 
       {/* Publish new service */}
       <Link href="/publicar" className="block">
-        <Card className="rounded-2xl border-dashed border-2 border-teal-200 hover:border-teal-400 transition-colors">
+        <Card className="rounded-2xl border-dashed border-2 border-teal-200 dark:border-teal-800 hover:border-teal-400 dark:hover:border-teal-600 transition-colors">
           <CardContent className="p-4 flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-teal-50 flex items-center justify-center shrink-0">
-              <PlusCircle className="h-5 w-5 text-teal-700" />
+            <div className="w-10 h-10 rounded-full bg-teal-50 dark:bg-teal-950/40 flex items-center justify-center shrink-0">
+              <PlusCircle className="h-5 w-5 text-teal-700 dark:text-teal-400" />
             </div>
             <div>
-              <p className="font-medium text-sm">Publicar nuevo servicio</p>
-              <p className="text-xs text-muted-foreground">Ofrece una experiencia a viajeros</p>
+              <p className="font-medium text-sm">{t('profile.publishNewService')}</p>
+              <p className="text-xs text-muted-foreground">{t('profile.publishNewServiceDesc')}</p>
             </div>
             <ChevronRight className="h-4 w-4 text-muted-foreground ml-auto" />
           </CardContent>
@@ -157,23 +159,23 @@ export default function PerfilPage() {
         <Link href="/settings" className="flex items-center justify-between px-3 py-3 rounded-2xl hover:bg-muted transition-colors">
           <div className="flex items-center gap-3">
             <Settings className="h-5 w-5 text-muted-foreground" />
-            <span className="text-sm">Configuracion</span>
+            <span className="text-sm">{t('profile.settingsLink')}</span>
           </div>
           <ChevronRight className="h-4 w-4 text-muted-foreground" />
         </Link>
         <Link href="/dashboard" className="flex items-center justify-between px-3 py-3 rounded-2xl hover:bg-muted transition-colors">
           <div className="flex items-center gap-3">
             <Shield className="h-5 w-5 text-muted-foreground" />
-            <span className="text-sm">Verificacion de identidad</span>
+            <span className="text-sm">{t('profile.identityVerification')}</span>
           </div>
           <ChevronRight className="h-4 w-4 text-muted-foreground" />
         </Link>
         <button
           onClick={handleLogout}
-          className="w-full flex items-center gap-3 px-3 py-3 rounded-2xl hover:bg-muted transition-colors text-left text-red-600"
+          className="w-full flex items-center gap-3 px-3 py-3 rounded-2xl hover:bg-muted transition-colors text-left text-red-600 dark:text-red-400"
         >
           <LogOut className="h-5 w-5" />
-          <span className="text-sm">Cerrar sesion</span>
+          <span className="text-sm">{t('profile.logout')}</span>
         </button>
       </div>
     </div>
