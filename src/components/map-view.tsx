@@ -180,7 +180,7 @@ function HostBubble({
       }}
       onClick={(e) => e.stopPropagation()}
     >
-      <div className="bg-white rounded-2xl shadow-xl p-4 relative">
+      <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl p-4 relative">
         {/* Close button */}
         <button
           onClick={onClose}
@@ -212,18 +212,19 @@ function HostBubble({
           </div>
         </div>
 
-        {/* Services */}
-        <div className="space-y-1.5 mb-3">
+        {/* Services — scrollable when 2+ */}
+        <div className="space-y-1.5 mb-3 max-h-[120px] overflow-y-auto scrollbar-none">
           {host.services.map((svc) => (
-            <div
+            <Link
               key={svc.id}
-              className="flex items-center justify-between py-1.5 px-2.5 bg-gray-50 rounded-lg"
+              href={`/servicio/${svc.id}`}
+              className="flex items-center justify-between py-1.5 px-2.5 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
             >
-              <span className="text-xs text-gray-700 truncate mr-2">{svc.title}</span>
+              <span className="text-xs text-gray-700 dark:text-gray-300 truncate mr-2">{svc.title}</span>
               <span className="text-xs font-semibold shrink-0" style={{ color: '#0f766e' }}>
                 ${svc.price} {svc.currency}
               </span>
-            </div>
+            </Link>
           ))}
         </div>
 
