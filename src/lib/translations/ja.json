@@ -320,6 +320,24 @@
     "paymentConfirmedDesc": "{amount}を支払いました。確認メールが送信されました。",
     "linkedAccount": "連携済みアカウント"
   },
+  "hostProfile": {
+    "title": "ホストプロフィール",
+    "bio": "自己紹介",
+    "details": "詳細",
+    "languages": "言語",
+    "location": "所在地",
+    "memberSince": "登録日",
+    "services": "利用可能なサービス",
+    "reviews": "レビュー",
+    "noReviews": "まだレビューがありません",
+    "noServices": "利用可能なサービスがありません",
+    "requestHost": "このホストにリクエスト",
+    "verified": "認証済み",
+    "superHost": "スーパーホスト",
+    "topRated": "高評価",
+    "perPerson": "1人あたり",
+    "bookings": "予約"
+  },
   "currencySettings": {
     "title": "通貨",
     "heading": "通貨設定",

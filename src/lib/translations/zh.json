@@ -320,6 +320,24 @@
     "paymentConfirmedDesc": "您已支付{amount}。确认信息已发送至您的邮箱。",
     "linkedAccount": "已关联账户"
   },
+  "hostProfile": {
+    "title": "向导资料",
+    "bio": "关于我",
+    "details": "详情",
+    "languages": "语言",
+    "location": "位置",
+    "memberSince": "注册时间",
+    "services": "可用服务",
+    "reviews": "评价",
+    "noReviews": "暂无评价",
+    "noServices": "暂无可用服务",
+    "requestHost": "请求此向导",
+    "verified": "已验证",
+    "superHost": "超级向导",
+    "topRated": "高评分",
+    "perPerson": "每人",
+    "bookings": "预订"
+  },
   "currencySettings": {
     "title": "货币",
     "heading": "货币偏好",

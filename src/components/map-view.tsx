@@ -230,7 +230,7 @@ function HostBubble({
 
         {/* CTA */}
         <Link
-          href={`/servicio/${host.services[0]?.id || host.id}`}
+          href={`/anfitrion/${host.id}`}
           className="block w-full py-2 text-center text-sm font-semibold rounded-xl transition-colors"
           style={{ backgroundColor: '#0f766e', color: '#ffffff' }}
         >

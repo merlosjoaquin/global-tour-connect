@@ -320,6 +320,24 @@
     "paymentConfirmedDesc": "You paid {amount}. Confirmation sent to your email.",
     "linkedAccount": "Linked account"
   },
+  "hostProfile": {
+    "title": "Host profile",
+    "bio": "About me",
+    "details": "Details",
+    "languages": "Languages",
+    "location": "Location",
+    "memberSince": "Member since",
+    "services": "Available services",
+    "reviews": "Reviews",
+    "noReviews": "No reviews yet",
+    "noServices": "No services available",
+    "requestHost": "Request this host",
+    "verified": "Verified",
+    "superHost": "Super Host",
+    "topRated": "Top Rated",
+    "perPerson": "per person",
+    "bookings": "bookings"
+  },
   "currencySettings": {
     "title": "Currency",
     "heading": "Currency preferences",

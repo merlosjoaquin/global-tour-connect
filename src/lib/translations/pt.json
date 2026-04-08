@@ -320,6 +320,24 @@
     "paymentConfirmedDesc": "Voce pagou {amount}. Confirmacao enviada ao seu email.",
     "linkedAccount": "Conta vinculada"
   },
+  "hostProfile": {
+    "title": "Perfil do anfitriao",
+    "bio": "Sobre mim",
+    "details": "Detalhes",
+    "languages": "Idiomas",
+    "location": "Localizacao",
+    "memberSince": "Membro desde",
+    "services": "Servicos disponiveis",
+    "reviews": "Avaliacoes",
+    "noReviews": "Ainda sem avaliacoes",
+    "noServices": "Nenhum servico disponivel",
+    "requestHost": "Solicitar este anfitriao",
+    "verified": "Verificado",
+    "superHost": "Super Anfitriao",
+    "topRated": "Mais Avaliado",
+    "perPerson": "por pessoa",
+    "bookings": "reservas"
+  },
   "currencySettings": {
     "title": "Moeda",
     "heading": "Preferencias de moeda",

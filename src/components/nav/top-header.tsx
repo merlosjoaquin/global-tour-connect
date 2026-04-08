@@ -29,7 +29,9 @@ export function TopHeader() {
     '/auth': t('nav.login'),
   }
 
-  const title = PAGE_TITLES[pathname] || 'Global Tour Connect'
+  const title = pathname.startsWith('/anfitrion/')
+    ? t('hostProfile.title')
+    : PAGE_TITLES[pathname] || 'Global Tour Connect'
   const showBack = pathname !== '/dashboard'
 
   return (

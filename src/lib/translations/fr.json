@@ -320,6 +320,24 @@
     "paymentConfirmedDesc": "Vous avez paye {amount}. Confirmation envoyee a votre email.",
     "linkedAccount": "Compte lie"
   },
+  "hostProfile": {
+    "title": "Profil de l'hote",
+    "bio": "A propos de moi",
+    "details": "Details",
+    "languages": "Langues",
+    "location": "Emplacement",
+    "memberSince": "Membre depuis",
+    "services": "Services disponibles",
+    "reviews": "Avis",
+    "noReviews": "Pas encore d'avis",
+    "noServices": "Aucun service disponible",
+    "requestHost": "Demander cet hote",
+    "verified": "Verifie",
+    "superHost": "Super Hote",
+    "topRated": "Mieux note",
+    "perPerson": "par personne",
+    "bookings": "reservations"
+  },
   "currencySettings": {
     "title": "Devise",
     "heading": "Preferences de devise",

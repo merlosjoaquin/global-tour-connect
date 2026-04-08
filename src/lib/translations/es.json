@@ -320,6 +320,24 @@
     "paymentConfirmedDesc": "Pagaste {amount}. Confirmacion enviada a tu correo.",
     "linkedAccount": "Cuenta vinculada"
   },
+  "hostProfile": {
+    "title": "Perfil del anfitrion",
+    "bio": "Sobre mi",
+    "details": "Detalles",
+    "languages": "Idiomas",
+    "location": "Ubicacion",
+    "memberSince": "Miembro desde",
+    "services": "Servicios disponibles",
+    "reviews": "Resenas",
+    "noReviews": "Aun no tiene resenas",
+    "noServices": "No hay servicios disponibles",
+    "requestHost": "Solicitar este anfitrion",
+    "verified": "Verificado",
+    "superHost": "Super Host",
+    "topRated": "Mejor calificado",
+    "perPerson": "por persona",
+    "bookings": "reservas"
+  },
   "currencySettings": {
     "title": "Divisa",
     "heading": "Preferencias de divisa",
