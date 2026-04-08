@@ -114,7 +114,7 @@ export default function PerfilPage() {
           </div>
           <div className="flex flex-wrap gap-1">
             {profile.languages.map(lang => (
-              <Badge key={lang} variant="outline" className="text-xs rounded-full">{lang}</Badge>
+              <Badge key={lang} variant="outline" className="text-sm rounded-full">{lang}</Badge>
             ))}
           </div>
         </CardContent>
@@ -126,7 +126,7 @@ export default function PerfilPage() {
           <CardContent className="p-4">
             <p className="text-sm text-white/80 mb-1">{t('profile.hostEarnings')}</p>
             <p className="text-3xl font-bold">${hostEarnings.toFixed(2)}</p>
-            <p className="text-xs text-white/60 mt-1">{t('profile.availableForWithdraw')}</p>
+            <p className="text-sm text-white/60 mt-1">{t('profile.availableForWithdraw')}</p>
             <Link href="/wallet">
               <Button size="sm" className="mt-3 bg-white/20 hover:bg-white/30 text-white rounded-full">
                 {t('profile.withdrawFunds')}
@@ -145,7 +145,7 @@ export default function PerfilPage() {
             </div>
             <div>
               <p className="font-medium text-sm">{t('profile.publishNewService')}</p>
-              <p className="text-xs text-muted-foreground">{t('profile.publishNewServiceDesc')}</p>
+              <p className="text-sm text-muted-foreground">{t('profile.publishNewServiceDesc')}</p>
             </div>
             <ChevronRight className="h-4 w-4 text-muted-foreground ml-auto" />
           </CardContent>

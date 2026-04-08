@@ -164,7 +164,7 @@ export default function WalletPage() {
                 <h3 className="font-heading text-sm font-semibold">
                   {t('wallet.withdrawMethods')}
                 </h3>
-                <p className="mt-1 text-xs text-muted-foreground">
+                <p className="mt-1 text-sm text-muted-foreground">
                   {t('wallet.withdrawMethodsDesc')}
                 </p>
                 <div className="mt-3 space-y-2">
@@ -179,12 +179,12 @@ export default function WalletPage() {
                         </div>
                         <div>
                           <div className="text-sm font-medium">{pm.label}</div>
-                          <div className="text-xs text-muted-foreground">
+                          <div className="text-sm text-muted-foreground">
                             {pm.detail}
                           </div>
                         </div>
                       </div>
-                      <span className="text-xs text-muted-foreground">
+                      <span className="text-sm text-muted-foreground">
                         {(pm.feePct * 100).toFixed(1)}% {t('wallet.commission')}
                       </span>
                     </div>
@@ -204,7 +204,7 @@ export default function WalletPage() {
                     hostCurrency
                   )}
                 </div>
-                <p className="mt-1 text-xs text-muted-foreground">
+                <p className="mt-1 text-sm text-muted-foreground">
                   {formatCurrency(balance.lifetimeEarnedUSD, 'USD')} {t('wallet.base')}
                 </p>
                 <div className="mt-4 grid grid-cols-7 gap-1.5">
@@ -221,7 +221,7 @@ export default function WalletPage() {
                     </div>
                   ))}
                 </div>
-                <div className="mt-2 grid grid-cols-7 gap-1.5 text-center text-[10px] text-muted-foreground">
+                <div className="mt-2 grid grid-cols-7 gap-1.5 text-center text-xs text-muted-foreground">
                   {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((d, i) => (
                     <span key={i}>{d}</span>
                   ))}
@@ -299,7 +299,7 @@ function TransactionRow({
             <h4 className="truncate text-sm font-medium">{tx.tourTitle}</h4>
             <span
               className={cn(
-                'inline-flex shrink-0 items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide',
+                'inline-flex shrink-0 items-center gap-1 rounded-full px-2 py-0.5 text-xs font-semibold uppercase tracking-wide',
                 status.className
               )}
             >
@@ -307,7 +307,7 @@ function TransactionRow({
               {t(status.labelKey)}
             </span>
           </div>
-          <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+          <div className="mt-1 flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
             <span className="truncate">{tx.touristName}</span>
             {country && (
               <span className="inline-flex items-center gap-1">
@@ -323,11 +323,11 @@ function TransactionRow({
           <div className="text-sm font-semibold tabular-nums text-emerald-700 dark:text-emerald-400">
             + {hostReceives}
           </div>
-          <div className="mt-0.5 flex items-center justify-end gap-1 text-[11px] text-muted-foreground">
+          <div className="mt-0.5 flex items-center justify-end gap-1 text-sm text-muted-foreground">
             <span>{t('wallet.from')}</span>
             <CurrencyBadge code={tx.touristCurrency} className="px-1.5 py-0" />
           </div>
-          <div className="text-[11px] tabular-nums text-muted-foreground">
+          <div className="text-sm tabular-nums text-muted-foreground">
             {touristPaid}
           </div>
         </div>
@@ -431,12 +431,12 @@ function WithdrawDialog({
                       </div>
                       <div>
                         <div className="text-sm font-medium">{pm.label}</div>
-                        <div className="text-[11px] text-muted-foreground">
+                        <div className="text-sm text-muted-foreground">
                           {pm.detail}
                         </div>
                       </div>
                     </div>
-                    <span className="text-xs text-muted-foreground">
+                    <span className="text-sm text-muted-foreground">
                       {(pm.feePct * 100).toFixed(1)}%
                     </span>
                   </button>
@@ -445,7 +445,7 @@ function WithdrawDialog({
             </div>
           </div>
 
-          <div className="space-y-1.5 rounded-xl bg-muted/60 p-3 text-xs">
+          <div className="space-y-1.5 rounded-xl bg-muted/60 p-3 text-sm">
             <div className="flex justify-between">
               <span className="text-muted-foreground">{t('wallet.estimatedRate')}</span>
               <span className="font-medium tabular-nums">
@@ -467,7 +467,7 @@ function WithdrawDialog({
             </div>
           </div>
 
-          <div className="flex items-start gap-2 rounded-xl border border-amber-200 bg-amber-50 p-3 text-xs text-amber-900 dark:border-amber-800/40 dark:bg-amber-950/30 dark:text-amber-200">
+          <div className="flex items-start gap-2 rounded-xl border border-amber-200 bg-amber-50 p-3 text-sm text-amber-900 dark:border-amber-800/40 dark:bg-amber-950/30 dark:text-amber-200">
             <BadgeCheck
               className="mt-0.5 h-4 w-4 shrink-0"
               aria-hidden="true"
