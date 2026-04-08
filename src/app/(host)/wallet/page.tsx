@@ -1,7 +1,6 @@
 'use client'
 
 import * as React from 'react'
-import { format } from 'date-fns'
 import { toast } from 'sonner'
 import {
   ArrowDownRight,
@@ -45,7 +44,6 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 import { BalanceCard } from '@/components/currency/BalanceCard'
-import { CurrencyBadge } from '@/components/currency/CurrencyBadge'
 import { DemoHeader } from '@/components/currency/DemoHeader'
 import { useTranslation } from '@/stores/language-store'
 
@@ -307,27 +305,16 @@ function TransactionRow({
               {t(status.labelKey)}
             </span>
           </div>
-          <div className="mt-1 flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+          <div className="mt-1 flex items-center gap-1.5 text-sm text-muted-foreground">
+            {country && <span aria-hidden="true">{country.flag}</span>}
             <span className="truncate">{tx.touristName}</span>
-            {country && (
-              <span className="inline-flex items-center gap-1">
-                <span aria-hidden="true">{country.flag}</span>
-                {country.name}
-              </span>
-            )}
-            <span aria-hidden="true">·</span>
-            <span>{format(new Date(tx.createdAt), 'MMM d')}</span>
           </div>
         </div>
         <div className="text-right">
           <div className="text-sm font-semibold tabular-nums text-emerald-700 dark:text-emerald-400">
             + {hostReceives}
           </div>
-          <div className="mt-0.5 flex items-center justify-end gap-1 text-sm text-muted-foreground">
-            <span>{t('wallet.from')}</span>
-            <CurrencyBadge code={tx.touristCurrency} className="px-1.5 py-0" />
-          </div>
-          <div className="text-sm tabular-nums text-muted-foreground">
+          <div className="mt-0.5 text-sm tabular-nums text-muted-foreground">
             {touristPaid}
           </div>
         </div>
