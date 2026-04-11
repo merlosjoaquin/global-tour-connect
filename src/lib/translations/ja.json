@@ -279,7 +279,14 @@
     "paymentReleasedToHost": "サービス完了！ホストに支払いが解放されました。",
     "confirmCancel": "サービスをキャンセルしてよろしいですか？返金プロセスが開始されます。",
     "cancelledRefund": "サービスがキャンセルされました。3〜5営業日以内に返金されます。",
-    "paymentReleaseWarning": "サービスが正しく完了したことを確認した場合のみ、ホストに支払いが解放されます。"
+    "paymentReleaseWarning": "サービスが正しく完了したことを確認した場合のみ、ホストに支払いが解放されます。",
+    "serviceTypes": {
+      "micro_tour": "15分マイクロツアー",
+      "photo_session": "速攻フォトセッション",
+      "language_assistant": "言語アシスタント",
+      "vip_access": "VIP予約 / 列をスキップ",
+      "table_reservation": "眺望テーブル席"
+    }
   },
   "wallet": {
     "title": "ウォレット",

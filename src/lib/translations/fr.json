@@ -279,7 +279,14 @@
     "paymentReleasedToHost": "Service termine ! Paiement libere a l'hote.",
     "confirmCancel": "Etes-vous sur de vouloir annuler le service ? Le processus de remboursement commencera.",
     "cancelledRefund": "Service annule. Votre argent sera rembourse dans 3 a 5 jours ouvrables.",
-    "paymentReleaseWarning": "Le paiement n'est libere a l'hote que lorsque vous confirmez que le service a ete correctement effectue."
+    "paymentReleaseWarning": "Le paiement n'est libere a l'hote que lorsque vous confirmez que le service a ete correctement effectue.",
+    "serviceTypes": {
+      "micro_tour": "Micro-Tour 15 min",
+      "photo_session": "Seance Photo Express",
+      "language_assistant": "Assistant Linguistique",
+      "vip_access": "Reservation VIP / Coupe-file",
+      "table_reservation": "Table avec Vue"
+    }
   },
   "wallet": {
     "title": "Portefeuille",

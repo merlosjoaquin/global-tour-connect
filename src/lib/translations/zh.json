@@ -279,7 +279,14 @@
     "paymentReleasedToHost": "服务已完成！付款已释放给向导。",
     "confirmCancel": "您确定要取消服务吗？退款流程将开始。",
     "cancelledRefund": "服务已取消。您的款项将在3-5个工作日内退还。",
-    "paymentReleaseWarning": "只有在您确认服务正确完成后，付款才会释放给向导。"
+    "paymentReleaseWarning": "只有在您确认服务正确完成后，付款才会释放给向导。",
+    "serviceTypes": {
+      "micro_tour": "15分钟微型游览",
+      "photo_session": "快闪拍照",
+      "language_assistant": "语言助理",
+      "vip_access": "VIP预订 / 快速通道",
+      "table_reservation": "景观餐桌"
+    }
   },
   "wallet": {
     "title": "钱包",

@@ -279,7 +279,14 @@
     "paymentReleasedToHost": "Servicio completado! Pago liberado al anfitrion.",
     "confirmCancel": "Estas seguro que deseas cancelar el servicio? Se iniciara el proceso de devolucion.",
     "cancelledRefund": "Servicio cancelado. Tu dinero sera devuelto en 3-5 dias habiles.",
-    "paymentReleaseWarning": "El pago se libera al anfitrion solo cuando confirmes que el servicio fue completado correctamente."
+    "paymentReleaseWarning": "El pago se libera al anfitrion solo cuando confirmes que el servicio fue completado correctamente.",
+    "serviceTypes": {
+      "micro_tour": "Micro-Tour 15 min",
+      "photo_session": "Sesion Fotos Express",
+      "language_assistant": "Asistente de Idioma",
+      "vip_access": "Reserva VIP / Skip-the-line",
+      "table_reservation": "Mesa con Vista"
+    }
   },
   "wallet": {
     "title": "Billetera",

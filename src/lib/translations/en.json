@@ -279,7 +279,14 @@
     "paymentReleasedToHost": "Service completed! Payment released to host.",
     "confirmCancel": "Are you sure you want to cancel the service? The refund process will begin.",
     "cancelledRefund": "Service cancelled. Your money will be refunded in 3-5 business days.",
-    "paymentReleaseWarning": "Payment is released to the host only when you confirm the service was completed correctly."
+    "paymentReleaseWarning": "Payment is released to the host only when you confirm the service was completed correctly.",
+    "serviceTypes": {
+      "micro_tour": "15-min Micro-Tour",
+      "photo_session": "Express Photo Session",
+      "language_assistant": "Language Assistant",
+      "vip_access": "VIP Booking / Skip-the-line",
+      "table_reservation": "Table with a View"
+    }
   },
   "wallet": {
     "title": "Wallet",

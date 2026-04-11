@@ -106,7 +106,7 @@ function StepSelectService({
             >
               <span className="text-3xl">{emoji}</span>
               <span className="text-sm font-medium text-center text-gray-800 leading-tight">
-                {label}
+                {t(`solicitar.serviceTypes.${type}`) || label}
               </span>
             </button>
           )
@@ -129,7 +129,7 @@ function StepBrowseHosts({
   onBack: () => void
 }) {
   const { t } = useTranslation()
-  const serviceLabel = SERVICE_TYPES[serviceType].label
+  const serviceLabel = t(`solicitar.serviceTypes.${serviceType}`) || SERVICE_TYPES[serviceType].label
 
   // Filter: online hosts with matching service type, sorted by rating desc
   const matchingHosts = MOCK_MAP_HOSTS
