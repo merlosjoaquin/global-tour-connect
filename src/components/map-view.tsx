@@ -19,6 +19,7 @@ import {
 } from '@/lib/map-data'
 import { MOCK_SERVICES } from '@/lib/mock-data'
 import { SERVICE_TYPES } from '@/lib/constants'
+import { PriceDisplay } from '@/components/currency/PriceDisplay'
 
 // --- Custom marker icons ---
 
@@ -223,9 +224,7 @@ function HostBubble({
               className="flex items-center justify-between py-1.5 px-2.5 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
             >
               <span className="text-xs text-gray-700 dark:text-gray-300 truncate mr-2">{svc.title}</span>
-              <span className="text-xs font-semibold shrink-0" style={{ color: '#0f766e' }}>
-                ${svc.price} {svc.currency}
-              </span>
+              <PriceDisplay amountUSD={svc.price} size="sm" animate={false} className="shrink-0 !text-[#0f766e]" />
             </Link>
           ))}
         </div>

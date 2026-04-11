@@ -26,12 +26,12 @@ import {
 } from '@/lib/fx-rates'
 import { getCountry } from '@/lib/country-currency-map'
 import {
-  MOCK_HOST_BALANCE,
   MOCK_PAYOUT_METHODS,
   MOCK_TRANSACTIONS,
   type MockPayoutMethod,
   type MockTransaction,
 } from '@/lib/payments-mock-data'
+import { useWalletStore } from '@/stores/wallet-store'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
@@ -80,7 +80,7 @@ const STATUS_STYLES: Record<
 
 export default function WalletPage() {
   const { t } = useTranslation()
-  const balance = MOCK_HOST_BALANCE
+  const balance = useWalletStore()
   const hostCurrency = balance.payoutCurrency
   const [withdrawOpen, setWithdrawOpen] = React.useState(false)
 
@@ -235,6 +235,7 @@ export default function WalletPage() {
         onOpenChange={setWithdrawOpen}
         balanceUSD={balance.amountUSD}
         hostCurrency={hostCurrency}
+        onWithdrawSuccess={balance.withdraw}
       />
     </div>
   )
@@ -328,11 +329,13 @@ function WithdrawDialog({
   onOpenChange,
   balanceUSD,
   hostCurrency,
+  onWithdrawSuccess,
 }: {
   open: boolean
   onOpenChange: (v: boolean) => void
   balanceUSD: number
   hostCurrency: CurrencyCode
+  onWithdrawSuccess: (amountInHostCurrency: number, hostCurrencyToUSDRate: number) => void
 }) {
   const { t } = useTranslation()
   const balanceInHost = convert(balanceUSD, 'USD', hostCurrency)
@@ -353,6 +356,7 @@ function WithdrawDialog({
     await new Promise((r) => setTimeout(r, 1500))
     setSubmitting(false)
     onOpenChange(false)
+    onWithdrawSuccess(amountNum, rate)
     toast.success(t('wallet.withdrawRequested'), {
       description: formatCurrency(receive, hostCurrency) + ' ' + t('wallet.withdrawDesc').replace('{method}', selectedMethod.label),
     })

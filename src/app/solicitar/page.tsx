@@ -1,5 +1,6 @@
 'use client'
 
+import * as React from 'react'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
@@ -8,7 +9,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { toast } from 'sonner'
-import { Star, Shield, CreditCard, CheckCircle, X, ArrowLeft, MessageCircle, AlertTriangle } from 'lucide-react'
+import { Star, Shield, CreditCard, CheckCircle, X, ArrowLeft, MessageCircle, AlertTriangle, Loader2 } from 'lucide-react'
 import { useTranslation } from '@/stores/language-store'
 import { SERVICE_TYPES } from '@/lib/constants'
 import { MOCK_MAP_HOSTS } from '@/lib/map-data'
@@ -223,17 +224,23 @@ function StepPayment({
   host,
   serviceIndex,
   onBack,
+  onPaymentConfirmed,
 }: {
   host: MapHost
   serviceIndex: number
   onBack: () => void
+  onPaymentConfirmed: () => void
 }) {
-  const router = useRouter()
   const { t } = useTranslation()
+  const [loading, setLoading] = React.useState(false)
   const service = host.services[serviceIndex]
 
-  const handleContinueToCheckout = () => {
-    router.push('/checkout')
+  const handleContinueToCheckout = async () => {
+    setLoading(true)
+    // Simulate payment processing (mock — no real Stripe)
+    await new Promise((r) => setTimeout(r, 1500))
+    setLoading(false)
+    onPaymentConfirmed()
   }
 
   return (
@@ -283,9 +290,19 @@ function StepPayment({
         <Button
           className="w-full rounded-2xl bg-teal-700 hover:bg-teal-600 text-white h-12 text-base font-semibold flex items-center gap-2"
           onClick={handleContinueToCheckout}
+          disabled={loading}
         >
-          <CreditCard className="h-5 w-5" />
-          {t('solicitar.continueToPay')}
+          {loading ? (
+            <>
+              <Loader2 className="h-5 w-5 animate-spin" />
+              {t('wallet.processing')}
+            </>
+          ) : (
+            <>
+              <CreditCard className="h-5 w-5" />
+              {t('solicitar.continueToPay')}
+            </>
+          )}
         </Button>
       </div>
     </>
@@ -456,6 +473,7 @@ export default function SolicitarPage() {
             host={selectedHost}
             serviceIndex={selectedServiceIdx}
             onBack={() => setStep(1)}
+            onPaymentConfirmed={() => setStep(3)}
           />
         )}
 
