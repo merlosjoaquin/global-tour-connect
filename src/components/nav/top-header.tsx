@@ -21,7 +21,7 @@ export function TopHeader() {
   ) return null
 
   const PAGE_TITLES: Record<string, string> = {
-    '/': 'Global Tour Connect',
+    '/': 'Aditly',
     '/publicar': t('nav.publish') + ' ' + t('solicitar.stepService'),
     '/chat': t('nav.messages'),
     '/perfil': t('nav.myProfile'),
@@ -31,7 +31,7 @@ export function TopHeader() {
 
   const title = pathname.startsWith('/anfitrion/')
     ? t('hostProfile.title')
-    : PAGE_TITLES[pathname] || 'Global Tour Connect'
+    : PAGE_TITLES[pathname] || 'Aditly'
   const showBack = pathname !== '/dashboard'
 
   // For detail pages that are reached via deep navigation, use router.back()

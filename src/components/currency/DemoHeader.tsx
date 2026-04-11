@@ -40,7 +40,7 @@ export function DemoHeader({ title, backHref }: DemoHeaderProps) {
             <span className="grid h-8 w-8 place-items-center rounded-lg bg-primary text-primary-foreground">
               <Globe className="h-4 w-4" aria-hidden="true" />
             </span>
-            <span className="hidden sm:inline">Global Tour</span>
+            <span className="hidden sm:inline">Aditly</span>
           </Link>
           {title && (
             <>

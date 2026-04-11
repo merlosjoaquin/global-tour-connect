@@ -19,7 +19,7 @@ export interface MockTransaction {
   amountUSD: number
   status: TransactionStatus
   createdAt: string // ISO
-  feePct: number // Global Tour fee, e.g. 0.02
+  feePct: number // Aditly fee, e.g. 0.02
 }
 
 export interface MockTour {

@@ -67,7 +67,7 @@ function AuthForm() {
   }
 
   function handleDemoMode() {
-    document.cookie = 'gtc_demo=true; path=/; max-age=86400'
+    document.cookie = 'adt_demo=true; path=/; max-age=86400'
     toast.success(t('auth.demoActivated'))
     window.location.href = '/onboarding'
   }
@@ -80,7 +80,7 @@ function AuthForm() {
           <div className="w-16 h-16 rounded-2xl bg-teal-700 flex items-center justify-center mb-3">
             <MapPin className="h-8 w-8 text-white" />
           </div>
-          <h1 className="text-xl font-bold">Global Tour Connect</h1>
+          <h1 className="text-xl font-bold">Aditly</h1>
           <p className="text-sm text-muted-foreground">
             {isLogin ? t('auth.loginSubtitle') : t('auth.signupSubtitle')}
           </p>

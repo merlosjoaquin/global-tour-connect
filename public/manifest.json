@@ -1,6 +1,6 @@
 {
-  "name": "Global Tour Connect",
-  "short_name": "GTC",
+  "name": "Aditly",
+  "short_name": "ADT",
   "description": "Marketplace de micro-servicios turisticos. Conecta con locales.",
   "start_url": "/",
   "display": "standalone",

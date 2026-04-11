@@ -30,7 +30,7 @@ export async function updateSession(request: NextRequest) {
   )
 
   // Allow demo mode (cookie set by auth page) — check BEFORE Supabase call
-  const isDemo = request.cookies.get('gtc_demo')?.value === 'true'
+  const isDemo = request.cookies.get('adt_demo')?.value === 'true'
 
   // Protected routes check
   const protectedPaths = ['/dashboard', '/publicar', '/chat', '/perfil', '/calificar']

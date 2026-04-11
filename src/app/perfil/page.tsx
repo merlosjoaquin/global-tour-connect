@@ -58,7 +58,7 @@ export default function PerfilPage() {
   const hostEarnings = 128.50
 
   async function handleLogout() {
-    document.cookie = 'gtc_demo=; path=/; max-age=0'
+    document.cookie = 'adt_demo=; path=/; max-age=0'
     await supabase.auth.signOut()
     window.location.href = '/'
   }
