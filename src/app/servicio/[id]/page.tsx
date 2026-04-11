@@ -115,7 +115,7 @@ export default function ServiceDetailPage({ params }: { params: Promise<{ id: st
           <Badge className="mb-2 bg-teal-50 text-teal-800 dark:bg-teal-950/40 dark:text-teal-300 border-teal-200 dark:border-teal-800">
             {typeInfo.emoji} {typeInfo.label}
           </Badge>
-          <h1 className="text-2xl font-bold">{service.title}</h1>
+          <h1 className="text-2xl font-bold">{t(`mapData.services.${service.id}`) || service.title}</h1>
           <div className="flex items-center gap-4 mt-2 text-sm text-muted-foreground">
             <div className="flex items-center gap-1">
               <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
@@ -185,7 +185,7 @@ export default function ServiceDetailPage({ params }: { params: Promise<{ id: st
                 </div>
               </div>
               {host.bio && (
-                <p className="text-sm text-muted-foreground mt-3">{host.bio}</p>
+                <p className="text-sm text-muted-foreground mt-3">{t(`hostBios.${host.id}`) || host.bio}</p>
               )}
               <div className="flex flex-wrap gap-1 mt-3">
                 {host.languages.map(lang => (

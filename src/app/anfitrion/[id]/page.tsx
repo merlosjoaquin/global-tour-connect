@@ -89,7 +89,7 @@ export default function HostProfilePage({ params }: { params: Promise<{ id: stri
           <Card className="rounded-2xl">
             <CardContent className="p-4">
               <h2 className="font-semibold mb-2 text-foreground">{t('hostProfile.bio')}</h2>
-              <p className="text-sm text-muted-foreground leading-relaxed">{host.bio}</p>
+              <p className="text-sm text-muted-foreground leading-relaxed">{t(`hostBios.${host.id}`) || host.bio}</p>
             </CardContent>
           </Card>
         )}
@@ -150,7 +150,7 @@ export default function HostProfilePage({ params }: { params: Promise<{ id: stri
                             <Badge className="mb-1 text-xs bg-teal-50 text-teal-800 dark:bg-teal-950/40 dark:text-teal-300 border-teal-200 dark:border-teal-800">
                               {typeInfo?.label}
                             </Badge>
-                            <p className="font-medium text-foreground truncate">{svc.title}</p>
+                            <p className="font-medium text-foreground truncate">{t(`mapData.services.${svc.id}`) || svc.title}</p>
                             <div className="flex items-center gap-3 mt-1 text-sm text-muted-foreground">
                               <PriceDisplay amountUSD={svc.price} size="sm" className="font-semibold text-teal-700 dark:text-teal-400" />
                               <span className="flex items-center gap-1">

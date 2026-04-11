@@ -191,7 +191,7 @@ function StepBrowseHosts({
                         </span>
                       </div>
                       <p className="text-sm text-gray-500 mt-1 truncate">
-                        {service.title}
+                        {t(`mapData.services.${service.id}`) || service.title}
                       </p>
                       <div className="flex items-center justify-between mt-3">
                         <span className="text-lg font-bold text-teal-700">
@@ -271,7 +271,7 @@ function StepPayment({
         <Card className="rounded-2xl">
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
-              <span className="text-sm text-gray-600 dark:text-gray-400">{service.title}</span>
+              <span className="text-sm text-gray-600 dark:text-gray-400">{t(`mapData.services.${service.id}`) || service.title}</span>
               <span className="text-lg font-bold text-teal-700">
                 ${service.price} {service.currency}
               </span>

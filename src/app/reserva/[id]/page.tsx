@@ -100,7 +100,7 @@ export default function ReservaPage({ params }: { params: Promise<{ id: string }
             </div>
             <div className="flex-1 min-w-0">
               <Badge className="text-[10px] mb-1 bg-teal-50 text-teal-800 dark:bg-teal-950/40 dark:text-teal-300">{typeInfo.label}</Badge>
-              <p className="font-semibold text-sm truncate">{service.title}</p>
+              <p className="font-semibold text-sm truncate">{t(`mapData.services.${service.id}`) || service.title}</p>
               <div className="flex items-center gap-2 text-xs text-muted-foreground">
                 <span className="flex items-center gap-0.5">
                   <Clock className="h-3 w-3" /> {service.duration_minutes} min
@@ -264,7 +264,7 @@ export default function ReservaPage({ params }: { params: Promise<{ id: string }
             <div className="bg-muted/50 rounded-lg p-4 text-sm space-y-2">
               <div className="flex justify-between">
                 <span className="text-muted-foreground">{t('booking.serviceLabel')}</span>
-                <span className="font-medium">{service.title}</span>
+                <span className="font-medium">{t(`mapData.services.${service.id}`) || service.title}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">{t('booking.durationLabel')}</span>

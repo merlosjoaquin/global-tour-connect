@@ -69,7 +69,19 @@
     "demoActivated": "Modo demo activado!"
   },
   "dashboard": {
-    "requestHost": "Solicitar anfitrion"
+    "requestHost": "Solicitar anfitrion",
+    "searchPlaceholder": "Buscar servicios, lugares...",
+    "filterAll": "Todos",
+    "filterGastronomy": "Gastronomia",
+    "filterTours": "Tours",
+    "filterCulture": "Cultura",
+    "filterAdventure": "Aventura",
+    "filterWellness": "Bienestar",
+    "online": "En linea",
+    "viewProfile": "Ver perfil",
+    "dropdownServices": "Servicios",
+    "dropdownPlaces": "Lugares",
+    "exploreNearby": "Explorar servicios cerca"
   },
   "explore": {
     "searchPlaceholder": "Buscar servicios, ciudades...",
@@ -356,5 +368,78 @@
     "saving": "Guardando...",
     "saved": "Preferencias guardadas",
     "savedDesc": "Divisa de visualizacion"
+  },
+  "hostBios": {
+    "host-1": "Guia local en Ciudad de Mexico con 5 anos de experiencia. Amo mostrar los secretos de mi ciudad.",
+    "host-2": "Fotografa profesional. Capturo tus mejores momentos en los lugares mas iconicos de Barcelona.",
+    "host-3": "Traductor japones-espanol. Te ayudo a comunicarte en Tokio sin problemas.",
+    "host-4": "Conocedora de la vida nocturna bogotana. Reservas VIP en los mejores lugares.",
+    "host-5": "Sommelier y amante de la gastronomia parisina. Te consigo la mejor mesa con vista.",
+    "host-map-1": "Naci en San Rafael y conozco cada rincon del Canon del Atuel. Sommelier certificada, combino aventura al aire libre con las mejores catas de la region.",
+    "host-map-2": "Gaucho de tercera generacion. Mis cabalgatas por las sierras de San Rafael te muestran la Mendoza que solo los locales conocen.",
+    "host-map-3": "Chef profesional especializada en cocina mendocina. Organizo asados criollos con vista a los vinedos y tours gastronomicos por las mejores bodegas y restaurantes de San Rafael.",
+    "host-map-4": "Guia bilingue y conductor habilitado. Facilito la comunicacion y el transporte para que disfrutes San Rafael sin preocupaciones.",
+    "host-map-5": "Fotografa profesional de paisajes y retratos. Capturo momentos unicos entre vinedos, montanas y los colores del Canon del Atuel.",
+    "host-map-6": "Instructor certificado de rafting y deportes acuaticos. Llevo 8 anos guiando aventuras en el Rio Atuel. Seguridad y adrenalina garantizadas.",
+    "host-map-7": "Cocinera y astronoma amateur. De dia te enseno los secretos de la cocina mendocina, de noche te guio bajo el cielo estrellado mas limpio de Argentina.",
+    "host-map-8": "Amante del ciclismo y la aventura extrema. Organizo rutas en bici por las bodegas y tirolesas en el Canon del Atuel para los que buscan emociones fuertes."
+  },
+  "mapData": {
+    "services": {
+      "srv-1": "Tour secreto por el Centro Historico",
+      "srv-2": "Fotos en la Sagrada Familia",
+      "srv-3": "Asistente de japones en Shibuya",
+      "srv-4": "Skip-the-line Museo del Oro",
+      "srv-5": "Mesa con vista a la Torre Eiffel",
+      "srv-6": "Coyoacan: Frida Kahlo y mas",
+      "srv-7": "Golden Hour en Park Guell",
+      "srv-8": "Acceso VIP Andres Carne de Res",
+      "srv-9": "Brunch con vista al Sena",
+      "srv-10": "Akihabara en 15 minutos",
+      "svc-1": "Tour Canon del Atuel en kayak",
+      "svc-2": "Degustacion de vinos en bodega",
+      "svc-3": "Cabalgata por la montana",
+      "svc-4": "Asado criollo con vista a los vinedos",
+      "svc-5": "Tour gastronomico por San Rafael",
+      "svc-6": "Guia bilingue espanol-ingles",
+      "svc-7": "Traslado al Canon del Atuel",
+      "svc-8": "Sesion de fotos en vinedos",
+      "svc-9": "Trekking Valle Grande",
+      "svc-10": "Rafting en el Rio Atuel",
+      "svc-11": "Clase de cocina mendocina",
+      "svc-12": "Tour nocturno de estrellas",
+      "svc-13": "Alquiler de bici + ruta de bodegas",
+      "svc-14": "Tirolesa en Canon del Atuel"
+    },
+    "landmarks": {
+      "landmark-1": {
+        "name": "Plaza San Martin",
+        "description": "Corazon de San Rafael. Plaza historica rodeada de arboles, la catedral y edificios coloniales. Punto de encuentro de la ciudad."
+      },
+      "landmark-2": {
+        "name": "Catedral San Rafael Arcangel",
+        "description": "Catedral principal de San Rafael, de estilo neoclasico. Ubicada frente a la Plaza San Martin."
+      },
+      "landmark-3": {
+        "name": "Parque Mariano Moreno",
+        "description": "Gran espacio verde de San Rafael con lago artificial, senderos y areas recreativas. Ideal para paseos y picnics."
+      },
+      "landmark-4": {
+        "name": "Museo de Historia Natural",
+        "description": "Museo con colecciones de paleontologia, mineralogia y fauna regional del sur mendocino."
+      },
+      "landmark-5": {
+        "name": "Plaza Francia",
+        "description": "Plaza emblematica de San Rafael con fuente central, bancos bajo arboles anejados y ambiente tranquilo. Punto clasico de encuentro."
+      },
+      "landmark-6": {
+        "name": "Parque Central",
+        "description": "El parque mas grande de San Rafael. Espacios verdes, juegos, lago y senderos arbolados. Ideal para familia y deporte."
+      },
+      "landmark-7": {
+        "name": "Parque de los Ninos",
+        "description": "Espacio recreativo para familias con juegos infantiles, areas verdes y circuitos para bicicletas. Favorito de los sanrafaelinos."
+      }
+    }
   }
 }

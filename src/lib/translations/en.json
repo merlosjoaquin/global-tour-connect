@@ -69,7 +69,19 @@
     "demoActivated": "Demo mode activated!"
   },
   "dashboard": {
-    "requestHost": "Request a host"
+    "requestHost": "Request a host",
+    "searchPlaceholder": "Search services, places...",
+    "filterAll": "All",
+    "filterGastronomy": "Gastronomy",
+    "filterTours": "Tours",
+    "filterCulture": "Culture",
+    "filterAdventure": "Adventure",
+    "filterWellness": "Wellness",
+    "online": "Online",
+    "viewProfile": "View profile",
+    "dropdownServices": "Services",
+    "dropdownPlaces": "Places",
+    "exploreNearby": "Explore nearby services"
   },
   "explore": {
     "searchPlaceholder": "Search services, cities...",
@@ -356,5 +368,78 @@
     "saving": "Saving...",
     "saved": "Preferences saved",
     "savedDesc": "Display currency"
+  },
+  "hostBios": {
+    "host-1": "Local guide in Mexico City with 5 years of experience. I love showing the secrets of my city.",
+    "host-2": "Professional photographer. I capture your best moments at the most iconic spots in Barcelona.",
+    "host-3": "Japanese-Spanish translator. I help you communicate in Tokyo without any hassle.",
+    "host-4": "Expert in Bogota nightlife. VIP reservations at the best venues.",
+    "host-5": "Sommelier and lover of Parisian gastronomy. I'll get you the best table with a view.",
+    "host-map-1": "I was born in San Rafael and know every corner of Atuel Canyon. Certified sommelier — I combine outdoor adventure with the best wine tastings in the region.",
+    "host-map-2": "Third-generation gaucho. My horseback rides through the San Rafael hills show you the Mendoza only locals know.",
+    "host-map-3": "Professional chef specialized in Mendoza cuisine. I organize traditional asado with vineyard views and gastronomic tours through the best wineries and restaurants in San Rafael.",
+    "host-map-4": "Bilingual guide and licensed driver. I handle communication and transportation so you can enjoy San Rafael worry-free.",
+    "host-map-5": "Professional landscape and portrait photographer. I capture unique moments among vineyards, mountains and the colors of Atuel Canyon.",
+    "host-map-6": "Certified rafting and water sports instructor. 8 years guiding adventures on the Atuel River. Safety and adrenaline guaranteed.",
+    "host-map-7": "Cook and amateur astronomer. By day I teach you the secrets of Mendoza cuisine, by night I guide you under Argentina's clearest starry sky.",
+    "host-map-8": "Cycling and extreme adventure enthusiast. I organize bike routes through wineries and zip-lines at Atuel Canyon for thrill-seekers."
+  },
+  "mapData": {
+    "services": {
+      "srv-1": "Secret tour of the Historic Center",
+      "srv-2": "Photos at the Sagrada Familia",
+      "srv-3": "Japanese assistant in Shibuya",
+      "srv-4": "Skip-the-line at the Gold Museum",
+      "srv-5": "Table with a view of the Eiffel Tower",
+      "srv-6": "Coyoacan: Frida Kahlo and more",
+      "srv-7": "Golden Hour at Park Guell",
+      "srv-8": "VIP access at Andres Carne de Res",
+      "srv-9": "Brunch with a view of the Seine",
+      "srv-10": "Akihabara in 15 minutes",
+      "svc-1": "Kayak tour through Atuel Canyon",
+      "svc-2": "Wine tasting at a winery",
+      "svc-3": "Horseback riding in the mountains",
+      "svc-4": "Traditional asado with vineyard views",
+      "svc-5": "Gastronomic tour of San Rafael",
+      "svc-6": "Bilingual Spanish-English guide",
+      "svc-7": "Transfer to Atuel Canyon",
+      "svc-8": "Photo session in the vineyards",
+      "svc-9": "Valle Grande trekking",
+      "svc-10": "Rafting on the Atuel River",
+      "svc-11": "Mendoza cooking class",
+      "svc-12": "Night stargazing tour",
+      "svc-13": "Bike rental + winery route",
+      "svc-14": "Zip-line at Atuel Canyon"
+    },
+    "landmarks": {
+      "landmark-1": {
+        "name": "Plaza San Martin",
+        "description": "Heart of San Rafael. Historic square surrounded by trees, the cathedral and colonial buildings. The city's main meeting point."
+      },
+      "landmark-2": {
+        "name": "San Rafael Archangel Cathedral",
+        "description": "Main cathedral of San Rafael, neoclassical style. Located in front of Plaza San Martin."
+      },
+      "landmark-3": {
+        "name": "Parque Mariano Moreno",
+        "description": "Large green space in San Rafael with an artificial lake, trails and recreational areas. Perfect for walks and picnics."
+      },
+      "landmark-4": {
+        "name": "Natural History Museum",
+        "description": "Museum with collections of paleontology, mineralogy and regional fauna of southern Mendoza."
+      },
+      "landmark-5": {
+        "name": "Plaza Francia",
+        "description": "Iconic square in San Rafael with a central fountain, benches under old trees and a quiet atmosphere. A classic meeting point."
+      },
+      "landmark-6": {
+        "name": "Parque Central",
+        "description": "San Rafael's largest park. Green spaces, playgrounds, a lake and tree-lined trails. Perfect for families and sports."
+      },
+      "landmark-7": {
+        "name": "Parque de los Ninos",
+        "description": "Recreational space for families with children's rides, green areas and bicycle circuits. A favorite among locals."
+      }
+    }
   }
 }

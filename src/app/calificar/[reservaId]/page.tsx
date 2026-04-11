@@ -90,7 +90,7 @@ export default function CalificarPage({ params }: { params: Promise<{ reservaId:
             <AvatarFallback>{host.full_name[0]}</AvatarFallback>
           </Avatar>
           <div className="flex-1">
-            <p className="font-semibold text-sm">{service.title}</p>
+            <p className="font-semibold text-sm">{t(`mapData.services.${service.id}`) || service.title}</p>
             <p className="text-xs text-muted-foreground">{t('rating.with')} {host.full_name}</p>
             <p className="text-xs text-muted-foreground">{typeInfo.emoji} {typeInfo.label}</p>
           </div>

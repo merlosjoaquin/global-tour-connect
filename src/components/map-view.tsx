@@ -20,6 +20,7 @@ import {
 import { MOCK_SERVICES } from '@/lib/mock-data'
 import { SERVICE_TYPES } from '@/lib/constants'
 import { PriceDisplay } from '@/components/currency/PriceDisplay'
+import { useTranslation } from '@/stores/language-store'
 
 // --- Custom marker icons ---
 
@@ -110,9 +111,11 @@ interface ServiceSearchResult {
 function HostBubble({
   host,
   onClose,
+  t,
 }: {
   host: MapHost
   onClose: () => void
+  t: (key: string) => string
 }) {
   const map = useMap()
   const bubbleRef = useRef<HTMLDivElement>(null)
@@ -209,7 +212,7 @@ function HostBubble({
               <Star className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />
               <span className="text-xs font-medium text-gray-700">{host.rating}</span>
               {host.isOnline && (
-                <span className="ml-1.5 text-[11px] text-green-600 font-medium">En linea</span>
+                <span className="ml-1.5 text-[11px] text-green-600 font-medium">{t('dashboard.online')}</span>
               )}
             </div>
           </div>
@@ -223,7 +226,7 @@ function HostBubble({
               href={`/servicio/${svc.id}`}
               className="flex items-center justify-between py-1.5 px-2.5 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
             >
-              <span className="text-xs text-gray-700 dark:text-gray-300 truncate mr-2">{svc.title}</span>
+              <span className="text-xs text-gray-700 dark:text-gray-300 truncate mr-2">{t(`mapData.services.${svc.id}`) || svc.title}</span>
               <PriceDisplay amountUSD={svc.price} size="sm" animate={false} className="shrink-0 !text-[#0f766e]" />
             </Link>
           ))}
@@ -235,7 +238,7 @@ function HostBubble({
           className="block w-full py-2 text-center text-sm font-semibold rounded-xl transition-colors"
           style={{ backgroundColor: '#0f766e', color: '#ffffff' }}
         >
-          Ver perfil
+          {t('dashboard.viewProfile')}
         </Link>
       </div>
 
@@ -272,6 +275,7 @@ export default function MapView({ onOverlayChange }: { onOverlayChange?: (active
   useEffect(() => { onOverlayChangeRef.current = onOverlayChange }, [onOverlayChange])
   const router = useRouter()
   const { resolvedTheme } = useTheme()
+  const { t } = useTranslation()
 
   const tileUrl = resolvedTheme === 'dark'
     ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
@@ -283,7 +287,7 @@ export default function MapView({ onOverlayChange }: { onOverlayChange?: (active
   const [mapCenter, setMapCenter] = useState<[number, number]>(DEFAULT_CENTER)
   const [selectedHost, setSelectedHost] = useState<MapHost | null>(null)
   const [selectedLandmark, setSelectedLandmark] = useState<MapLandmark | null>(null)
-  const [activeFilter, setActiveFilter] = useState('Todos')
+  const [activeFilter, setActiveFilter] = useState('all')
   const sheetRef = useRef<HTMLDivElement>(null)
 
   // Search state
@@ -296,7 +300,14 @@ export default function MapView({ onOverlayChange }: { onOverlayChange?: (active
   const searchContainerRef = useRef<HTMLDivElement>(null)
   const nominatimTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
-  const filters = ['Todos', 'Gastronomia', 'Tours', 'Cultura', 'Aventura', 'Bienestar']
+  const filters = [
+    { key: 'all', label: t('dashboard.filterAll') },
+    { key: 'gastronomy', label: t('dashboard.filterGastronomy') },
+    { key: 'tours', label: t('dashboard.filterTours') },
+    { key: 'culture', label: t('dashboard.filterCulture') },
+    { key: 'adventure', label: t('dashboard.filterAdventure') },
+    { key: 'wellness', label: t('dashboard.filterWellness') },
+  ]
 
   // Geolocation
   useEffect(() => {
@@ -339,7 +350,7 @@ export default function MapView({ onOverlayChange }: { onOverlayChange?: (active
       .slice(0, 5)
       .map((s) => ({
         id: s.id,
-        title: s.title,
+        title: t(`mapData.services.${s.id}`) || s.title,
         address: s.address,
         emoji: SERVICE_TYPES[s.type]?.emoji || '📍',
         latitude: s.latitude,
@@ -384,7 +395,7 @@ export default function MapView({ onOverlayChange }: { onOverlayChange?: (active
         clearTimeout(nominatimTimeoutRef.current)
       }
     }
-  }, [searchQuery])
+  }, [searchQuery, t])
 
   // Prevent Leaflet from stealing events on the search container
   useEffect(() => {
@@ -504,7 +515,7 @@ export default function MapView({ onOverlayChange }: { onOverlayChange?: (active
 
         {/* Host bubble popup (inside MapContainer to access useMap) */}
         {selectedHost && (
-          <HostBubble host={selectedHost} onClose={() => { setSelectedHost(null); onOverlayChange?.(false) }} />
+          <HostBubble host={selectedHost} onClose={() => { setSelectedHost(null); onOverlayChange?.(false) }} t={t} />
         )}
       </MapContainer>
 
@@ -520,7 +531,7 @@ export default function MapView({ onOverlayChange }: { onOverlayChange?: (active
               <Search className="h-5 w-5 shrink-0" style={{ color: '#0f766e' }} />
               <input
                 type="text"
-                placeholder="Buscar servicios, lugares..."
+                placeholder={t('dashboard.searchPlaceholder')}
                 className="flex-1 bg-transparent text-sm outline-none placeholder:text-gray-400"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -550,7 +561,7 @@ export default function MapView({ onOverlayChange }: { onOverlayChange?: (active
                   <div>
                     <div className="px-4 pt-3 pb-1.5">
                       <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
-                        Servicios
+                        {t('dashboard.dropdownServices')}
                       </span>
                     </div>
                     {serviceResults.map((svc) => (
@@ -579,7 +590,7 @@ export default function MapView({ onOverlayChange }: { onOverlayChange?: (active
                   <div>
                     <div className="px-4 pt-3 pb-1.5 flex items-center gap-2">
                       <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
-                        Lugares
+                        {t('dashboard.dropdownPlaces')}
                       </span>
                       {isSearchingPlaces && (
                         <Loader2 className="h-3 w-3 text-gray-400 animate-spin" />
@@ -615,15 +626,15 @@ export default function MapView({ onOverlayChange }: { onOverlayChange?: (active
           <div className="flex gap-2 pb-1">
             {filters.map((f) => (
               <button
-                key={f}
-                onClick={() => setActiveFilter(f)}
+                key={f.key}
+                onClick={() => setActiveFilter(f.key)}
                 className={`shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-colors shadow-sm ${
-                  activeFilter === f
+                  activeFilter === f.key
                     ? 'bg-teal-700 text-white shadow-md'
                     : 'bg-white/90 backdrop-blur-md text-gray-700 hover:bg-white'
                 }`}
               >
-                {f}
+                {f.label}
               </button>
             ))}
           </div>
@@ -665,7 +676,7 @@ export default function MapView({ onOverlayChange }: { onOverlayChange?: (active
               </div>
 
               <div className="flex items-center gap-2 mb-2">
-                <h3 className="font-semibold text-lg text-gray-900">{selectedLandmark.name}</h3>
+                <h3 className="font-semibold text-lg text-gray-900">{t(`mapData.landmarks.${selectedLandmark.id}.name`) || selectedLandmark.name}</h3>
                 <span
                   className={`text-xs px-2 py-0.5 rounded-full font-medium ${
                     CATEGORY_COLORS[selectedLandmark.category] || 'bg-gray-100 text-gray-700'
@@ -675,14 +686,14 @@ export default function MapView({ onOverlayChange }: { onOverlayChange?: (active
                 </span>
               </div>
               <p className="text-sm text-gray-600 mb-4 leading-relaxed line-clamp-3">
-                {selectedLandmark.description}
+                {t(`mapData.landmarks.${selectedLandmark.id}.description`) || selectedLandmark.description}
               </p>
 
               <button
                 className="block w-full py-3 text-center text-white font-semibold rounded-2xl transition-colors"
                 style={{ backgroundColor: '#0f766e' }}
               >
-                Explorar servicios cerca
+                {t('dashboard.exploreNearby')}
               </button>
             </div>
           </div>

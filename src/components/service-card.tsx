@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { Star } from 'lucide-react'
 import { SERVICE_TYPES } from '@/lib/constants'
 import { PriceDisplay } from '@/components/currency/PriceDisplay'
+import { useTranslation } from '@/stores/language-store'
 import type { Service } from '@/types/database'
 
 interface ServiceCardProps {
@@ -15,6 +16,7 @@ interface ServiceCardProps {
 
 export function ServiceCard({ service, compact = false }: ServiceCardProps) {
   const typeInfo = SERVICE_TYPES[service.type]
+  const { t } = useTranslation()
   const [mounted, setMounted] = useState(false)
   useEffect(() => setMounted(true), [])
 
@@ -48,7 +50,7 @@ export function ServiceCard({ service, compact = false }: ServiceCardProps) {
 
         {/* Info */}
         <div className="p-2.5">
-          <h3 className="font-semibold text-sm line-clamp-1">{service.title}</h3>
+          <h3 className="font-semibold text-sm line-clamp-1">{t(`mapData.services.${service.id}`) || service.title}</h3>
           <div className="flex items-center gap-1 mt-1">
             <Star className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />
             <span className="text-xs font-medium">{service.rating_avg}</span>
