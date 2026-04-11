@@ -14,6 +14,7 @@ import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
 import { StarRating } from '@/components/star-rating'
+import { PriceDisplay } from '@/components/currency/PriceDisplay'
 import { getServiceWithHost, MOCK_REVIEWS } from '@/lib/mock-data'
 import { SERVICE_TYPES } from '@/lib/constants'
 import { useTranslation } from '@/stores/language-store'
@@ -133,8 +134,7 @@ export default function ServiceDetailPage({ params }: { params: Promise<{ id: st
         {/* Price & duration */}
         <div className="flex items-center justify-between">
           <div>
-            <span className="text-3xl font-bold text-teal-700 dark:text-teal-400">${service.price}</span>
-            <span className="text-sm text-muted-foreground ml-1">USD</span>
+            <PriceDisplay amountUSD={service.price} size="lg" className="text-teal-700 dark:text-teal-400" />
             {service.type === 'language_assistant' && (
               <span className="text-sm text-muted-foreground"> {t('service.perMin')}</span>
             )}
@@ -241,8 +241,7 @@ export default function ServiceDetailPage({ params }: { params: Promise<{ id: st
       <div className="fixed bottom-16 left-0 right-0 p-4 bg-background/95 backdrop-blur border-t">
         <div className="max-w-lg mx-auto flex items-center gap-3">
           <div className="flex-1">
-            <span className="text-2xl font-bold text-teal-700 dark:text-teal-400">${service.price}</span>
-            <span className="text-sm text-muted-foreground ml-1">USD</span>
+            <PriceDisplay amountUSD={service.price} size="lg" className="text-teal-700 dark:text-teal-400" />
           </div>
           <Button
             onClick={() => router.push(`/reserva/${service.id}`)}

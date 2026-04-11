@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { StarRating } from '@/components/star-rating'
+import { PriceDisplay } from '@/components/currency/PriceDisplay'
 import { getHostProfile, getServicesForHost, getReviewsForHost } from '@/lib/mock-data'
 import { SERVICE_TYPES } from '@/lib/constants'
 import { useTranslation } from '@/stores/language-store'
@@ -151,9 +152,7 @@ export default function HostProfilePage({ params }: { params: Promise<{ id: stri
                             </Badge>
                             <p className="font-medium text-foreground truncate">{svc.title}</p>
                             <div className="flex items-center gap-3 mt-1 text-sm text-muted-foreground">
-                              <span className="font-semibold text-teal-700 dark:text-teal-400">
-                                ${svc.price} USD
-                              </span>
+                              <PriceDisplay amountUSD={svc.price} size="sm" className="font-semibold text-teal-700 dark:text-teal-400" />
                               <span className="flex items-center gap-1">
                                 <Clock className="h-3.5 w-3.5" />
                                 {svc.duration_minutes} min

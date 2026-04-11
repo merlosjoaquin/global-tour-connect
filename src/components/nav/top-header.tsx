@@ -1,13 +1,13 @@
 'use client'
 
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { ArrowLeft, Bell } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useTranslation } from '@/stores/language-store'
 
 export function TopHeader() {
   const pathname = usePathname()
+  const router = useRouter()
   const { t } = useTranslation()
 
   // Don't show on landing page, auth, intro, or dashboard (map view)
@@ -34,16 +34,27 @@ export function TopHeader() {
     : PAGE_TITLES[pathname] || 'Global Tour Connect'
   const showBack = pathname !== '/dashboard'
 
+  // For detail pages that are reached via deep navigation, use router.back()
+  // so the user returns to whichever page they came from (e.g. anfitrion profile → servicio → back = anfitrion profile)
+  const usesHistoryBack = pathname.startsWith('/servicio/') || pathname.startsWith('/anfitrion/')
+
+  function handleBack() {
+    if (usesHistoryBack) {
+      router.back()
+    } else {
+      const parent = pathname.split('/').slice(0, -1).join('/') || '/dashboard'
+      router.push(parent)
+    }
+  }
+
   return (
     <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="flex items-center justify-between h-14 px-4 max-w-lg mx-auto">
         <div className="flex items-center gap-2">
           {showBack && (
-            <Link href={pathname.startsWith('/anfitrion/') || pathname.startsWith('/servicio/') ? '/dashboard' : (pathname.split('/').slice(0, -1).join('/') || '/dashboard')}>
-              <Button variant="ghost" size="icon" className="-ml-2">
-                <ArrowLeft className="h-5 w-5" />
-              </Button>
-            </Link>
+            <Button variant="ghost" size="icon" className="-ml-2" onClick={handleBack}>
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
           )}
           <h1 className="font-semibold text-lg truncate">{title}</h1>
         </div>

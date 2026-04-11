@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { MapContainer, TileLayer, Marker, useMap } from 'react-leaflet'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
+import { useTheme } from 'next-themes'
 import { Star, X, MapPin, Search, Loader2 } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -271,6 +272,14 @@ export default function MapView({ onOverlayChange }: { onOverlayChange?: (active
   const onOverlayChangeRef = useRef(onOverlayChange)
   useEffect(() => { onOverlayChangeRef.current = onOverlayChange }, [onOverlayChange])
   const router = useRouter()
+  const { resolvedTheme } = useTheme()
+
+  const tileUrl = resolvedTheme === 'dark'
+    ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
+    : 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png'
+  const tileAttribution = resolvedTheme === 'dark'
+    ? '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>'
+    : '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>'
   const [userCoords, setUserCoords] = useState<[number, number] | null>(null)
   const [mapCenter, setMapCenter] = useState<[number, number]>(DEFAULT_CENTER)
   const [selectedHost, setSelectedHost] = useState<MapHost | null>(null)
@@ -461,8 +470,9 @@ export default function MapView({ onOverlayChange }: { onOverlayChange?: (active
         attributionControl={false}
       >
         <TileLayer
-          url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>'
+          key={resolvedTheme}
+          url={tileUrl}
+          attribution={tileAttribution}
         />
 
         <FlyToLocation coords={userCoords} />
