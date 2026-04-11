@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { useTheme } from 'next-themes'
 import { Card, CardContent } from '@/components/ui/card'
@@ -31,7 +30,6 @@ const LANGUAGES = [
 ]
 
 export default function SettingsPage() {
-  const router = useRouter()
   const { resolvedTheme, setTheme } = useTheme()
   const { preferredCurrency } = useCurrencyStore()
   const { language, setLanguage } = useLanguageStore()
@@ -57,13 +55,13 @@ export default function SettingsPage() {
     <div className="min-h-dvh bg-background">
       {/* Header */}
       <div className="flex items-center gap-3 px-4 pt-4 pb-2 max-w-lg mx-auto">
-        <button
-          onClick={() => router.back()}
+        <Link
+          href="/perfil"
           className="p-1.5 rounded-full hover:bg-muted transition-colors"
           aria-label={t('common.back')}
         >
           <ArrowLeft className="h-5 w-5 text-muted-foreground" />
-        </button>
+        </Link>
         <h1 className="text-lg font-bold">{t('settings.title')}</h1>
       </div>
 
