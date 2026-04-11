@@ -441,5 +441,34 @@
         "description": "Recreational space for families with children's rides, green areas and bicycle circuits. A favorite among locals."
       }
     }
+  },
+  "reviews": {
+    "rev-1": {
+      "comment": "Incredible experience! Carlos knows every corner of the Historic Center. The tacos were the best part."
+    },
+    "rev-2": {
+      "comment": "The photos turned out spectacular. Maria has an impressive artistic eye."
+    },
+    "rev-3": {
+      "comment": "The table had a perfect view of the Eiffel Tower. Pierre is a genius at getting reservations."
+    },
+    "rev-4": {
+      "comment": "Lucia is amazing! The kayak tour through Atuel Canyon was the highlight of our trip. She knows every rock formation and its history."
+    },
+    "rev-5": {
+      "comment": "The horseback ride with Martin was an authentic experience. The landscapes are stunning and he knows so much about gaucho culture."
+    },
+    "rev-6": {
+      "comment": "Camila's asado was spectacular. The vineyard view at sunset, the homemade empanadas... everything was perfect. We would do it again without hesitation."
+    },
+    "rev-7": {
+      "comment": "Valentina has an incredible talent for photography. The photos among the vineyards turned out beautiful, a memory we will always treasure."
+    },
+    "rev-8": {
+      "comment": "Rafting with Santiago was pure adrenaline! Very professional about safety and super fun. The views of the canyon from the river are unique."
+    },
+    "rev-9": {
+      "comment": "The cooking class with Isabella was magical. We learned to make Mendoza-style empanadas and then the stargazing tour... the San Rafael sky is unlike anything else."
+    }
   }
 }

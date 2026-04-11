@@ -1,5 +1,6 @@
 'use client'
 
+import { useCallback } from 'react'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { translations, type Language } from '@/lib/translations'
@@ -25,11 +26,14 @@ export const useLanguageStore = create<LanguageState>()(
  * Returns a `t(key)` function that resolves dot-separated keys
  * against the current language's translation map.
  * Falls back to Spanish if the key is missing.
+ *
+ * `t` is stable across re-renders (useCallback) and only changes
+ * when the active language changes — safe to use as a useEffect dependency.
  */
 export function useTranslation() {
   const { language } = useLanguageStore()
 
-  const t = (key: string): string => {
+  const t = useCallback((key: string): string => {
     const parts = key.split('.')
     // Try current language first
     let value: unknown = translations[language]
@@ -53,7 +57,7 @@ export function useTranslation() {
       }
     }
     return typeof fallback === 'string' ? fallback : key
-  }
+  }, [language])
 
   return { t, language }
 }

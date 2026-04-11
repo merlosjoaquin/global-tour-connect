@@ -200,7 +200,7 @@ export default function HostProfilePage({ params }: { params: Promise<{ id: stri
                       </div>
                       <StarRating rating={review.rating} size="sm" />
                     </div>
-                    <p className="text-sm text-muted-foreground">{review.comment}</p>
+                    <p className="text-sm text-muted-foreground">{t(`reviews.${review.id}.comment`) || review.comment}</p>
                   </CardContent>
                 </Card>
               ))}

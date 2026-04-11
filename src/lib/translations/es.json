@@ -441,5 +441,34 @@
         "description": "Espacio recreativo para familias con juegos infantiles, areas verdes y circuitos para bicicletas. Favorito de los sanrafaelinos."
       }
     }
+  },
+  "reviews": {
+    "rev-1": {
+      "comment": "Increible experiencia! Carlos conoce cada rincon del Centro Historico. Los tacos fueron lo mejor."
+    },
+    "rev-2": {
+      "comment": "Las fotos quedaron espectaculares. Maria tiene un ojo artistico impresionante."
+    },
+    "rev-3": {
+      "comment": "La mesa tenia una vista perfecta de la Torre Eiffel. Pierre es un genio de las reservas."
+    },
+    "rev-4": {
+      "comment": "Lucia es increible! El tour en kayak por el Canon del Atuel fue lo mejor de nuestro viaje. Conoce cada formacion rocosa y su historia."
+    },
+    "rev-5": {
+      "comment": "La cabalgata con Martin fue una experiencia autentica. Los paisajes son impresionantes y el sabe mucho de la cultura gaucha."
+    },
+    "rev-6": {
+      "comment": "El asado de Camila fue espectacular. La vista a los vinedos al atardecer, las empanadas caseras... todo perfecto. Repetiriamos sin dudar."
+    },
+    "rev-7": {
+      "comment": "Valentina tiene un talento increible para la fotografia. Las fotos entre los vinedos quedaron hermosas, un recuerdo que vamos a atesorar siempre."
+    },
+    "rev-8": {
+      "comment": "El rafting con Santiago fue pura adrenalina! Muy profesional con la seguridad y super divertido. Las vistas del canon desde el rio son unicas."
+    },
+    "rev-9": {
+      "comment": "La clase de cocina con Isabella fue magica. Aprendimos a hacer empanadas mendocinas y despues el tour de estrellas... el cielo de San Rafael no se compara con nada."
+    }
   }
 }
