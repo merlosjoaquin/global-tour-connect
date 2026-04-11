@@ -24,9 +24,11 @@ export default function HostProfilePage({ params }: { params: Promise<{ id: stri
       <div className="flex items-center justify-center min-h-[50vh]">
         <div className="text-center">
           <p className="text-lg font-medium">{t('service.notFound')}</p>
-          <Button render={<Link href="/dashboard" />} variant="link" className="text-teal-700 dark:text-teal-400 mt-2">
-            {t('service.backToHome')}
-          </Button>
+          <Link href="/dashboard">
+            <Button variant="link" className="text-teal-700 dark:text-teal-400 mt-2">
+              {t('service.backToHome')}
+            </Button>
+          </Link>
         </div>
       </div>
     )
@@ -213,13 +215,14 @@ export default function HostProfilePage({ params }: { params: Promise<{ id: stri
       {/* Fixed bottom CTA */}
       <div className="fixed bottom-16 left-0 right-0 p-4 bg-background/95 backdrop-blur border-t dark:border-gray-800">
         <div className="max-w-lg mx-auto">
-          <Button
-            render={<Link href="/solicitar" />}
-            className="w-full bg-teal-700 hover:bg-teal-600 rounded-full"
-            size="lg"
-          >
-            {t('hostProfile.requestHost')}
-          </Button>
+          <Link href="/solicitar">
+            <Button
+              className="w-full bg-teal-700 hover:bg-teal-600 rounded-full"
+              size="lg"
+            >
+              {t('hostProfile.requestHost')}
+            </Button>
+          </Link>
         </div>
       </div>
     </div>

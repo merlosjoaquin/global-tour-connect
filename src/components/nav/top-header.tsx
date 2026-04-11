@@ -39,9 +39,11 @@ export function TopHeader() {
       <div className="flex items-center justify-between h-14 px-4 max-w-lg mx-auto">
         <div className="flex items-center gap-2">
           {showBack && (
-            <Button render={<Link href={pathname.startsWith('/anfitrion/') || pathname.startsWith('/servicio/') ? '/dashboard' : (pathname.split('/').slice(0, -1).join('/') || '/dashboard')} />} variant="ghost" size="icon" className="-ml-2">
+            <Link href={pathname.startsWith('/anfitrion/') || pathname.startsWith('/servicio/') ? '/dashboard' : (pathname.split('/').slice(0, -1).join('/') || '/dashboard')}>
+              <Button variant="ghost" size="icon" className="-ml-2">
                 <ArrowLeft className="h-5 w-5" />
-            </Button>
+              </Button>
+            </Link>
           )}
           <h1 className="font-semibold text-lg truncate">{title}</h1>
         </div>

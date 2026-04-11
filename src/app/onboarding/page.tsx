@@ -72,14 +72,14 @@ export default function OnboardingPage() {
         'gtc_user_profile',
         JSON.stringify({ fullName, bio, city, country, languages: selectedLangs })
       )
-      toast.success(t('onboarding.profileCompleted'))
+      toast.success(t('onboarding.profileCompleted'), { id: 'onboarding-toast' })
       if (role === 'host') {
         router.push('/publicar')
       } else {
         router.push('/dashboard')
       }
     } catch {
-      toast.error(t('onboarding.profileError'))
+      toast.error(t('onboarding.profileError'), { id: 'onboarding-toast' })
     } finally {
       setLoading(false)
     }

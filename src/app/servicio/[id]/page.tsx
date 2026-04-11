@@ -32,9 +32,11 @@ export default function ServiceDetailPage({ params }: { params: Promise<{ id: st
       <div className="flex items-center justify-center min-h-[50vh]">
         <div className="text-center">
           <p className="text-lg font-medium">{t('service.notFound')}</p>
-          <Button render={<Link href="/dashboard" />} variant="link" className="text-teal-700 dark:text-teal-400 mt-2">
-            {t('service.backToHome')}
-          </Button>
+          <Link href="/dashboard">
+            <Button variant="link" className="text-teal-700 dark:text-teal-400 mt-2">
+              {t('service.backToHome')}
+            </Button>
+          </Link>
         </div>
       </div>
     )

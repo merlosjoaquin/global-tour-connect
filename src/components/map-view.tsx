@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef, useCallback } from 'react'
+import Image from 'next/image'
 import { MapContainer, TileLayer, Marker, useMap } from 'react-leaflet'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
@@ -192,7 +193,7 @@ function HostBubble({
 
         {/* Host info */}
         <div className="flex items-center gap-2.5 mb-3 pr-6">
-          <img
+          <Image
             src={host.avatar}
             alt={host.name}
             width={44}
@@ -214,7 +215,7 @@ function HostBubble({
 
         {/* Services — scrollable when 2+ */}
         <div className="space-y-1.5 mb-3 max-h-[120px] overflow-y-auto scrollbar-none">
-          {host.services.map((svc) => (
+          {host.services?.map((svc) => (
             <Link
               key={svc.id}
               href={`/servicio/${svc.id}`}
@@ -267,6 +268,8 @@ const CATEGORY_COLORS: Record<string, string> = {
 // --- Main Map Component ---
 
 export default function MapView({ onOverlayChange }: { onOverlayChange?: (active: boolean) => void }) {
+  const onOverlayChangeRef = useRef(onOverlayChange)
+  useEffect(() => { onOverlayChangeRef.current = onOverlayChange }, [onOverlayChange])
   const router = useRouter()
   const [userCoords, setUserCoords] = useState<[number, number] | null>(null)
   const [mapCenter, setMapCenter] = useState<[number, number]>(DEFAULT_CENTER)
@@ -417,7 +420,7 @@ export default function MapView({ onOverlayChange }: { onOverlayChange?: (active
     function handleClick(e: MouseEvent) {
       if (sheetRef.current && !sheetRef.current.contains(e.target as Node)) {
         setSelectedLandmark(null)
-        onOverlayChange?.(false)
+        onOverlayChangeRef.current?.(false)
       }
     }
     if (selectedLandmark) {
@@ -628,7 +631,7 @@ export default function MapView({ onOverlayChange }: { onOverlayChange?: (active
           <div className="bg-white rounded-t-3xl shadow-2xl overflow-hidden mx-0">
             {/* Image */}
             <div className="relative h-40 w-full">
-              <img
+              <Image
                 src={selectedLandmark.image}
                 alt={selectedLandmark.name}
                 width={400}

@@ -1,7 +1,6 @@
 'use client'
 
 import { use, useState } from 'react'
-import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
@@ -16,12 +15,11 @@ import {
   CheckCircle, Shield, DollarSign
 } from 'lucide-react'
 import { getServiceWithHost } from '@/lib/mock-data'
-import { SERVICE_TYPES, getCommissionRate } from '@/lib/constants'
+import { SERVICE_TYPES } from '@/lib/constants'
 import { useTranslation } from '@/stores/language-store'
 
 export default function ReservaPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params)
-  const router = useRouter()
   const [step, setStep] = useState(1)
   const [selectedDate, setSelectedDate] = useState('')
   const [selectedTime, setSelectedTime] = useState('')
@@ -35,9 +33,11 @@ export default function ReservaPage({ params }: { params: Promise<{ id: string }
       <div className="flex items-center justify-center min-h-[50vh]">
         <div className="text-center">
           <p className="text-lg font-medium">{t('service.notFound')}</p>
-          <Button render={<Link href="/dashboard" />} variant="link" className="text-teal-700 dark:text-teal-400 mt-2">
-            {t('service.backToHome')}
-          </Button>
+          <Link href="/dashboard">
+            <Button variant="link" className="text-teal-700 dark:text-teal-400 mt-2">
+              {t('service.backToHome')}
+            </Button>
+          </Link>
         </div>
       </div>
     )
@@ -53,6 +53,11 @@ export default function ReservaPage({ params }: { params: Promise<{ id: string }
   ]
 
   async function handlePayment() {
+    const selectedDateObj = new Date(selectedDate)
+    if (selectedDateObj < new Date()) {
+      toast.error('La fecha no puede ser en el pasado', { id: 'reserva-date' })
+      return
+    }
     setLoading(true)
     await new Promise(r => setTimeout(r, 2000))
     setLoading(false)
@@ -277,12 +282,16 @@ export default function ReservaPage({ params }: { params: Promise<{ id: string }
             </div>
 
             <div className="flex flex-col gap-2">
-              <Button render={<Link href="/chat" />} className="bg-teal-700 hover:bg-teal-600">
-                {t('booking.chatWith')} {host.full_name}
-              </Button>
-              <Button render={<Link href="/dashboard" />} variant="outline">
-                {t('booking.goToDashboard')}
-              </Button>
+              <Link href="/chat">
+                <Button className="bg-teal-700 hover:bg-teal-600">
+                  {t('booking.chatWith')} {host.full_name}
+                </Button>
+              </Link>
+              <Link href="/dashboard">
+                <Button variant="outline">
+                  {t('booking.goToDashboard')}
+                </Button>
+              </Link>
             </div>
           </CardContent>
         </Card>

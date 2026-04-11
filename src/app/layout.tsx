@@ -18,6 +18,7 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://globaltourconnect.com'),
   title: 'Global Tour Connect',
   description: 'Marketplace de micro-servicios turisticos. Conecta con locales, descubre experiencias unicas.',
   manifest: '/manifest.json',
@@ -25,6 +26,17 @@ export const metadata: Metadata = {
     capable: true,
     statusBarStyle: 'default',
     title: 'GTC',
+  },
+  openGraph: {
+    title: 'Global Tour Connect',
+    description: 'Marketplace de micro-servicios turisticos. Conecta con locales, descubre experiencias unicas.',
+    type: 'website',
+    images: [{ url: '/og-image.png', width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Global Tour Connect',
+    description: 'Marketplace de micro-servicios turisticos. Conecta con locales, descubre experiencias unicas.',
   },
 }
 

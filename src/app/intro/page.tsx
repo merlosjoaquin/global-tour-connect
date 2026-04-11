@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useRef } from 'react'
 import { useRouter } from 'next/navigation'
+import Image from 'next/image'
 import { ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useTranslation } from '@/stores/language-store'
@@ -86,9 +87,11 @@ export default function IntroPage() {
 
       {/* Content */}
       <div className="flex-1 flex flex-col items-center justify-center px-8 text-center">
-        <img
+        <Image
           src={slide.image}
           alt={slide.title}
+          width={256}
+          height={256}
           className="w-64 h-64 object-contain mb-8"
           style={{
             maskImage: 'radial-gradient(ellipse 75% 75% at center, black 45%, transparent 90%)',

@@ -28,6 +28,7 @@ const serviceIcons: Record<ServiceType, typeof MapPin> = {
   table_reservation: UtensilsCrossed,
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const serviceSchema = z.object({
   title: z.string().min(5, 'Minimo 5 caracteres'),
   description: z.string().min(20, 'Minimo 20 caracteres'),
@@ -54,7 +55,8 @@ export default function PublicarPage() {
 
   const formValues = watch()
 
-  async function onSubmit(data: ServiceForm) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async function onSubmit(_data: ServiceForm) {
     if (!selectedType) return
     setLoading(true)
     await new Promise(r => setTimeout(r, 1500))

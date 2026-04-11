@@ -355,13 +355,14 @@ function StepActiveService({
 
         {/* Action buttons */}
         <div className="space-y-3">
-          <Button
-            render={<Link href="/chat" />}
-            className="w-full rounded-2xl bg-teal-700 hover:bg-teal-600 text-white h-12 text-base font-semibold flex items-center gap-2"
-          >
-            <MessageCircle className="h-5 w-5" />
-            {t('solicitar.chatWith')} {host.name}
-          </Button>
+          <Link href="/chat" className="w-full">
+            <Button
+              className="w-full rounded-2xl bg-teal-700 hover:bg-teal-600 text-white h-12 text-base font-semibold flex items-center gap-2"
+            >
+              <MessageCircle className="h-5 w-5" />
+              {t('solicitar.chatWith')} {host.name}
+            </Button>
+          </Link>
 
           <Button
             variant="outline"
