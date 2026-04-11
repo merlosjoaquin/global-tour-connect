@@ -11,6 +11,7 @@ import { Badge } from '@/components/ui/badge'
 import { toast } from 'sonner'
 import { Star, Shield, CreditCard, CheckCircle, X, ArrowLeft, MessageCircle, AlertTriangle, Loader2 } from 'lucide-react'
 import { useTranslation } from '@/stores/language-store'
+import { PriceDisplay } from '@/components/currency/PriceDisplay'
 import { SERVICE_TYPES } from '@/lib/constants'
 import { MOCK_MAP_HOSTS } from '@/lib/map-data'
 import type { ServiceType } from '@/types/database'
@@ -194,9 +195,7 @@ function StepBrowseHosts({
                         {t(`mapData.services.${service.id}`) || service.title}
                       </p>
                       <div className="flex items-center justify-between mt-3">
-                        <span className="text-lg font-bold text-teal-700">
-                          ${service.price} {service.currency}
-                        </span>
+                        <PriceDisplay amountUSD={service.price} size="sm" animate={false} />
                         <Button
                           size="sm"
                           className="rounded-full bg-teal-700 hover:bg-teal-600 text-white"
@@ -272,9 +271,7 @@ function StepPayment({
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <span className="text-sm text-gray-600 dark:text-gray-400">{t(`mapData.services.${service.id}`) || service.title}</span>
-              <span className="text-lg font-bold text-teal-700">
-                ${service.price} {service.currency}
-              </span>
+              <PriceDisplay amountUSD={service.price} size="sm" animate={false} />
             </div>
           </CardContent>
         </Card>
@@ -344,7 +341,7 @@ function StepActiveService({
         <div className="flex flex-col items-center py-4">
           <CheckCircle className="h-12 w-12 text-green-500 mb-2" />
           <p className="text-lg font-semibold text-gray-900">
-            {t('solicitar.paymentHeld')} — ${service.price} {service.currency}
+            {t('solicitar.paymentHeld')} — <PriceDisplay amountUSD={service.price} size="sm" animate={false} />
           </p>
         </div>
 
