@@ -46,6 +46,7 @@ import {
 import { BalanceCard } from '@/components/currency/BalanceCard'
 import { DemoHeader } from '@/components/currency/DemoHeader'
 import { useTranslation } from '@/stores/language-store'
+import { useActiveCurrency } from '@/stores/currency-store'
 
 const METHOD_ICON: Record<MockPayoutMethod['type'], React.ReactNode> = {
   bank: <Landmark className="h-4 w-4" />,
@@ -81,7 +82,8 @@ const STATUS_STYLES: Record<
 export default function WalletPage() {
   const { t } = useTranslation()
   const balance = useWalletStore()
-  const hostCurrency = balance.payoutCurrency
+  const activeCurrency = useActiveCurrency()
+  const hostCurrency = activeCurrency
   const [withdrawOpen, setWithdrawOpen] = React.useState(false)
 
   const monthEarnedUSD = MOCK_TRANSACTIONS.filter(

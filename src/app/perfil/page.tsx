@@ -13,6 +13,7 @@ import {
   LogOut, ChevronRight, Globe, Shield, PlusCircle
 } from 'lucide-react'
 import { useTranslation } from '@/stores/language-store'
+import { PriceDisplay } from '@/components/currency/PriceDisplay'
 import type { Profile } from '@/types/database'
 
 export default function PerfilPage() {
@@ -125,7 +126,7 @@ export default function PerfilPage() {
         <Card className="rounded-2xl bg-gradient-to-r from-teal-700 to-emerald-700 text-white">
           <CardContent className="p-4">
             <p className="text-sm text-white/80 mb-1">{t('profile.hostEarnings')}</p>
-            <p className="text-3xl font-bold">${hostEarnings.toFixed(2)}</p>
+            <PriceDisplay amountUSD={hostEarnings} size="lg" className="text-white" />
             <p className="text-sm text-white/60 mt-1">{t('profile.availableForWithdraw')}</p>
             <Link href="/wallet">
               <Button size="sm" className="mt-3 bg-white/20 hover:bg-white/30 text-white rounded-full">
