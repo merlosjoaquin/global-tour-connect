@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { Globe } from 'lucide-react'
+import { ArrowLeft, Globe } from 'lucide-react'
 import { CurrencySwitcher } from '@/components/currency/CurrencySwitcher'
 import { ThemeToggle } from '@/components/theme-toggle'
 import { useCurrencyStore } from '@/stores/currency-store'
@@ -23,8 +23,17 @@ export function DemoHeader({ title, backHref }: DemoHeaderProps) {
     <header className="sticky top-0 z-40 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="mx-auto flex h-14 max-w-3xl items-center justify-between gap-3 px-4">
         <div className="flex min-w-0 items-center gap-2">
+          {backHref && (
+            <Link
+              href={backHref}
+              aria-label="Back"
+              className="grid h-8 w-8 place-items-center rounded-full hover:bg-muted transition-colors"
+            >
+              <ArrowLeft className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
+            </Link>
+          )}
           <Link
-            href={backHref ?? '/dashboard'}
+            href="/dashboard"
             aria-label="Home"
             className="flex items-center gap-2 text-sm font-semibold"
           >
