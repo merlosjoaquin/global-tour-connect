@@ -139,16 +139,23 @@ function HostBubble({
 
   // Close on outside click
   useEffect(() => {
-    const timer = setTimeout(() => {
+    let timer: ReturnType<typeof setTimeout> | null = null
+    let removeListener: (() => void) | null = null
+
+    timer = setTimeout(() => {
       function handleClick(e: MouseEvent) {
         if (bubbleRef.current && !bubbleRef.current.contains(e.target as Node)) {
           onClose()
         }
       }
       document.addEventListener('click', handleClick)
-      return () => document.removeEventListener('click', handleClick)
+      removeListener = () => document.removeEventListener('click', handleClick)
     }, 100)
-    return () => clearTimeout(timer)
+
+    return () => {
+      if (timer) clearTimeout(timer)
+      if (removeListener) removeListener()
+    }
   }, [onClose])
 
   if (!position) return null
@@ -470,6 +477,13 @@ export default function MapView({ onOverlayChange }: { onOverlayChange?: (active
     onOverlayChange?.(false)
   }
 
+  // Stable callback for HostBubble — avoids re-registering the outside-click
+  // listener on every render (HostBubble's useEffect depends on onClose identity)
+  const closeHostBubble = useCallback(() => {
+    setSelectedHost(null)
+    onOverlayChangeRef.current?.(false)
+  }, [])
+
   return (
     <div className="relative w-full h-full">
       <MapContainer
@@ -515,7 +529,7 @@ export default function MapView({ onOverlayChange }: { onOverlayChange?: (active
 
         {/* Host bubble popup (inside MapContainer to access useMap) */}
         {selectedHost && (
-          <HostBubble host={selectedHost} onClose={() => { setSelectedHost(null); onOverlayChange?.(false) }} t={t} />
+          <HostBubble host={selectedHost} onClose={closeHostBubble} t={t} />
         )}
       </MapContainer>
 
