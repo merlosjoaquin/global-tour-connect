@@ -12,7 +12,12 @@ interface DemoHeaderProps {
 }
 
 export function DemoHeader({ title, backHref }: DemoHeaderProps) {
-  const { preferredCurrency, setPreferredCurrency } = useCurrencyStore()
+  const { preferredCurrency, setPreferredCurrency, setAutoDetect } = useCurrencyStore()
+
+  const handleCurrencyChange = (code: Parameters<typeof setPreferredCurrency>[0]) => {
+    setPreferredCurrency(code)
+    setAutoDetect(false)
+  }
 
   return (
     <header className="sticky top-0 z-40 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -45,7 +50,7 @@ export function DemoHeader({ title, backHref }: DemoHeaderProps) {
         <div className="flex items-center gap-2">
           <CurrencySwitcher
             value={preferredCurrency}
-            onChange={setPreferredCurrency}
+            onChange={handleCurrencyChange}
             compact
             align="end"
           />

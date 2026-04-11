@@ -1,9 +1,11 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Star } from 'lucide-react'
 import { SERVICE_TYPES } from '@/lib/constants'
+import { PriceDisplay } from '@/components/currency/PriceDisplay'
 import type { Service } from '@/types/database'
 
 interface ServiceCardProps {
@@ -13,6 +15,8 @@ interface ServiceCardProps {
 
 export function ServiceCard({ service, compact = false }: ServiceCardProps) {
   const typeInfo = SERVICE_TYPES[service.type]
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
 
   return (
     <Link href={`/servicio/${service.id}`} className="block">
@@ -34,7 +38,11 @@ export function ServiceCard({ service, compact = false }: ServiceCardProps) {
           )}
           {/* Price pill */}
           <div className="absolute top-2 right-2 bg-white/95 rounded-full px-2.5 py-1 text-xs font-bold shadow-sm">
-            ${service.price}
+            {mounted ? (
+              <PriceDisplay amountUSD={service.price} size="sm" animate={false} />
+            ) : (
+              <span>${service.price}</span>
+            )}
           </div>
         </div>
 

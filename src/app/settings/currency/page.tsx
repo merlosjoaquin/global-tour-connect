@@ -35,7 +35,11 @@ export default function CurrencySettingsPage() {
     setSaving(true)
     await new Promise((r) => setTimeout(r, 600))
     setPreferredCurrency(draft)
-    setAutoDetect(draftAuto)
+    // If the user picked a currency that differs from the auto-detected one,
+    // disable auto-detect so their explicit choice is not silently overridden.
+    const { detectedCurrency: currentDetected } = useCurrencyStore.getState()
+    const resolvedAuto = draftAuto && draft === currentDetected ? draftAuto : false
+    setAutoDetect(resolvedAuto)
     setSaving(false)
     toast.success(t('currencySettings.saved'), {
       description: t('currencySettings.savedDesc') + ': ' + currency.name + ' (' + draft + ').',

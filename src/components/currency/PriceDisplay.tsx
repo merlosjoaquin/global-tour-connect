@@ -9,6 +9,15 @@ import {
 } from '@/lib/fx-rates'
 import { useActiveCurrency } from '@/stores/currency-store'
 
+// Hydration-safe: the Zustand persist middleware rehydrates from localStorage
+// only on the client. Until then we show the raw USD amount to avoid a
+// server/client mismatch warning.
+function useIsMounted() {
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
+  return mounted
+}
+
 interface PriceDisplayProps {
   /** Canonical amount stored in USD */
   amountUSD: number
@@ -37,8 +46,10 @@ export function PriceDisplay({
   className,
   animate = true,
 }: PriceDisplayProps) {
+  const mounted = useIsMounted()
   const active = useActiveCurrency()
-  const target = targetCurrency ?? active
+  // Before hydration, fall back to USD so SSR and first client render match.
+  const target = targetCurrency ?? (mounted ? active : 'USD')
   const converted = convert(amountUSD, 'USD', target)
   const formatted = formatCurrency(converted, target)
 
